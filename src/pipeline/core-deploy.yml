@@ -34,12 +34,12 @@ jobs:
         steps:
         - checkout: self
         - pwsh: |
-            Get-ChildItem -Path $(Build.Repository.LocalPath)/$(Build.Repository.Name) –Recurse
+            Get-ChildItem -Path $(Pipeline.Workspace) –Recurse
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
             resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Build.Repository.LocalPath)/$(Build.Repository.Name)/src/arm/core.json'
+            templateFilePath: '$(Pipeline.Workspace)/login.dfe.gateway/src/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
