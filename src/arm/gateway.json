@@ -127,7 +127,7 @@
     },
     "resources": [
         {
-            "apiVersion": "2015-05-01-preview",
+            "apiVersion": "2020-04-01",
             "type": "Microsoft.Network/publicIPAddresses",
             "sku": {
                 "name": "Standard"
