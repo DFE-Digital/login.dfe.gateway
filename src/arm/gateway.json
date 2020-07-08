@@ -58,9 +58,7 @@
                     "directories": {
                         "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/httpListeners/', variables('resourceNames').applicationGateway.hostedServices.directories.backendPoolName)]"
                     }
-                },
-                
-
+                }
             }
         },
         "applicationGateway": {
