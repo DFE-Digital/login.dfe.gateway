@@ -23,6 +23,5 @@ stages:
         serviceConnection: $(devServiceConnection)
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
-        applicationName: $(applicationName)
         environmentId: d01
         
