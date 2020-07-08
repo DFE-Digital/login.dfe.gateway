@@ -32,6 +32,7 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - checkout: self
         - pwsh: |
             Get-ChildItem -Path $(Pipeline.Workspace) –Recurse
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
