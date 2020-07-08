@@ -5,6 +5,9 @@ parameters:
   type: string
 - name: environmentName
   type: string
+- name: applicationName
+  type: string
+  default: gateway
 - name: deploymentLocation
   type: string
   default: 'westeurope'
@@ -25,7 +28,7 @@ jobs:
     vmImage: ubuntu-latest
   variables:
     overrideParameters: '
-    -applicationName "gateway"
+    -applicationName "${{parameters.applicationName}}"
     -environmentName "${{parameters.environmentName}}"
     '
   strategy:

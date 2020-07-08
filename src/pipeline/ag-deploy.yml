@@ -5,6 +5,9 @@ parameters:
   type: string
 - name: environmentName
   type: string
+- name: applicationName
+  type: string
+  default: gateway
 - name: deploymentLocation
   type: string
   default: 'westeurope'
@@ -13,6 +16,15 @@ parameters:
   default: 's141'
 - name: environmentId
   type: string
+- name: projectCoreRgSuffix
+  type: string  
+  default: projectcore 
+- name: vnetName
+  type: string  
+- name: subnetName
+  type: string  
+  default: service
+
 
 jobs:
 - deployment: deploy
@@ -24,6 +36,9 @@ jobs:
     overrideParameters: '
     -applicationName "gateway"
     -environmentName "${{parameters.environmentName}}"
+    -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
+    -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
+    -subnetName "${{parameters.subnetName}}"
     '
   strategy:
     runOnce:

@@ -37,6 +37,3 @@ stages:
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
         environmentId: d01
-
-
-        
