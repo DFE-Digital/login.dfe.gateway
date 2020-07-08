@@ -26,6 +26,11 @@
             "applicationGateway": {
                 "name": "[concat(variables('baseName'), '-ag')]",
                 "hostedServices": {
+                    "default": {
+                        "backendPoolName": "default-pool",
+                        "backendSettingName": "default-backend-setting",
+                        "backendSettingProbeName": "default-backend-setting-probe"
+                    },
                     "oidc": {
                         "backendPoolName": "oidc-pool",
                         "backendSettingName": "oidc-backend-setting",
@@ -52,6 +57,11 @@
             "applicationGateway": {
                 "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name)]",
                 "hostedServices": {
+                    "default": {
+                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendAddressPools/', variables('resourceNames').applicationGateway.hostedServices.default.backendPoolName)]",
+                        "backendSettingResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendHttpSettingsCollection/', variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName)]",
+                        "probeResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/probes/', variables('resourceNames').applicationGateway.hostedServices.default.backendSettingProbeName)]"
+                    },
                     "oidc": {
                         "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendAddressPools/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName)]",
                         "backendSettingResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendHttpSettingsCollection/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingName)]",
@@ -69,6 +79,21 @@
             "name": "[variables('resourceNames').applicationGateway.name]",
             "resourceId": "[variables('resourceIds').applicationGateway.resourceId]",
             "hostedServices": {
+                "default": {
+                    "poolName": "[variables('resourceNames').applicationGateway.hostedServices.default.backendPoolName]",
+                    "pathMap": "/",
+                    "backendSetting": {
+                        "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName]",
+                        "port": 80,
+                        "protocol": "Http",
+                        "requestTimeout": 20,
+                        "probe": {
+                            "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingProbeName]",
+                            "protocol": "Http",
+                            "path": "/"
+                        }
+                    }
+                },
                 "oidc": {
                     "poolName": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName]",
                     "pathMap": "/oidc",
@@ -149,7 +174,7 @@
                 },
                 "gatewayIPConfigurations": [
                     {
-                        "name": "appGatewayIpConfig",
+                        "name": "gateway-ip-config",
                         "properties": {
                             "subnet": {
                                 "id": "[variables('resourceIds').subnetResourceId]"
@@ -205,6 +230,23 @@
                     }
                 ],
                 "backendAddressPools": [
+                    {
+                        "name": "[variables('applicationGateway').hostedServices.default.poolName]",
+                        "properties": {
+                            "backendAddresses": [],
+                            "urlPathMaps": [
+                                {
+                                    "id": "[variables('applicationGateway').urlPathMap.resourceId]"
+                                }
+                            ],
+                            "pathRules": [
+                                {
+                                    "id": "[concat(variables('applicationGateway').urlPathMap.resourceId, '/pathRules/default-target')]"
+                                }
+                            ]
+                        },
+                        "type": "Microsoft.Network/applicationGateways/backendAddressPools"
+                    },
                     {
                         "name": "[variables('applicationGateway').hostedServices.oidc.poolName]",
                         "properties": {
@@ -266,12 +308,27 @@
                         "name": "[variables('applicationGateway').urlPathMap.name]",
                         "properties": {
                             "defaultBackendAddressPool": {
-                                "id": "[variables('resourceIds').applicationGateway.hostedServices.oidc.poolResourceId]"
+                                "id": "[variables('resourceIds').applicationGateway.hostedServices.default.poolResourceId]"
                             },
                             "defaultBackendHttpSettings": {
-                                "id": "[variables('resourceIds').applicationGateway.hostedServices.oidc.backendSettingResourceId]"
+                                "id": "[variables('resourceIds').applicationGateway.hostedServices.default.backendSettingResourceId]"
                             },
                             "pathRules": [
+                                {
+                                    "name": "default-target",
+                                    "properties": {
+                                        "paths": [
+                                            "[variables('applicationGateway').hostedServices.default.pathMap]"
+                                        ],
+                                        "backendAddressPool": {
+                                            "id": "[variables('resourceIds').applicationGateway.hostedServices.default.poolResourceId]"
+                                        },
+                                        "backendHttpSettings": {
+                                            "id": "[variables('resourceIds').applicationGateway.hostedServices.default.backendSettingResourceId]"
+                                        }
+                                    },
+                                    "type": "Microsoft.Network/applicationGateways/urlPathMaps/pathRules"
+                                },
                                 {
                                     "name": "oidc-target",
                                     "properties": {
@@ -313,6 +370,30 @@
                     }
                 ],
                 "backendHttpSettingsCollection": [
+                    {
+                        "name": "[variables('applicationGateway').hostedServices.default.backendSetting.name]",
+                        "properties": {
+                            "port": "[variables('applicationGateway').hostedServices.default.backendSetting.port]",
+                            "protocol": "[variables('applicationGateway').hostedServices.default.backendSetting.protocol]",
+                            "cookieBasedAffinity": "Disabled",
+                            "pickHostNameFromBackendAddress": true,
+                            "requestTimeout": "[variables('applicationGateway').hostedServices.default.backendSetting.requestTimeout]",
+                            "probe": {
+                                "id": "[variables('resourceIds').applicationGateway.hostedServices.default.probeResourceId]"
+                            },
+                            "urlPathMaps": [
+                                {
+                                    "id": "[variables('applicationGateway').urlPathMap.resourceId]"
+                                }
+                            ],
+                            "pathRules": [
+                                {
+                                    "id": "[concat(variables('applicationGateway').urlPathMap.resourceId, '/pathRules/default-target')]"
+                                }
+                            ]
+                        },
+                        "type": "Microsoft.Network/applicationGateways/backendHttpSettingsCollection"
+                    },
                     {
                         "name": "[variables('applicationGateway').hostedServices.oidc.backendSetting.name]",
                         "properties": {
@@ -363,6 +444,25 @@
                     }
                 ],
                 "probes": [
+                    {
+                        "name": "[variables('applicationGateway').hostedServices.default.backendSetting.probe.name]",
+                        "properties": {
+                            "protocol": "[variables('applicationGateway').hostedServices.default.backendSetting.probe.protocol]",
+                            "path": "[variables('applicationGateway').hostedServices.default.backendSetting.probe.path]",
+                            "interval": 30,
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": true,
+                            "minServers": 0,
+                            "match": {},
+                            "backendHttpSettings": [
+                                {
+                                    "id": "[variables('resourceIds').applicationGateway.hostedServices.default.backendSettingResourceId]"
+                                }
+                            ]
+                        },
+                        "type": "Microsoft.Network/applicationGateways/probes"
+                    },
                     {
                         "name": "[variables('applicationGateway').hostedServices.oidc.backendSetting.probe.name]",
                         "properties": {
