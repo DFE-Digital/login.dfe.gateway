@@ -1,0 +1,28 @@
+name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
+resources:
+  repositories:
+    - repository: devopsTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/operations-devops-pipeline-templates
+
+trigger:
+  branches:
+    include:
+    - master
+    - develop
+    - feature/*
+    # exclude:
+    # - feature/*
+
+stages:
+  - stage: deployDev
+    jobs:
+    - template: deploy.yml
+      parameters:
+        serviceConnection: $(devServiceConnection)
+        subscriptionId: $(devSubscriptionId)
+        environmentName: dev
+        applicationName: $(applicationName)
+        environmentId: d01
+        

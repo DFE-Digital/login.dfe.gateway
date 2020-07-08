@@ -1,0 +1,43 @@
+parameters:
+- name: serviceConnection
+  type: string
+- name: subscriptionId
+  type: string
+- name: environmentName
+  type: string
+- name: deploymentLocation
+  type: string
+  default: 'westeurope'
+- name: projectId
+  type: string
+  default: 's141'
+- name: environmentId
+  type: string
+- name: projectCoreRgSuffix
+  type: string
+  default: projectcore
+
+jobs:
+- deployment: deploy 
+  environment: ${{parameters.environmentName}}
+  pool:
+    vmImage: ubuntu-latest
+  variables:
+    overrideParameters: '
+    -applicationName "gateway"
+    -environmentName "${{parameters.environmentName}}"
+    '
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: current
+          artifact: $(Build.BuildId)
+        - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+          parameters:
+            serviceConnection: ${{parameters.serviceConnection}}
+            subscriptionId: ${{parameters.subscriptionId}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+            location: ${{parameters.deploymentLocation}}
+            templateFilePath: '$(Build.SourcesDirectory)/arm/core.json'
+            armParameterOverrideString: $(overrideParameters)
