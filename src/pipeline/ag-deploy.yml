@@ -13,9 +13,6 @@ parameters:
   default: 's141'
 - name: environmentId
   type: string
-- name: projectCoreRgSuffix
-  type: string
-  default: projectcore
 
 jobs:
 - deployment: deploy
@@ -39,8 +36,8 @@ jobs:
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-gateway${{parameters.environmentName}}
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/core.json'
+            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)
             processOutputs: false
