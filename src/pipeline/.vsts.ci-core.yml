@@ -18,6 +18,8 @@ trigger:
 stages:
   - stage: deployDev
     jobs:
+    - pwsh: |
+        Get-ChildItem -Path $(Pipeline.Workspace) –Recurse
     - template: core-deploy.yml
       parameters:
         serviceConnection: $(devServiceConnection)
