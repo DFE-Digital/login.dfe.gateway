@@ -53,10 +53,10 @@
                 "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name)]",
                 "hostedServices": {
                     "oidc": {
-                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/httpListeners/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName)]"
+                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendAddressPools/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName)]"
                     },
                     "directories": {
-                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/httpListeners/', variables('resourceNames').applicationGateway.hostedServices.directories.backendPoolName)]"
+                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/backendAddressPools/', variables('resourceNames').applicationGateway.hostedServices.directories.backendPoolName)]"
                     }
                 }
             }
