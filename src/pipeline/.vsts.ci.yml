@@ -16,7 +16,7 @@ trigger:
     # - feature/*
 
 stages:
-  - stage: deployDev
+  - stage: deployCoreDev
     jobs:
     - template: core-deploy.yml
       parameters:

@@ -43,3 +43,4 @@ jobs:
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
+            processOutputs: false
