@@ -18,7 +18,7 @@ parameters:
   default: projectcore
 
 jobs:
-- deployment: deploy 
+- deployment: deploy - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
   pool:
     vmImage: ubuntu-latest
@@ -31,8 +31,6 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - download: current
-          artifact: $(Build.BuildId)
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
