@@ -81,7 +81,7 @@
             "hostedServices": {
                 "default": {
                     "poolName": "[variables('resourceNames').applicationGateway.hostedServices.default.backendPoolName]",
-                    "pathMap": "/",
+                    "pathMap": "/default",
                     "backendSetting": {
                         "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName]",
                         "port": 80,
