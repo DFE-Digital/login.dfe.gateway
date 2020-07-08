@@ -27,12 +27,12 @@
                 "name": "[concat(variables('baseName'), '-ag')]",
                 "hostedServices": {
                     "oidc": {
-                        "backendPoolName":  "oidc-pool",
+                        "backendPoolName": "oidc-pool",
                         "backendSettingName": "oidc-backend-setting",
                         "backendSettingProbeName": "oidc-backend-setting-probe"
                     },
                     "directories": {
-                        "backendPoolName":  "directories-pool",
+                        "backendPoolName": "directories-pool",
                         "backendSettingName": "directories-backend-setting",
                         "backendSettingProbeName": "directories-backend-setting-probe"
                     }
@@ -267,6 +267,12 @@
                     {
                         "name": "[variables('applicationGateway').urlPathMap.name]",
                         "properties": {
+                            "defaultBackendAddressPool": {
+                                "id": "[variables('applicationGateway').hostedServices.oidc.poolResourceId]"
+                            },
+                            "defaultBackendHttpSettings": {
+                                "id": "[variables('applicationGateway').hostedServices.oidc.backendSetting.resourceId]"
+                            },
                             "pathRules": [
                                 {
                                     "name": "oidc-target",
