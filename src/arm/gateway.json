@@ -23,32 +23,63 @@
     "variables": {
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
-            "applicationGatewayName": "[concat(variables('baseName'), '-ag')]",
+            "applicationGateway": {
+                "name": "[concat(variables('baseName'), '-ag')]",
+                "hostedServices": {
+                    "oidc": {
+                        "backendPoolName":  "oidc-pool",
+                        "backendSettingName": "oidc-backend-setting",
+                        "backendSettingProbeName": "oidc-backend-setting-probe"
+                    },
+                    "directories": {
+                        "backendPoolName":  "directories-pool",
+                        "backendSettingName": "directories-backend-setting",
+                        "backendSettingProbeName": "directories-backend-setting-probe"
+                    }
+                },
+                "listenerName": "gateway-listener",
+                "routingRuleName": "gateway-ruleset",
+                "frontEndPortName": "gateway-frontend-port",
+                "frontEndIpConfigurationName": "gateway-frontend-ip-config",
+                "urlPathMapName": "gateway-path-map"
+            },
             "publicIpName": "[concat(variables('baseName'), '-pip')]"
-
         },
         "resourceIds": {
             "publicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('resourceNames').publicIpName)]",
             "vnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-            "subnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+            "subnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]",
+            "applicationGateway": {
+                "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name)]",
+                "hostedServices": {
+                    "oidc": {
+                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/httpListeners/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName)]"
+                    },
+                    "directories": {
+                        "poolResourceId": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name), '/httpListeners/', variables('resourceNames').applicationGateway.hostedServices.directories.backendPoolName)]"
+                    }
+                },
+                
+
+            }
         },
         "applicationGateway": {
-            "name": "[variables('resourceNames').applicationGatewayName]",
-            "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGatewayName)]",
+            "name": "[variables('resourceNames').applicationGateway.name]",
+            "resourceId": "[variables('resourceIds').applicationGateway.resourceId]",
             "hostedServices": {
                 "oidc": {
-                    "poolName": "oidc-pool",
+                    "poolName": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendPoolName]",
                     "pathMap": "/oidc",
-                    "poolResourceId": "[concat(variables('applicationGateway').resourceId, '/httpListeners/', variables('applicationGateway').hostedServices.oidc.poolName)]",
+                    "poolResourceId": "[variables('resourceIds').applicationGateway.hostedServices.oidc.poolResourceId]",
                     "backendSetting": {
-                        "resourceId": "[concat(variables('applicationGateway').resourceId, '/backendHttpSettingsCollection/', variables('applicationGateway').hostedServices.oidc.backendSetting.name)]",
-                        "name": "oidc-backend-setting",
+                        "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/backendHttpSettingsCollection/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingName)]",
+                        "name": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingName]",
                         "port": 80,
                         "protocol": "Http",
                         "requestTimeout": 20,
                         "probe": {
-                            "name": "oidc-backend-setting-probe",
-                            "resourceId": "[concat(variables('applicationGateway').resourceId, '/probes/', variables('applicationGateway').hostedServices.oidc.backendSetting.probe.name)]",
+                            "name": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingProbeName]",
+                            "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/probes/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingProbeName)]",
                             "protocol": "Http",
                             "path": "/"
                         }
@@ -57,16 +88,16 @@
                 "directories": {
                     "poolName": "directories-pool",
                     "pathMap": "/directories",
-                    "poolResourceId": "[concat(variables('applicationGateway').resourceId, '/httpListeners/', variables('applicationGateway').hostedServices.directories.poolName)]",
+                    "poolResourceId": "[variables('resourceIds').applicationGateway.hostedServices.directories.poolResourceId]",
                     "backendSetting": {
-                        "resourceId": "[concat(variables('applicationGateway').resourceId, '/backendHttpSettingsCollection/', variables('applicationGateway').hostedServices.directories.backendSetting.name)]",
-                        "name": "directories-backend-setting",
+                        "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/backendHttpSettingsCollection/', variables('resourceNames').applicationGateway.hostedServices.directories.backendSettingName)]",
+                        "name": "[variables('resourceNames').applicationGateway.hostedServices.directories.backendSettingName]",
                         "port": 80,
                         "protocol": "Http",
                         "requestTimeout": 20,
                         "probe": {
-                            "name": "directories-backend-setting-probe",
-                            "resourceId": "[concat(variables('applicationGateway').resourceId, '/probes/', variables('applicationGateway').hostedServices.directories.backendSetting.probe.name)]",
+                            "name": "[variables('resourceNames').applicationGateway.hostedServices.directories.backendSettingProbeName]",
+                            "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/probes/', variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingProbeName)]",
                             "protocol": "Http",
                             "path": "/"
                         }
@@ -74,25 +105,25 @@
                 }
             },
             "httpListener": {
-                "name": "gateway-listener",
-                "resourceId": "[concat(variables('applicationGateway').resourceId, '/httpListeners/', variables('applicationGateway').httpListener.name)]"
+                "name": "[variables('resourceNames').applicationGateway.listenerName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/httpListeners/', variables('resourceNames').applicationGateway.listenerName)]"
             },
             "routingRule": {
-                "name": "gateway-ruleset",
-                "resourceId": "[concat(variables('applicationGateway').resourceId, '/requestRoutingRules/', variables('applicationGateway').routingRule.name)]"
+                "name": "[variables('resourceNames').applicationGateway.routingRuleName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/requestRoutingRules/', variables('resourceNames').applicationGateway.routingRuleName)]"
             },
             "frontEndPort": {
-                "name": "gateway-frontend-port",
+                "name": "[variables('resourceNames').applicationGateway.frontEndPortName]",
                 "port": 80,
-                "resourceId": "[concat(variables('applicationGateway').resourceId, '/frontendPorts/', variables('applicationGateway').frontEndPort.name)]"
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/frontendPorts/', variables('resourceNames').applicationGateway.frontEndPortName)]"
             },
             "frontEndIpConfiguration": {
-                "name": "gateway-frontendip-config",
-                "resourceId": "[concat(variables('applicationGateway').resourceId, '/frontendIPConfigurations/', variables('applicationGateway').frontEndIpConfiguration.name)]"
+                "name": "[variables('resourceNames').applicationGateway.frontEndIpConfigurationName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/frontendIPConfigurations/', variables('resourceNames').applicationGateway.frontEndIpConfigurationName)]"
             },
             "urlPathMap": {
-                "name": "gateway-path-map",
-                "resourceId": "[concat(variables('applicationGateway').resourceId, '/urlPathMaps/', variables('applicationGateway').urlPathMap.name)]"
+                "name": "[variables('resourceNames').applicationGateway.urlPathMapName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/urlPathMaps/', variables('resourceNames').applicationGateway.urlPathMapName)]"
             }
         }
     },
