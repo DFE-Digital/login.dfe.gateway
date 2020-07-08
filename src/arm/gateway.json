@@ -250,7 +250,7 @@
                                 "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
                             },
                             "frontendPort": {
-                                "id": "[variables('applicationGateway').frontEndPort.name]"
+                                "id": "[variables('applicationGateway').frontEndPort.resourceId]"
                             },
                             "protocol": "Http",
                             "requireServerNameIndication": false,
