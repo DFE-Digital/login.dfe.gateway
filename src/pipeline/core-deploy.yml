@@ -38,5 +38,5 @@ jobs:
             subscriptionId: ${{parameters.subscriptionId}}
             resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Build.SourcesDirectory)/arm/core.json'
+            templateFilePath: '$(Pipeline.WorkSpace)/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
