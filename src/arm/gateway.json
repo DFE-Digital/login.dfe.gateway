@@ -14,11 +14,12 @@
     "variables": {
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
+            "applicationGatewayName": "[concat(variables('baseName'), '-ag')]",
             "publicIpName": "[concat(variables('baseName'), '-pip')]"
         },
         "applicationGateway": {
-            "name": "",
-            "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name)]",
+            "name": "[variables('resourceNames').applicationGatewayName]",
+            "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGatewayName)]",
             "componentNames": {
                 "frontEndConfig": "",
                 "httpListener": "",

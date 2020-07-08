@@ -17,6 +17,7 @@ trigger:
 
 stages:
   - stage: deployCoreDev
+    displayName: Core - DEV
     jobs:
     - template: core-deploy.yml
       parameters:
@@ -26,6 +27,7 @@ stages:
         environmentId: d01
   
   - stage: deployAgDev
+    displayName: Application Gateway - DEV
     dependsOn: 
     - deployCoreDev
     jobs:
