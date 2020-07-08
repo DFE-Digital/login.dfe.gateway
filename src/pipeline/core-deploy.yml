@@ -41,5 +41,5 @@ jobs:
             subscriptionId: ${{parameters.subscriptionId}}
             resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/login.dfe.gateway/src/arm/core.json'
+            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
