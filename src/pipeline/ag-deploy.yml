@@ -19,8 +19,6 @@ parameters:
 - name: projectCoreRgSuffix
   type: string  
   default: projectcore 
-- name: vnetName
-  type: string  
 - name: subnetName
   type: string  
   default: service
