@@ -16,7 +16,7 @@ parameters:
 
 jobs:
 - deployment: deploy
-  displayName: deploy core vnet - ${{parameters.environmentName}}
+  displayName: deploy ag - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
   pool:
     vmImage: ubuntu-latest
@@ -30,13 +30,11 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - pwsh: |
-            Get-ChildItem -Path $(Pipeline.Workspace) –Recurse
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-gateway${{parameters.environmentName}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)

@@ -27,7 +27,7 @@ stages:
         environmentId: d01
   
   - stage: deployAgDev
-    displayName: Application Gateway - DEV
+    displayName: Gateway - DEV
     dependsOn: 
     - deployCoreDev
     jobs:
