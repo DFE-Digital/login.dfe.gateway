@@ -18,7 +18,8 @@ parameters:
   default: projectcore
 
 jobs:
-- deployment: deploy - ${{parameters.environmentName}}
+- deployment: deploy
+  displayName: deploy - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
   pool:
     vmImage: ubuntu-latest
