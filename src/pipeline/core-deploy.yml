@@ -32,7 +32,6 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - checkout: self
         - pwsh: |
             Get-ChildItem -Path $(Pipeline.Workspace) –Recurse
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
@@ -41,5 +40,5 @@ jobs:
             subscriptionId: ${{parameters.subscriptionId}}
             resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/arm/core.json'
+            templateFilePath: ../arm/core.json
             armParameterOverrideString: $(overrideParameters)
