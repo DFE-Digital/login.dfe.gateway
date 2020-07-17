@@ -1,0 +1,103 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationName": {
+            "type": "string",
+            "defaultValue": "gateway"
+        },
+        "environmentName": {
+            "type": "string"
+        }
+    },
+    "functions": [
+    ],
+    "variables": {
+        "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
+        "resourceNames": {
+            "aspName1": "[concat(variables('baseName'), '-asp-1')]",
+            "aspName2": "[concat(variables('baseName'), '-asp-2')]",
+            "apiName1": "[concat(variables('baseName'), '-api-1')]",
+            "apiName2": "[concat(variables('baseName'), '-api-2')]"
+
+        },
+        "resourceIds": {
+            "asp1Id": "[resourceId('Microsoft.Web/serverfarms', variables('resourceNames').aspName1)]",
+            "asp2Id": "[resourceId('Microsoft.Web/serverfarms', variables('resourceNames').aspName2)]"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "Tier": "Basic",
+                "Name": "B1"
+            },
+            "apiVersion": "2018-02-01",
+            "name": "[variables('resourceNames').aspName1]",
+            "properties": {
+                "name": "[variables('resourceNames').aspName1]",
+                "workerSize": "0",
+                "workerSizeId": "0"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "Tier": "Basic",
+                "Name": "B1"
+            },
+            "apiVersion": "2018-02-01",
+            "name": "[variables('resourceNames').aspName2]",
+            "properties": {
+                "name": "[variables('resourceNames').aspName2]",
+                "workerSize": "0",
+                "workerSizeId": "0"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('resourceNames').apiName1]",
+            "kind": "app",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "siteConfig": {
+                    "minTlsVersion": "1.2",
+                    "alwaysOn": true
+                },
+                "name": "[variables('resourceNames').apiName1]",
+                "serverFarmId": "[variables('resourceIds').asp1Id]"
+            },
+            "dependsOn": [
+                "[variables('resourceIds').asp1Id]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('resourceNames').apiName2]",
+            "kind": "app",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "siteConfig": {
+                    "minTlsVersion": "1.2",
+                    "alwaysOn": true
+                },
+                "name": "[variables('resourceNames').apiName2]",
+                "serverFarmId": "[variables('resourceIds').asp2Id]"
+            },
+            "dependsOn": [
+                "[variables('resourceIds').asp2Id]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        }
+    ]
+}
