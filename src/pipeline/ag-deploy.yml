@@ -68,8 +68,7 @@ jobs:
               write-host ag resource id : $env:ARMOUTPUT_RESOURCEID
               write-host rg : $env:RESOURCEGROUPNAME
               write-host id : $env:GATEWAYIDENTITYNAME
-              $id = az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv
+              $id = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME --query id --output tsv
               write-host created $id
-              write-host Assigning to AG
               $agIdent = az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $id --query 'userAssignedIdentities'
               write-host assigned princial $agIdent[3]
