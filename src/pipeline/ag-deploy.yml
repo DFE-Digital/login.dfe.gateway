@@ -45,7 +45,6 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
@@ -64,8 +63,8 @@ jobs:
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              echo AGNAME : $ARMOUTPUTS_RESOURCEID
+              echo AGNAME : $ARMOUTPUT_RESOURCEID
               echo RG : $RESOURCEGROUPNAME
               echo ID : $GATEWAYIDENTITYNAME
-              az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME
-              echo created $AGIDENTITYID
+              IDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv)
+              echo created $IDENTITYID
