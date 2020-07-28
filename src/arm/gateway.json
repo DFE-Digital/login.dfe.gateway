@@ -506,6 +506,10 @@
         }
     ],
     "outputs": {
+        "resourceName": {
+            "type": "string",
+            "value": "[variables('applicationGateway').name]"
+        },
         "resourceId": {
             "type": "string",
             "value": "[variables('applicationGateway').resourceId]"

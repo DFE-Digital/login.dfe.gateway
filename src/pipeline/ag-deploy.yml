@@ -63,8 +63,11 @@ jobs:
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              echo AGNAME : $ARMOUTPUT_RESOURCEID
+              echi ag name $ARMOUTPUT_RESOURCENAME
+              echo ag resource id : $ARMOUTPUT_RESOURCEID
               echo RG : $RESOURCEGROUPNAME
               echo ID : $GATEWAYIDENTITYNAME
               IDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv)
               echo created $IDENTITYID
+              echo Assigning id to AG
+              az network application-gateway identity assign -g $RESOURCEGROUPNAME --gateway-name $ARMOUTPUT_RESOURCENAME --identity $IDENTITYID
