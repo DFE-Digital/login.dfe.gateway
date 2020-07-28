@@ -52,6 +52,8 @@ jobs:
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
+              echo RG : $RESOURCEGROUPNAME
+              echo ID : $GATEWAYIDENTITYNAME
               AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
               echo created $AGIDENTITYID
 
@@ -63,4 +65,4 @@ jobs:
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)
-            processOutputs: false
+            processOutputs: true

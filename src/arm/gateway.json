@@ -502,12 +502,13 @@
                         "type": "Microsoft.Network/applicationGateways/probes"
                     }
                 ]
-            },
-            "identity": {
-                "type": "SystemAssigned"
             }
         }
     ],
     "outputs": {
+        "resourceId": {
+            "type": "string",
+            "value": "[variables('applicationGateway').resourceId]"
+        }
     }
 }
