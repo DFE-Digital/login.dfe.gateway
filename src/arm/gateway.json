@@ -502,6 +502,9 @@
                         "type": "Microsoft.Network/applicationGateways/probes"
                     }
                 ]
+            },
+            "identity": {
+                "type": "SystemAssigned"
             }
         }
     ],
