@@ -45,17 +45,7 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - task: AzureCLI@2
-          displayName: Create user assigned identity for AG
-          inputs:
-            azureSubscription: ${{parameters.serviceConnection}}
-            scriptType: 'bash'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-              echo RG : $RESOURCEGROUPNAME
-              echo ID : $GATEWAYIDENTITYNAME
-              AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
-              echo created $AGIDENTITYID
+        
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
@@ -66,3 +56,16 @@ jobs:
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)
             processOutputs: true
+
+        - task: AzureCLI@2
+          displayName: Create and assign AG identity
+          inputs:
+            azureSubscription: ${{parameters.serviceConnection}}
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              echo AGNAME : $ARMOUTPUTS_RESOURCEID
+              echo RG : $RESOURCEGROUPNAME
+              echo ID : $GATEWAYIDENTITYNAME
+              AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
+              echo created $AGIDENTITYID
