@@ -31,6 +31,8 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
+    resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
+    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
     overrideParameters: '
     -applicationName "gateway"
     -environmentName "${{parameters.environmentName}}"
@@ -43,11 +45,22 @@ jobs:
       deploy:
         steps:
         - checkout: self
+        - task: AzureCLI@2
+          displayName: Create user assigned identity for AG
+          inputs:
+            azureSubscription: ${{parameters.serviceConnection}}
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
+              echo created $AGIDENTITYID
+
+          displayName: Create user assigned identity for ag
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
+            resourceGroupName: $(resourceGroupName)
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)
