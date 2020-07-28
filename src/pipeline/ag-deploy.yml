@@ -31,6 +31,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
+    keyVaultName: ${{parameters.projectId}}-signin-global-kv
     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
     gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
     overrideParameters: '
@@ -57,17 +58,17 @@ jobs:
             processOutputs: true
 
         - task: AzureCLI@2
-          displayName: Create and assign AG identity
+          displayName: Post Deploy
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
-            scriptType: 'bash'
+            scriptType: 'pscode'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              echo ag name $ARMOUTPUT_RESOURCENAME
-              echo ag resource id : $ARMOUTPUT_RESOURCEID
-              echo RG : $RESOURCEGROUPNAME
-              echo ID : $GATEWAYIDENTITYNAME
-              ID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv)
-              echo created $ID
-              echo Assigning to AG
-              az network application-gateway identity assign -g $RESOURCEGROUPNAME --gateway-name $ARMOUTPUT_RESOURCENAME --identity $ID
+              write-host ag name $env:ARMOUTPUT_RESOURCENAME
+              write-host ag resource id : $env:ARMOUTPUT_RESOURCEID
+              write-host rg : $env:RESOURCEGROUPNAME
+              write-host id : $env:GATEWAYIDENTITYNAME
+              $id = az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv
+              write-host created $id
+              write-host Assigning to AG
+              az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $id
