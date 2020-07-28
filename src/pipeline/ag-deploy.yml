@@ -55,7 +55,6 @@ jobs:
               AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
               echo created $AGIDENTITYID
 
-          displayName: Create user assigned identity for ag
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
