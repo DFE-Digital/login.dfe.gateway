@@ -61,7 +61,7 @@ jobs:
           displayName: Post Deploy
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
-            scriptType: 'pscode'
+            scriptType: 'pscore'
             scriptLocation: 'inlineScript'
             inlineScript: |
               write-host ag name $env:ARMOUTPUT_RESOURCENAME
@@ -71,4 +71,5 @@ jobs:
               $id = az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query id --output tsv
               write-host created $id
               write-host Assigning to AG
-              az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $id
+              $agIdent = az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $id --query 'userAssignedIdentities'
+              write-host assigned princial $agIdent[3]
