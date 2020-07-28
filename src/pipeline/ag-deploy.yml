@@ -67,5 +67,5 @@ jobs:
               echo AGNAME : $ARMOUTPUTS_RESOURCEID
               echo RG : $RESOURCEGROUPNAME
               echo ID : $GATEWAYIDENTITYNAME
-              AGIDENTITYID=$(az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME --query objectId --output tsv)
+              az identity create -g $RESOURCEGROUPNAME -n $GATEWAYIDENTITYNAME
               echo created $AGIDENTITYID
