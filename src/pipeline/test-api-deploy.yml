@@ -19,6 +19,16 @@ parameters:
 
 
 jobs:
+
+- job: buildStub
+  displayName: Build Stub apis
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+    - template: /Application/dotnet/jobs/build-application.yml@devopsTemplates
+      parameters:
+        applicationName: $(applicationName)
+  
 - deployment: deploy
   displayName: deploy test apis - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
@@ -38,6 +48,15 @@ jobs:
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
+            location: ${{parameters.deploymentLocation}}
+            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/service-plans.json'
+            armParameterOverrideString: $(overrideParameters)
+            processOutputs: false
+
+        - template: /Application/dotnet/steps/deploy-appservice.yml@devopsTemplates
+          parameters:
+            serviceConnection: ${{parameters.serviceConnection}}
             resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/service-plans.json'
