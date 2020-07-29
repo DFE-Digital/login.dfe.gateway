@@ -1,30 +1,44 @@
 parameters:
 - name: serviceConnection
   type: string
+
 - name: subscriptionId
   type: string
+
 - name: environmentName
   type: string
+
+- name: environmentId
+  type: string
+
+# defautls
 - name: applicationName
   type: string
   default: gateway
+
 - name: deploymentLocation
   type: string
-  default: 'westeurope'
+  default: westeurope
+
 - name: projectId
   type: string
-  default: 's141'
-- name: environmentId
-  type: string
+  default: s141
+
 - name: projectCoreRgSuffix
   type: string  
   default: projectcore 
+
 - name: subnetName
   type: string  
   default: service
+
+- name: globalKeyVaultName
+  type: string
+  default: s141-signin-global-kv
+
 - name: sslCertificateName
   type: string
-
+  default: signin-generic
 
 jobs:
 - deployment: deploy
@@ -33,10 +47,10 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
-    keyVaultName: ${{parameters.projectId}}-signin-global-kv
+    keyVaultName: ${{parameters.globalKeyVaultName}}
     sslCertificateName: ${{parameters.sslCertificateName}}
     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
-    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway-id
+    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id
   strategy:
     runOnce:
       deploy:
@@ -74,7 +88,7 @@ jobs:
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: '
-            -applicationName "gateway"
+            -applicationName "${{parameters.applicationName}}"
             -environmentName "${{parameters.environmentName}}"
             -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
             -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"

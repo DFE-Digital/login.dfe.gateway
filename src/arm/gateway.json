@@ -21,7 +21,7 @@
             "type": "string"
         },
         "userAssignedIdentityName": {
-            "type" : "string"
+            "type": "string"
         }
     },
     "functions": [
@@ -58,7 +58,7 @@
             "publicIpName": "[concat(variables('baseName'), '-pip')]"
         },
         "resourceIds": {
-            "userAssignedIdentityId" : "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]",
+            "userAssignedIdentityId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]",
             "publicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('resourceNames').publicIpName)]",
             "vnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
             "subnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]",
@@ -181,17 +181,15 @@
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
-                    "[variables('resourceIds').userAssignedIdentityId]" : {}
+                    "[variables('resourceIds').userAssignedIdentityId]": {}
                 }
             },
-
             "properties": {
                 "sku": {
                     "name": "Standard_v2",
                     "tier": "Standard_v2",
                     "capacity": 2
                 },
-
                 "gatewayIPConfigurations": [
                     {
                         "name": "gateway-ip-config",
