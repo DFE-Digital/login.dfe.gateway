@@ -22,8 +22,6 @@ parameters:
 - name: subnetName
   type: string  
   default: service
-- name: keyVaultCertResourceId
-  type: string
 - name: sslCertificateName
   type: string
 
