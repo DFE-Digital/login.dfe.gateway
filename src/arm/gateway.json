@@ -16,6 +16,9 @@
         },
         "subnetName": {
             "type": "string"
+        },
+        "sslKeyVaultCertResourceId": {
+            "type" : "string"
         }
     },
     "functions": [
@@ -42,7 +45,8 @@
                         "backendSettingProbeName": "directories-backend-setting-probe"
                     }
                 },
-                "listenerName": "gateway-listener",
+                "sslCertificateName": "gateway-ssl-cert",
+                "listenerName": "gateway-ssl-listener",
                 "routingRuleName": "gateway-ruleset",
                 "frontEndPortName": "gateway-frontend-port",
                 "frontEndIpConfigurationName": "gateway-frontend-ip-config",
@@ -125,6 +129,10 @@
                     }
                 }
             },
+            "sslCertificate": {
+                "name": "[variables('resourceNames').applicationGateway.sslCertificateName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/sslCertificates/', variables('resourceNames').applicationGateway.sslCertificateName)]"
+            },
             "httpListener": {
                 "name": "[variables('resourceNames').applicationGateway.listenerName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/httpListeners/', variables('resourceNames').applicationGateway.listenerName)]"
@@ -172,6 +180,14 @@
                     "tier": "Standard_v2",
                     "capacity": 2
                 },
+                "sslCertificates": [
+                    {
+                        "name": "[variables('applicationGateway').sslCertificate.name]",
+                        "properties": {
+                            "keyVaultSecretId": "[parameters('sslKeyVaultCertResourceId')]"
+                        }
+                    }
+                ],
                 "gatewayIPConfigurations": [
                     {
                         "name": "gateway-ip-config",
@@ -292,8 +308,11 @@
                             "frontendPort": {
                                 "id": "[variables('applicationGateway').frontEndPort.resourceId]"
                             },
-                            "protocol": "Http",
+                            "protocol": "Https",
                             "requireServerNameIndication": false,
+                            "sslCertificate": {
+                                "id": "[variables('applicationGateway').sslCertificate.resourceId]"
+                            },
                             "requestRoutingRules": [
                                 {
                                     "id": "[variables('applicationGateway').routingRule.resourceId]"

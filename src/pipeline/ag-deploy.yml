@@ -22,6 +22,10 @@ parameters:
 - name: subnetName
   type: string  
   default: service
+- name: keyVaultCertResourceId
+  type: string
+- name: sslCertificateName
+  type: string
 
 
 jobs:
@@ -32,15 +36,9 @@ jobs:
     vmImage: ubuntu-latest
   variables:
     keyVaultName: ${{parameters.projectId}}-signin-global-kv
+    sslCertificateName: ${{parameters.sslCertificateName}}
     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
     gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
-    overrideParameters: '
-    -applicationName "gateway"
-    -environmentName "${{parameters.environmentName}}"
-    -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
-    -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
-    -subnetName "${{parameters.subnetName}}"
-    '
   strategy:
     runOnce:
       deploy:
@@ -48,6 +46,7 @@ jobs:
         - checkout: self
 
         - task: AzureCLI@2
+          name: preDeploy
           displayName: Pre Deploy
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
@@ -60,9 +59,12 @@ jobs:
               write-host setting kv policy for $ident.name
               az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers
               write-host puttin principalId $ident.principalId on the pipeline
-              Write-Host "##vso[task.setvariable variable=principalId]$ident.principalId"
+              hrite-host "##vso[task.setvariable variable=principalId]$ident.principalId"
 
-              
+              write-host retrieving ssl certificate
+              $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME
+              write-host "##vso[task.setvariable variable=sslCertificateResourceId]$cert.id"
+
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
@@ -70,11 +72,19 @@ jobs:
             resourceGroupName: $(resourceGroupName)
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
-            armParameterOverrideString: $(overrideParameters)
+            armParameterOverrideString: '
+            -applicationName "gateway"
+            -environmentName "${{parameters.environmentName}}"
+            -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
+            -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
+            -subnetName "${{parameters.subnetName}}"
+            -sslKeyVaultCertResourceId "$(preDeploy.sslCertificateResourceId)"
+            '
             processOutputs: true
 
 
         - task: AzureCLI@2
+          name: postDeploy
           displayName: Post Deploy
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
