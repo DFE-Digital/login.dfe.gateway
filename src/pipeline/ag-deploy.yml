@@ -76,7 +76,7 @@ jobs:
             -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
             -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
             -subnetName "${{parameters.subnetName}}"
-            -sslKeyVaultCertResourceId "$(preDeploy.sslCertificateResourceId)"
+            -sslKeyVaultCertResourceId "$(sslCertificateResourceId)"
             '
             processOutputs: true
 
