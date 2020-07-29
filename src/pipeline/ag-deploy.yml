@@ -59,6 +59,8 @@ jobs:
               write-host created identity : $ident.name
               write-host setting kv policy for $ident.name
               az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers
+              write-host puttin principalId $ident.principalId on the pipeline
+              Write-Host "##vso[task.setvariable variable=$principalId]$ident.principalId"
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
