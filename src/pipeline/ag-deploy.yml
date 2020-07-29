@@ -70,4 +70,4 @@ jobs:
               $principalId = az network application-gateway identity show -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --query 'userAssignedIdentities.*.principalId' | ConvertFrom-json
               write-host assigned princial $principalId
               write-host assigning ag ident policy to kv : $env:KEYVAULTNAME
-              az keyvault set-policy --name $env:KEYVAULTNAME -spn $principalId --certificate-permissions get getissuers list listissuers
+              az keyvault set-policy --name $env:KEYVAULTNAME --spn $principalId --certificate-permissions get getissuers list listissuers
