@@ -79,17 +79,6 @@ jobs:
             -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
             -subnetName "${{parameters.subnetName}}"
             -sslKeyVaultCertResourceId "$(sslCertificateResourceId)"
+            -userAssignedIdentityName "$(gatewayIdentityName)"
             '
-            processOutputs: true
-
-
-        - task: AzureCLI@2
-          name: postDeploy
-          displayName: Post Deploy
-          inputs:
-            azureSubscription: ${{parameters.serviceConnection}}
-            scriptType: 'pscore'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-              $ident = az identity show -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME | ConvertFrom-Json
-              az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $ident.id
+            processOutputs: false
