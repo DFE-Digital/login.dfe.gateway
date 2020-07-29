@@ -48,3 +48,4 @@ stages:
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
         environmentId: d01
+        sslCertificateName: signin-generic
