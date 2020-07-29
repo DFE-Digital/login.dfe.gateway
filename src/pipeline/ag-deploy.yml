@@ -67,5 +67,7 @@ jobs:
               $id = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME --query id --output tsv
               write-host created identity : $id
               $agIdent = az network application-gateway identity assign -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --identity $id
-              $ident = az network application-gateway identity show --gateway-name -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --query 'userAssignedIdentities'
+              $ident = az network application-gateway identity show -g $env:RESOURCEGROUPNAME --gateway-name $env:ARMOUTPUT_RESOURCENAME --query 'userAssignedIdentities'
               write-host assigned princial $ident[3]
+              write-host assigning ag ident policy to kv : $env:KEYVAULTNAME
+              az keyvault set-policy --name $env:KEYVAULTNAME -spn $ident[3] --certificate-permissions get getissuers list listissuers
