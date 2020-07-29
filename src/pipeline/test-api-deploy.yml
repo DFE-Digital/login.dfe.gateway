@@ -44,12 +44,3 @@ jobs:
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/service-plans.json'
             armParameterOverrideString: $(overrideParameters)
             processOutputs: false
-
-        - template: /Application/dotnet/steps/deploy-appservice.yml@devopsTemplates
-          parameters:
-            serviceConnection: ${{parameters.serviceConnection}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
-            location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/service-plans.json'
-            armParameterOverrideString: $(overrideParameters)
-            processOutputs: false
