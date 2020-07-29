@@ -62,7 +62,7 @@ jobs:
               write-host retrieving ssl certificate
               $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
               write-host found $cert.id
-              $certId = $cert.id
+              $certId = $cert.sid
               write-host "##vso[task.setvariable variable=sslCertificateResourceId]$certId"
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
