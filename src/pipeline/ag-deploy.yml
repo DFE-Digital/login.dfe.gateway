@@ -55,6 +55,7 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - checkout: self
         - task: AzureCLI@2
           name: preDeploy
           displayName: Pre Deploy
@@ -76,7 +77,7 @@ jobs:
               write-host found $cert.id
               $certId = $cert.sid
               write-host putting cert secret id on the pipeline
-              write-host "##vso[task.setvariable variable=sslCertificateResourceId]$certId"
+              write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
@@ -91,7 +92,7 @@ jobs:
             -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
             -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
             -subnetName "${{parameters.subnetName}}"
-            -sslKeyVaultCertResourceId "$(sslCertificateResourceId)"
+            -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)"
             -userAssignedIdentityName "$(gatewayIdentityName)"
             '
             processOutputs: false

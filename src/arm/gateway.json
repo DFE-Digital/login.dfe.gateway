@@ -17,7 +17,7 @@
         "subnetName": {
             "type": "string"
         },
-        "sslKeyVaultCertResourceId": {
+        "sslKeyVaultCertSecretId": {
             "type": "string"
         },
         "userAssignedIdentityName": {
@@ -205,7 +205,7 @@
                     {
                         "name": "[variables('applicationGateway').sslCertificate.name]",
                         "properties": {
-                            "keyVaultSecretId": "[parameters('sslKeyVaultCertResourceId')]",
+                            "keyVaultSecretId": "[parameters('sslKeyVaultCertSecretId')]",
                             "httpListeners": [
                                 {
                                     "id": "[variables('applicationGateway').httpListener.resourceId]"
