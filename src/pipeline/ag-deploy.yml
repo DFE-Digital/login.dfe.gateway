@@ -11,6 +11,12 @@ parameters:
 - name: environmentId
   type: string
 
+- name: globalKeyVaultName
+  type: string
+
+- name: sslCertificateName
+  type: string
+
 # defautls
 - name: applicationName
   type: string
@@ -32,13 +38,6 @@ parameters:
   type: string  
   default: service
 
-- name: globalKeyVaultName
-  type: string
-  default: s141-signin-global-kv
-
-- name: sslCertificateName
-  type: string
-  default: signin-generic
 
 jobs:
 - deployment: deploy
