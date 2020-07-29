@@ -18,7 +18,7 @@
             "type": "string"
         },
         "sslKeyVaultCertResourceId": {
-            "type" : "string"
+            "type": "string"
         }
     },
     "functions": [
@@ -180,14 +180,7 @@
                     "tier": "Standard_v2",
                     "capacity": 2
                 },
-                "sslCertificates": [
-                    {
-                        "name": "[variables('applicationGateway').sslCertificate.name]",
-                        "properties": {
-                            "keyVaultSecretId": "[parameters('sslKeyVaultCertResourceId')]"
-                        }
-                    }
-                ],
+
                 "gatewayIPConfigurations": [
                     {
                         "name": "gateway-ip-config",
@@ -197,6 +190,19 @@
                             }
                         },
                         "type": "Microsoft.Network/applicationGateways/gatewayIPConfigurations"
+                    }
+                ],
+                "sslCertificates": [
+                    {
+                        "name": "[variables('applicationGateway').sslCertificate.name]",
+                        "properties": {
+                            "keyVaultSecretId": "[parameters('sslKeyVaultCertResourceId')]",
+                            "httpListeners": [
+                                {
+                                    "id": "[variables('applicationGateway').httpListener.resourceId]"
+                                }
+                            ]
+                        }
                     }
                 ],
                 "frontendIPConfigurations": [
