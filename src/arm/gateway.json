@@ -180,9 +180,9 @@
             "location": "[resourceGroup().location]",
             "identity": {
                 "type": "UserAssigned",
-                "userAssignedIdentities": [
-                    "[variables('resourceIds').userAssignedIdentityId]"
-                ]
+                "userAssignedIdentities": {
+                    "[variables('resourceIds').userAssignedIdentityId]" : {}
+                }
             },
 
             "properties": {

@@ -36,7 +36,7 @@ jobs:
     keyVaultName: ${{parameters.projectId}}-signin-global-kv
     sslCertificateName: ${{parameters.sslCertificateName}}
     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
-    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
+    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway-id
   strategy:
     runOnce:
       deploy:
