@@ -57,7 +57,7 @@ jobs:
               write-host setting kv policy for $ident.name
               az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers
               write-host puttin principalId $ident.principalId on the pipeline
-              hrite-host "##vso[task.setvariable variable=principalId]$ident.principalId"
+              write-host "##vso[task.setvariable variable=principalId]$ident.principalId"
 
               write-host retrieving ssl certificate
               $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
