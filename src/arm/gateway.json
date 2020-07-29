@@ -92,12 +92,12 @@
                     "pathMap": "/default",
                     "backendSetting": {
                         "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName]",
-                        "port": 80,
-                        "protocol": "Http",
+                        "port": 443,
+                        "protocol": "Https",
                         "requestTimeout": 20,
                         "probe": {
                             "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingProbeName]",
-                            "protocol": "Http",
+                            "protocol": "Https",
                             "path": "/"
                         }
                     }
@@ -107,12 +107,12 @@
                     "pathMap": "/oidc",
                     "backendSetting": {
                         "name": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingName]",
-                        "port": 80,
-                        "protocol": "Http",
+                        "port": 443,
+                        "protocol": "Https",
                         "requestTimeout": 20,
                         "probe": {
                             "name": "[variables('resourceNames').applicationGateway.hostedServices.oidc.backendSettingProbeName]",
-                            "protocol": "Http",
+                            "protocol": "Https",
                             "path": "/"
                         }
                     }
@@ -122,12 +122,12 @@
                     "pathMap": "/directories",
                     "backendSetting": {
                         "name": "[variables('resourceNames').applicationGateway.hostedServices.directories.backendSettingName]",
-                        "port": 80,
-                        "protocol": "Http",
+                        "port": 443,
+                        "protocol": "Https",
                         "requestTimeout": 20,
                         "probe": {
                             "name": "[variables('resourceNames').applicationGateway.hostedServices.directories.backendSettingProbeName]",
-                            "protocol": "Http",
+                            "protocol": "Https",
                             "path": "/"
                         }
                     }
@@ -147,7 +147,7 @@
             },
             "frontEndPort": {
                 "name": "[variables('resourceNames').applicationGateway.frontEndPortName]",
-                "port": 80,
+                "port": 443,
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/frontendPorts/', variables('resourceNames').applicationGateway.frontEndPortName)]"
             },
             "frontEndIpConfiguration": {
