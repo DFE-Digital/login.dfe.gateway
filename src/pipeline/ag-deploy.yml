@@ -62,6 +62,7 @@ jobs:
               write-host puttin principalId $ident.principalId on the pipeline
               Write-Host "##vso[task.setvariable variable=principalId]$ident.principalId"
 
+              
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
@@ -71,6 +72,7 @@ jobs:
             templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
             armParameterOverrideString: $(overrideParameters)
             processOutputs: true
+
 
         - task: AzureCLI@2
           displayName: Post Deploy
