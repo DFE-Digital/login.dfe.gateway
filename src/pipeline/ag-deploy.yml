@@ -60,7 +60,7 @@ jobs:
               hrite-host "##vso[task.setvariable variable=principalId]$ident.principalId"
 
               write-host retrieving ssl certificate
-              $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME
+              $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
               write-host "##vso[task.setvariable variable=sslCertificateResourceId]$cert.id"
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
