@@ -51,18 +51,19 @@ jobs:
             scriptType: 'pscore'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              write-host creating ident for ag
+              write-host creating identity for ag
               $ident = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME | ConvertFrom-Json
               write-host created identity : $ident.name
               write-host setting kv policy for $ident.name
+
+              write-host set keyvault policy for ag identity
               az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers --secret-permissions get list
-              write-host puttin principalId $ident.principalId on the pipeline
-              write-host "##vso[task.setvariable variable=principalId]$ident.principalId"
 
               write-host retrieving ssl certificate
               $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
               write-host found $cert.id
               $certId = $cert.sid
+              write-host putting cert secret id on the pipeline
               write-host "##vso[task.setvariable variable=sslCertificateResourceId]$certId"
 
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
