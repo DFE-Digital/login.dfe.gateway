@@ -76,7 +76,7 @@ stages:
   - stage: deployAgTest
     displayName: Gateway - TEST
     dependsOn: 
-    - deployCoreDev
+    - deployCoreTest
     jobs:
     - template: ag-deploy.yml
       parameters:
