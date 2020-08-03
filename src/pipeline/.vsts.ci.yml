@@ -40,7 +40,6 @@ stages:
     displayName: Gateway - DEV
     dependsOn: 
     - deployCoreDev
-    - deployTestApis
     jobs:
     - template: ag-deploy.yml
       parameters:
