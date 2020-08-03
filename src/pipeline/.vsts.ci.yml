@@ -26,15 +26,15 @@ stages:
         environmentName: dev
         environmentId: d01
 
-  - stage: deployTestApis
-    displayName: TestApis - DEV
-    jobs:
-    - template: test-api-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
+  # - stage: deployTestApis
+  #   displayName: TestApis - DEV
+  #   jobs:
+  #   - template: test-api-deploy.yml
+  #     parameters:
+  #       serviceConnection: $(devServiceConnection)
+  #       subscriptionId: $(devSubscriptionId)
+  #       environmentName: dev
+  #       environmentId: d01
   
   - stage: deployAgDev
     displayName: Gateway - DEV
@@ -48,5 +48,5 @@ stages:
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
         environmentId: d01
-        globalKeyVaultName: s141-signin-global-kv
+        globalKeyVaultName: s141d01-signin-global-kv
         sslCertificateName: signin-generic
