@@ -18,14 +18,14 @@ trigger:
 stages:
 
   - stage: preDeploy
-    displayName: Core - DEV
+    displayName: Pre Deploy
     jobs:
     - job: preDeployJob
       displayName: Pre deploy
       pool:
         vmImage: ubuntu-latest
       steps:
-      - pwsh: write-host 'go'
+      - pwsh: write-host 'placeholder for predeploy'
 
   - stage: deployCoreDev
     dependsOn: preDeploy
