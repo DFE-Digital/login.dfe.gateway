@@ -26,7 +26,7 @@ stages:
         environmentName: dev
         environmentId: d01
 
-  - stage: deployCoreDev
+  - stage: deployCoreTest
     displayName: Core - TEST
     jobs:
     - template: core-deploy.yml
