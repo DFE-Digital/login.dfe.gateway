@@ -16,7 +16,19 @@ trigger:
     # - feature/*
 
 stages:
+
+  - stage: preDeploy
+    displayName: Core - DEV
+    jobs:
+    - job: preDeployJob
+      displayName: Pre deploy
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+      - pwsh: write-host 'go'
+
   - stage: deployCoreDev
+    dependsOn: preDeploy
     displayName: Core - DEV
     jobs:
     - template: core-deploy.yml
@@ -27,6 +39,7 @@ stages:
         environmentId: d01
 
   - stage: deployCoreTest
+    dependsOn: preDeploy
     displayName: Core - TEST
     jobs:
     - template: core-deploy.yml
