@@ -1,66 +1,3 @@
-<<<<<<< HEAD
-name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
-resources:
-  repositories:
-    - repository: devopsTemplates
-      type: github
-      endpoint: DfE-Digital
-      name: DFE-Digital/operations-devops-pipeline-templates
-
-trigger:
-  branches:
-    include:
-    - master
-    - develop
-    - feature/*
-    # exclude:
-    # - feature/*
-
-stages:
-  - stage: deployCoreDev
-    displayName: Core - DEV
-    jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
-
-  # - stage: deployTestApis
-  #   displayName: TestApis - DEV
-  #   jobs:
-  #   - template: test-api-deploy.yml
-  #     parameters:
-  #       serviceConnection: $(devServiceConnection)
-  #       subscriptionId: $(devSubscriptionId)
-  #       environmentName: dev
-  #       environmentId: d01
-  
-  - stage: deployAgDev
-    displayName: Gateway - DEV
-    dependsOn: 
-    - deployCoreDev
-    jobs:
-    - template: ag-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
-
-  - stage: deployAgTest
-    displayName: Gateway - TEST
-    dependsOn: 
-    - deployCoreDev
-    jobs:
-    - template: ag-deploy.yml
-      parameters:
-        serviceConnection: $(tesServiceConnection)
-        subscriptionId: $(tesSubscriptionId)
-        environmentName: test
-        environmentId: t01
-=======
 name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
 resources:
   repositories:
@@ -149,4 +86,3 @@ stages:
         environmentId: t01
         globalKeyVaultName: s141d01-signin-global-kv
         sslCertificateName: signin-generic
->>>>>>> 2386a9a5bc689fcd2163bed0e672d215e6850c09
