@@ -26,21 +26,20 @@ stages:
         environmentName: dev
         environmentId: d01
 
-  - stage: deployTestApis
-    displayName: TestApis - DEV
-    jobs:
-    - template: test-api-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
+  # - stage: deployTestApis
+  #   displayName: TestApis - DEV
+  #   jobs:
+  #   - template: test-api-deploy.yml
+  #     parameters:
+  #       serviceConnection: $(devServiceConnection)
+  #       subscriptionId: $(devSubscriptionId)
+  #       environmentName: dev
+  #       environmentId: d01
   
   - stage: deployAgDev
     displayName: Gateway - DEV
     dependsOn: 
     - deployCoreDev
-    - deployTestApis
     jobs:
     - template: ag-deploy.yml
       parameters:
@@ -48,3 +47,15 @@ stages:
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
         environmentId: d01
+
+  - stage: deployAgTest
+    displayName: Gateway - TEST
+    dependsOn: 
+    - deployCoreDev
+    jobs:
+    - template: ag-deploy.yml
+      parameters:
+        serviceConnection: $(tesServiceConnection)
+        subscriptionId: $(tesSubscriptionId)
+        environmentName: test
+        environmentId: t01

@@ -21,7 +21,7 @@ parameters:
   default: projectcore 
 - name: subnetName
   type: string  
-  default: service
+  default: gateway
 
 
 jobs:
