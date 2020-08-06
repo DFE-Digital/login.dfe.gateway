@@ -99,7 +99,7 @@ stages:
   - stage: deployAgInt
     displayName: Gateway - INT
     dependsOn: 
-    - deployCoreTest
+    - deployCoreInt
     jobs:
     - template: ag-deploy.yml
       parameters:
