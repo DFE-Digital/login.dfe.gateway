@@ -55,8 +55,8 @@ stages:
     jobs:
     - template: core-deploy.yml
       parameters:
-        serviceConnection: $(intServiceConnection)
-        subscriptionId: $(intSubscriptionId)
+        serviceConnection: $(testServiceConnection)
+        subscriptionId: $(testSubscriptionId)
         environmentName: int
         environmentId: t03
 
