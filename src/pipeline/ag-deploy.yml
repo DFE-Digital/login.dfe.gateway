@@ -11,9 +11,6 @@ parameters:
 - name: environmentId
   type: string
 
-- name: globalKeyVaultName
-  type: string
-
 - name: sslCertificateName
   type: string
 
@@ -46,7 +43,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
-    keyVaultName: ${{parameters.globalKeyVaultName}}
+    keyVaultName: ${{parameters.projectId}}${{parameters.environmentId}}-signin-global-kv
     sslCertificateName: ${{parameters.sslCertificateName}}
     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
     gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id
