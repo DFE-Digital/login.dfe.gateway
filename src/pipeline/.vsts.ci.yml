@@ -84,5 +84,5 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: test
         environmentId: t01
-        globalKeyVaultName: s141dt01-signin-global-kv
+        globalKeyVaultName: s141t01-signin-global-kv
         sslCertificateName: signin-generic
