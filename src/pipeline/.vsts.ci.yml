@@ -60,15 +60,16 @@ stages:
         environmentName: int
         environmentId: t03
 
-  # - stage: deployTestApis
-  #   displayName: TestApis - DEV
-  #   jobs:
-  #   - template: test-api-deploy.yml
-  #     parameters:
-  #       serviceConnection: $(devServiceConnection)
-  #       subscriptionId: $(devSubscriptionId)
-  #       environmentName: dev
-  #       environmentId: d01
+  - stage: deployCorePreProd
+    dependsOn: preDeploy
+    displayName: Core - PreProd
+    jobs:
+    - template: core-deploy.yml
+      parameters:
+        serviceConnection: $(testServiceConnection)
+        subscriptionId: $(testSubscriptionId)
+        environmentName: ipp
+        environmentId: t02
   
   - stage: deployAgDev
     displayName: Gateway - DEV
@@ -108,3 +109,18 @@ stages:
         environmentName: int
         environmentId: t03
         sslCertificateName: signin-generic
+
+  - stage: deployAgPreProd
+    displayName: Gateway - PreProd
+    dependsOn: 
+    - deployCorePreProd
+    jobs:
+    - template: ag-deploy.yml
+      parameters:
+        serviceConnection: $(testServiceConnection)
+        subscriptionId: $(testSubscriptionId)
+        environmentName: pp
+        environmentId: t02
+        sslCertificateName: signin-generic
+
+
