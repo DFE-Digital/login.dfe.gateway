@@ -68,7 +68,7 @@ stages:
       parameters:
         serviceConnection: $(testServiceConnection)
         subscriptionId: $(testSubscriptionId)
-        environmentName: ipp
+        environmentName: pp
         environmentId: t02
   
   - stage: deployAgDev
