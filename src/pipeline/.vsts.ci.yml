@@ -70,6 +70,17 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: pp
         environmentId: t02
+
+  - stage: deployCoreProd
+    dependsOn: preDeploy
+    displayName: Core - Prod
+    jobs:
+    - template: core-deploy.yml
+      parameters:
+        serviceConnection: $(prodServiceConnection)
+        subscriptionId: $(prodSubscriptionId)
+        environmentName: pr
+        environmentId: p01
   
   - stage: deployAgDev
     displayName: Gateway - DEV
@@ -121,6 +132,19 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: pp
         environmentId: t02
+        sslCertificateName: signin-generic
+
+  - stage: deployAgProd
+    displayName: Gateway - Prod
+    dependsOn: 
+    - deployCoreProd
+    jobs:
+    - template: ag-deploy.yml
+      parameters:
+        serviceConnection: $(prodServiceConnection)
+        subscriptionId: $(prodSubscriptionId)
+        environmentName: pr
+        environmentId: p01
         sslCertificateName: signin-generic
 
 
