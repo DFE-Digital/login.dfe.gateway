@@ -68,6 +68,16 @@ jobs:
               write-host set keyvault policy for ag identity
               az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers --secret-permissions get list
 
+              write-host set keyvault policy for MS App serviceConnection
+
+              az keyvault set-policy --name $env:KEYVAULTNAME --object-id a6621090-e704-45ec-b65f-50257f9d4dcd--certificate-permissions get getissuers list listissuers --secret-permissions get list
+
+              write-host set keyvault policy for s141-dfesignin-Managers USR
+
+              az keyvault set-policy --name $env:KEYVAULTNAME --object-id 4c04a9e6-1ed2-44a6-8db5-ee93b10f79ad--certificate-permissions get list update create import recover backup restore managecontacts manageissuers getissuers listissuers setissuers delete --secret-permissions get list
+
+              4c04a9e6-1ed2-44a6-8db5-ee93b10f79ad
+
               write-host retrieving ssl certificate
               $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
               write-host found $cert.id
