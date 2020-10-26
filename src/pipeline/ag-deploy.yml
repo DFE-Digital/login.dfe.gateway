@@ -1,52 +1,40 @@
 parameters:
 - name: serviceConnection
   type: string
-
 - name: subscriptionId
   type: string
-
 - name: environmentName
   type: string
-
 - name: environmentId
   type: string
-
 - name: sslCertificateName
   type: string
-
-# defautls
 - name: applicationName
   type: string
   default: gateway
-
 - name: deploymentLocation
   type: string
   default: westeurope
-
 - name: projectId
   type: string
   default: s141
-
 - name: projectCoreRgSuffix
-  type: string  
-  default: projectcore 
-
+  type: string
+  default: projectcore
 - name: subnetName
-  type: string  
+  type: string
   default: gateway
-
-
 jobs:
 - deployment: deploy
-  displayName: deploy ag - ${{parameters.environmentName}}
-  environment: ${{parameters.environmentName}}
+  displayName: 'deploy ag - ${{parameters.environmentName}}'
+  environment: '${{parameters.environmentName}}'
   pool:
     vmImage: ubuntu-latest
   variables:
-    keyVaultName: ${{parameters.projectId}}${{parameters.environmentId}}-signin-global-kv
-    sslCertificateName: ${{parameters.sslCertificateName}}
-    resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway
-    gatewayIdentityName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id
+    keyVaultName: '${{parameters.projectId}}${{parameters.environmentId}}-signin-global-kv'
+    sslCertificateName: '${{parameters.sslCertificateName}}'
+    resourceGroupName: '${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway'
+    gatewayIdentityName: '${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id'
   strategy:
     runOnce:
       deploy:
@@ -56,9 +44,9 @@ jobs:
           name: preDeploy
           displayName: Pre Deploy
           inputs:
-            azureSubscription: ${{parameters.serviceConnection}}
-            scriptType: 'pscore'
-            scriptLocation: 'inlineScript'
+            azureSubscription: '${{parameters.serviceConnection}}'
+            scriptType: pscore
+            scriptLocation: inlineScript
             inlineScript: |
               write-host creating identity for ag
               $ident = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME | ConvertFrom-Json
@@ -74,21 +62,12 @@ jobs:
               $certId = $cert.sid
               write-host putting cert secret id on the pipeline
               write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
-
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
-            serviceConnection: ${{parameters.serviceConnection}}
-            subscriptionId: ${{parameters.subscriptionId}}
+            serviceConnection: '${{parameters.serviceConnection}}'
+            subscriptionId: '${{parameters.subscriptionId}}'
             resourceGroupName: $(resourceGroupName)
-            location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/gateway.json'
-            armParameterOverrideString: '
-            -applicationName "${{parameters.applicationName}}"
-            -environmentName "${{parameters.environmentName}}"
-            -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
-            -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
-            -subnetName "${{parameters.subnetName}}"
-            -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)"
-            -userAssignedIdentityName "$(gatewayIdentityName)"
-            '
+            location: '${{parameters.deploymentLocation}}'
+            templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
+            armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "${{parameters.subnetName}}" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" '
             processOutputs: false

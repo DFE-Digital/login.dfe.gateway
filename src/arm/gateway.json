@@ -40,10 +40,9 @@
                 },
                 "sslCertificateName": "gateway-ssl-cert",
                 "listenerName": "gateway-ssl-listener",
-                "routingRuleName": "gateway-ruleset",
+                "routingRuleName": "gateway-default-ruleset",
                 "frontEndPortName": "gateway-frontend-port",
-                "frontEndIpConfigurationName": "gateway-frontend-ip-config",
-                "urlPathMapName": "gateway-path-map"
+                "frontEndIpConfigurationName": "gateway-frontend-ip-config"
             },
             "publicIpName": "[concat(variables('baseName'), '-pip')]"
         },
@@ -111,10 +110,6 @@
             "frontEndIpConfiguration": {
                 "name": "[variables('resourceNames').applicationGateway.frontEndIpConfigurationName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/frontendIPConfigurations/', variables('resourceNames').applicationGateway.frontEndIpConfigurationName)]"
-            },
-            "urlPathMap": {
-                "name": "[variables('resourceNames').applicationGateway.urlPathMapName]",
-                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/urlPathMaps/', variables('resourceNames').applicationGateway.urlPathMapName)]"
             }
         }
     },
