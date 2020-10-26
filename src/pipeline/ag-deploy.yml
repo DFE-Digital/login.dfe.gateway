@@ -81,7 +81,7 @@ jobs:
             subscriptionId: ${{parameters.subscriptionId}}
             resourceGroupName: $(resourceGroupName)
             location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/login.dfe.gateway/src/arm/gateway.json'
+            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/gateway.json'
             armParameterOverrideString: '
             -applicationName "${{parameters.applicationName}}"
             -environmentName "${{parameters.environmentName}}"
