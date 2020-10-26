@@ -87,6 +87,10 @@
                 "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendPoolName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/backendAddressPools/', variables('resourceNames').applicationGateway.hostedServices.default.backendPoolName)]"
             },
+            "backendSetting": {
+                "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName]",
+                "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/backendHttpSettingsCollection/', variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName)]"
+            },
             "sslCertificate": {
                 "name": "[variables('resourceNames').applicationGateway.sslCertificateName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/sslCertificates/', variables('resourceNames').applicationGateway.sslCertificateName)]"
@@ -199,58 +203,20 @@
                         "type": "Microsoft.Network/applicationGateways/frontendPorts"
                     }
                 ],
-                "requestRoutingRules": [
-                    {
-                        "name": "[variables('applicationGateway').routingRule.name]",
-                        "properties": {
-                            "ruleType": "Basic",
-                            "httpListener": {
-                                "id": "[variables('applicationGateway').httpListener.resourceId]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[variables('applicationGateway').backendPool.resourceId]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[variables('applicationGateway').httpListener.resourceId]"
-                            }
-                        },
-                        "type": "Microsoft.Network/applicationGateways/requestRoutingRules"
-                    }
-                ],
                 "backendAddressPools": [
                     {
                         "name": "[variables('applicationGateway').hostedServices.default.poolName]",
                         "properties": {
-                            "backendAddresses": []
-                        },
-                        "type": "Microsoft.Network/applicationGateways/backendAddressPools"
-                    }
-                ],
-                "httpListeners": [
-                    {
-                        "name": "[variables('applicationGateway').httpListener.name]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
-                            },
-                            "frontendPort": {
-                                "id": "[variables('applicationGateway').frontEndPort.resourceId]"
-                            },
-                            "protocol": "Https",
-                            "requireServerNameIndication": false,
-                            "sslCertificate": {
-                                "id": "[variables('applicationGateway').sslCertificate.resourceId]"
-                            },
+                            "backendAddresses": [],
                             "requestRoutingRules": [
                                 {
                                     "id": "[variables('applicationGateway').routingRule.resourceId]"
                                 }
                             ]
                         },
-                        "type": "Microsoft.Network/applicationGateways/httpListeners"
+                        "type": "Microsoft.Network/applicationGateways/backendAddressPools"
                     }
                 ],
-                "urlPathMaps":[],
                 "backendHttpSettingsCollection": [
                     {
                         "name": "[variables('applicationGateway').hostedServices.default.backendSetting.name]",
@@ -278,6 +244,49 @@
                         "type": "Microsoft.Network/applicationGateways/backendHttpSettingsCollection"
                     }
                 ],
+                "httpListeners": [
+                    {
+                        "name": "[variables('applicationGateway').httpListener.name]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
+                            },
+                            "frontendPort": {
+                                "id": "[variables('applicationGateway').frontEndPort.resourceId]"
+                            },
+                            "protocol": "Https",
+                            "requireServerNameIndication": false,
+                            "sslCertificate": {
+                                "id": "[variables('applicationGateway').sslCertificate.resourceId]"
+                            },
+                            "requestRoutingRules": [
+                                {
+                                    "id": "[variables('applicationGateway').routingRule.resourceId]"
+                                }
+                            ]
+                        },
+                        "type": "Microsoft.Network/applicationGateways/httpListeners"
+                    }
+                ],
+                "requestRoutingRules": [
+                    {
+                        "name": "[variables('applicationGateway').routingRule.name]",
+                        "properties": {
+                            "ruleType": "Basic",
+                            "httpListener": {
+                                "id": "[variables('applicationGateway').httpListener.resourceId]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[variables('applicationGateway').backendPool.resourceId]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[variables('applicationGateway').backendSetting.resourceId]"
+                            }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/requestRoutingRules"
+                    }
+                ],
+                "urlPathMaps":[],
                 "probes": [
                     {
                         "name": "[variables('applicationGateway').hostedServices.default.backendSetting.probe.name]",
