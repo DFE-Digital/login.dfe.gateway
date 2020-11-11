@@ -93,7 +93,7 @@ stages:
         subscriptionId: $(devSubscriptionId)
         environmentName: dev
         environmentId: d01
-        sslCertificateName: signin-generic
+        sslCertificateName: non-prod-gateway
 
   - stage: deployAgTest
     displayName: Gateway - TEST
@@ -106,7 +106,7 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: test
         environmentId: t01
-        sslCertificateName: signin-generic
+        sslCertificateName: non-prod-gateway
 
   - stage: deployAgInt
     displayName: Gateway - INT
@@ -119,7 +119,7 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: int
         environmentId: t03
-        sslCertificateName: signin-generic
+        sslCertificateName: non-prod-gateway
 
   - stage: deployAgPreProd
     displayName: Gateway - PreProd
@@ -132,7 +132,7 @@ stages:
         subscriptionId: $(testSubscriptionId)
         environmentName: pp
         environmentId: t02
-        sslCertificateName: signin-generic
+        sslCertificateName: non-prod-gateway
 
   - stage: deployAgProd
     displayName: Gateway - Prod
