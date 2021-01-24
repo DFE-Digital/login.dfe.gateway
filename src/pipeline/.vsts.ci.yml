@@ -113,7 +113,7 @@ stages:
     dependsOn: 
     - deployCoreInt
     jobs:
-    - template: ag-deploy.yml
+    - template: ag-deploy-int.yml
       parameters:
         serviceConnection: $(testServiceConnection)
         subscriptionId: $(testSubscriptionId)
