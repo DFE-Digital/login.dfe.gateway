@@ -139,7 +139,7 @@ stages:
     dependsOn: 
     - deployCoreProd
     jobs:
-    - template: ag-deploy-pp.yml
+    - template: ag-deploy-pr.yml
       parameters:
         serviceConnection: $(prodServiceConnection)
         subscriptionId: $(prodSubscriptionId)
