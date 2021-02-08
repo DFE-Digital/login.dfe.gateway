@@ -73,7 +73,7 @@
                         "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingName]",
                         "port": 443,
                         "protocol": "Https",
-                        "requestTimeout": 50,
+                        "requestTimeout": 20,
                         "probe": {
                             "name": "[variables('resourceNames').applicationGateway.hostedServices.default.backendSettingProbeName]",
                             "protocol": "Https",
@@ -115,6 +115,18 @@
     },
     "resources": [
         {
+            "apiVersion": "2020-04-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+                "name": "Standard"
+            },
+            "name": "[variables('resourceNames').publicIpName]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
             "apiVersion": "2018-10-01",
             "type": "Microsoft.Network/applicationGateways",
             "name": "[variables('applicationGateway').name]",
@@ -129,7 +141,7 @@
                 "sku": {
                     "name": "Standard_v2",
                     "tier": "Standard_v2",
-                    "capacity": 4
+                    "capacity": 2
                 },
                 "gatewayIPConfigurations": [
                     {
