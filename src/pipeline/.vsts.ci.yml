@@ -87,7 +87,7 @@ stages:
     dependsOn: 
     - deployCoreDev
     jobs:
-    - template: ag-deploy.yml
+    - template: ag-deploy-dev-temp.yml
       parameters:
         serviceConnection: $(devServiceConnection)
         subscriptionId: $(devSubscriptionId)
