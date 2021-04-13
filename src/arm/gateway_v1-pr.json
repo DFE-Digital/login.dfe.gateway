@@ -35,7 +35,13 @@
             "type": "string",
             "defaultValue": "d01"
         },
-        "hostName": {
+        "hostName1": {
+            "type": "string",
+            "metadata": {
+                "description": "Web App name"
+            }
+        },
+        "hostName2": {
             "type": "string",
             "metadata": {
                 "description": "Web App name"
@@ -270,30 +276,35 @@
                         "type": "Microsoft.Network/applicationGateways/backendAddressPools"
                     },
                      {
-                        "name": "oidc-pool",
+                        //"name": "oidc-pool",
+                        "name": "[concat(parameters('hostName1'),'-pool')]",
                         "properties": {
                             "backendAddresses": [
                                 //{
                                   //  "fqdn": "s141d01-signin-oidc-1.azurewebsites.net"
                                 //},
                                 {
-                                    "fqdn": "s141d01-signin-oidc-2.azurewebsites.net"
+                                    //"fqdn": "s141d01-signin-oidc-2.azurewebsites.net"
+                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
                                 },
                                 {
-                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
+                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
                                 }
                             ]
                         }
                     },
                     {
-                        "name": "interactions-pool",
+                        //"name": "interactions-pool",
+                        "name": "[concat(parameters('hostName2'),'-pool')]",
                         "properties": {
                             "backendAddresses": [
                                 {
-                                    "fqdn": "s141d01-signin-interactions-1.azurewebsites.net"
+                                    //"fqdn": "s141d01-signin-interactions-1.azurewebsites.net"
+                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
                                 },
                                 {
-                                    "fqdn": "s141d01-signin-interactions-2.azurewebsites.net"
+                                    //"fqdn": "s141d01-signin-interactions-2.azurewebsites.net"
+                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
                                 }
                             ]
                         }
@@ -326,7 +337,8 @@
                         "type": "Microsoft.Network/applicationGateways/backendHttpSettingsCollection"
                     },
                      {
-                        "name": "oidc-backend-setting",
+                        //"name": "oidc-backend-setting",
+                        "name": "[concat(parameters('hostName1'),'-backend-setting')]",
                         "properties": {
                             "port": 443,
                             "protocol": "Https",
@@ -344,7 +356,8 @@
                         }
                     },
                     {
-                        "name": "interactions-backend-setting",
+                        //"name": "interactions-backend-setting",
+                        "name": "[concat(parameters('hostName2'),'-backend-setting')]",
                         "properties": {
                             "port": 443,
                             "protocol": "Https",
@@ -386,7 +399,8 @@
                         "type": "Microsoft.Network/applicationGateways/httpListeners"
                     },
                     {
-                        "name": "oidc-ssl-listener",
+                        //"name": "oidc-ssl-listener",
+                        "name": "[concat(parameters('hostName1'),'-ssl-listener')]",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
@@ -400,14 +414,15 @@
                             },
                             //"hostName": "dev-oidc.signin.education.gov.uk",
                             //"hostName": "[concat(parameters('environmentName'),'-',parameters('hostName'),'.',parameters('project'),'.',parameters('domainSuffix'))]",
-                            "hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+                            "hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
                             "hostNames": [],
                             "requireServerNameIndication": true
                 
                         }
                     },
                     {
-                        "name": "interactions-ssl-listener",
+                        //"name": "interactions-ssl-listener",
+                        "name": "[concat(parameters('hostName2'),'-ssl-listener')]",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
@@ -419,7 +434,8 @@
                             "sslCertificate": {
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
-                            "hostName": "dev-interactions.signin.education.gov.uk",
+                            //"hostName": "dev-interactions.signin.education.gov.uk",
+                            "hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
                             "hostNames": [],
                             "requireServerNameIndication": true
                         }
@@ -444,7 +460,7 @@
                     },
                     {
                         //"name": "oidc-ruleset",
-                        "name": "[concat(parameters('hostName'),'-ruleset')]",
+                        "name": "[concat(parameters('hostName1'),'-ruleset')]",
                         "properties": {
                             "ruleType": "Basic",
                             "httpListener": {
@@ -462,7 +478,8 @@
                         }
                     },
                     {
-                        "name": "interactions-ruleset",
+                        //"name": "interactions-ruleset",
+                        "name": "[concat(parameters('hostName2'),'-ruleset')]",
                         "properties": {
                             "ruleType": "Basic",
                             "httpListener": {
@@ -503,7 +520,7 @@
                     },
                      {
                         //"name": "oidc-backend-setting-probe",
-                        "name": "[concat(parameters('hostName'),'-backend-setting-probe')]",
+                        "name": "[concat(parameters('hostName1'),'-backend-setting-probe')]",
                         "properties": {
                             "protocol": "Https",
                             "path": "/healthcheck",
@@ -520,7 +537,8 @@
                         }
                     },
                      {
-                        "name": "interactions-backend-setting-probe",
+                        //"name": "interactions-backend-setting-probe",
+                        "name": "[concat(parameters('hostName2'),'-backend-setting-probe')]",
                         "properties": {
                             "protocol": "Https",
                             "path": "/healthcheck",
@@ -539,7 +557,8 @@
                 ],
                 "rewriteRuleSets": [
                     {
-                        "name": "oidc_rewrite",
+                        //"name": "oidc_rewrite",
+                        "name": "[concat(parameters('hostName1'),'_rewrite')]",
                         "properties": {
                             "rewriteRules": [
                                 {
@@ -560,7 +579,8 @@
                         }
                     },
                     {
-                        "name": "interactions_rewrite",
+                        //"name": "interactions_rewrite",
+                        "name": "[concat(parameters('hostName2'),'_rewrite')]",
                         "properties": {
                             "rewriteRules": [
                                 {
