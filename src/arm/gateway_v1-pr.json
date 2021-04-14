@@ -163,8 +163,8 @@
             "oidcFqdn2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-2','.azurewebsites.net')]",
             "interactions1": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-1','.azurewebsites.net')]",
             "interactions2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-2','.azurewebsites.net')]",
-            "url1": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
-            "url2": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
+            "oidcUrl": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+            "interactionsUrl": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
 
         }
     },
@@ -392,7 +392,7 @@
                             "sslCertificate": {
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
-                            "hostName": "[variables('domains').url1]",
+                            "hostName": "[variables('domains').oidcUrl]",
                             "hostNames": [],
                             "requireServerNameIndication": true
                         }
@@ -410,7 +410,7 @@
                             "sslCertificate": {
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
-                            "hostName": "[variables('domains').url2]",
+                            "hostName": "[variables('domains').interactionsUrl]",
                             "hostNames": [],
                             "requireServerNameIndication": true
                         }
@@ -539,7 +539,7 @@
                                         "requestHeaderConfigurations": [
                                             {
                                                 "headerName": "X-Forwarded-Host",
-                                                "headerValue": "[variables('domains').url1]"
+                                                "headerValue": "[variables('domains').oidcUrl]"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
@@ -560,7 +560,7 @@
                                         "requestHeaderConfigurations": [
                                             {
                                                 "headerName": "X-Forwarded-Host",
-                                                "headerValue": "[variables('domains').url2]"
+                                                "headerValue": "[variables('domains').interactionsUrl]"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
