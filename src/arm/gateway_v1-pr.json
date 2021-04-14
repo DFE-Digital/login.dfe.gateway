@@ -69,13 +69,11 @@
             "defaultValue": "signin"
         },
         "isProduction": {
-            "type": "string",
-            "allowedValues": [
-                "Yes",
-                "No"
-            ],
+            "type": "bool",
+            "defaultValue": false
+               ,
             "metadata": {
-                "description": "Only use 'Yes' for production"
+                "description": "Overide with 'true' for production"
             }
         }
 
@@ -179,6 +177,15 @@
             //"backendHostName1": "[if(equals(parameters('hostName1'),'oidc'), concat(parameters('hostName1'),'-1'), concat(parameters('hostName2'),'-1'))]",
             "backendHostName1": "[if (equals(parameters('hostName1'), 'oidc'), concat(parameters('hostName1'), '-1'), if (equals(parameters('hostName2'), 'interactions'),concat(parameters('hostName2'), '-1') , json('null')))]",
             "backendHostName2": "[if (equals(parameters('hostName1'), 'oidc'), concat(parameters('hostName1'), '-2'), if (equals(parameters('hostName2'), 'interactions'),concat(parameters('hostName2'), '-2') , json('null')))]"
+        },
+        "domains": {
+            "oidcFqdn1":"[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-1','.azurewebsites.net')]",
+            "oidcFqdn2":"[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-2','.azurewebsites.net')]",
+            "interactions1":"[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-1','.azurewebsites.net')]",
+            "interactions2":"[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-2','.azurewebsites.net')]",
+            "url1":"[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+            "url2":"[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
+            
         }
     },
     "resources": [
@@ -290,11 +297,14 @@
                                 {
                                     //"fqdn": "s141d01-signin-oidc-2.azurewebsites.net"
                                     //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
-                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
+                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
+                                    //"fqdn": "[if(equals(parameters('hostName1'),'oidc'), concat(parameters('hostName1'),'-1'), concat(parameters('hostName2'),'-1'))]"
+                                    "fqdn": "[variables('domains').oidcFqdn1]"
 
                                 },
                                 {
-                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
+                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
+                                    "fqdn": "[variables('domains').oidcFqdn2]"
                                 }
                             ]
                         }
@@ -307,11 +317,13 @@
                                 {
                                     //"fqdn": "s141d01-signin-interactions-1.azurewebsites.net"
                                     //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
-                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
+                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
+                                    "fqdn": "[variables('domains').interactions1]"
                                 },
                                 {
                                     //"fqdn": "s141d01-signin-interactions-2.azurewebsites.net"
-                                    "fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
+                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
+                                    "fqdn": "[variables('domains').interactions2]"
                                 }
                             ]
                         }
@@ -421,7 +433,8 @@
                             },
                             //"hostName": "dev-oidc.signin.education.gov.uk",
                             //"hostName": "[concat(parameters('environmentName'),'-',parameters('hostName'),'.',parameters('project'),'.',parameters('domainSuffix'))]",
-                            "hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+                            //"hostName": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+                            "hostName": "[variables('domains').url1]",
                             "hostNames": [],
                             "requireServerNameIndication": true
 
@@ -442,7 +455,8 @@
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
                             //"hostName": "dev-interactions.signin.education.gov.uk",
-                            "hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+                            //"hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+                            "hostName": "[variables('domains').url2]",
                             "hostNames": [],
                             "requireServerNameIndication": true
                         }
@@ -576,7 +590,7 @@
                                         "requestHeaderConfigurations": [
                                             {
                                                 "headerName": "X-Forwarded-Host",
-                                                "headerValue": "dev-oidc.signin.education.gov.uk"
+                                                "headerValue": "[variables('domains').url1]"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
@@ -598,7 +612,7 @@
                                         "requestHeaderConfigurations": [
                                             {
                                                 "headerName": "X-Forwarded-Host",
-                                                "headerValue": "dev-interactions.signin.education.gov.uk"
+                                                "headerValue": "[variables('domains').url2]"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
