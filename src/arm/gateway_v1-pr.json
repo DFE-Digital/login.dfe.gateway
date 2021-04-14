@@ -33,7 +33,14 @@
         },
         "environmentId": {
             "type": "string",
-            "defaultValue": "d01"
+            "allowedValues": [
+                "d01",
+                "t01",
+                "t02",
+                "t03",
+                "p01",
+                "p02"
+            ]
         },
         "hostName1": {
             "type": "string",
@@ -62,10 +69,6 @@
                 "description": "Overide with 'true' for production"
             }
         }
-
-
-
-
     },
     "functions": [
     ],
