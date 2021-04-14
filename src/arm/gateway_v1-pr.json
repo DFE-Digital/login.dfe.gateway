@@ -26,7 +26,7 @@
         "userAssignedIdentityName": {
             "type": "string"
         },
-        // test FQDN
+
         "projectId": {
             "type": "string",
             "defaultValue": "s141"
@@ -45,19 +45,6 @@
             "type": "string",
             "metadata": {
                 "description": "Web App name"
-            }
-        },
-        "backendHostName1": {
-            "type": "string",
-            "metadata": {
-                "description": "description"
-            }
-        },
-
-        "backendHostName2": {
-            "type": "string",
-            "metadata": {
-                "description": "description"
             }
         },
         "domainSuffix": {
@@ -154,10 +141,6 @@
                 "name": "[variables('resourceNames').applicationGateway.listenerName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/httpListeners/', variables('resourceNames').applicationGateway.listenerName)]"
             },
-            //"httpListener2": {
-            //  "name": "[variables('resourceNames').applicationGateway.listenerName]",
-            //"resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/httpListeners/', variables('resourceNames').applicationGateway.listenerName)]"
-            //},
             "routingRule": {
                 "name": "[variables('resourceNames').applicationGateway.routingRuleName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/requestRoutingRules/', variables('resourceNames').applicationGateway.routingRuleName)]"
@@ -171,11 +154,6 @@
                 "name": "[variables('resourceNames').applicationGateway.frontEndIpConfigurationName]",
                 "resourceId": "[concat(variables('resourceIds').applicationGateway.resourceId, '/frontendIPConfigurations/', variables('resourceNames').applicationGateway.frontEndIpConfigurationName)]"
             }
-        },
-        "backendHostName": {
-            //"backendHostName1": "[if(equals(parameters('hostName1'),'oidc'), concat(parameters('hostName1'),'-1'), concat(parameters('hostName2'),'-1'))]",
-            "backendHostName1": "[if (equals(parameters('hostName1'), 'oidc'), concat(parameters('hostName1'), '-1'), if (equals(parameters('hostName2'), 'interactions'),concat(parameters('hostName2'), '-1') , json('null')))]",
-            "backendHostName2": "[if (equals(parameters('hostName1'), 'oidc'), concat(parameters('hostName1'), '-2'), if (equals(parameters('hostName2'), 'interactions'),concat(parameters('hostName2'), '-2') , json('null')))]"
         },
         "domains": {
             "oidcFqdn1": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-1','.azurewebsites.net')]",
@@ -286,42 +264,26 @@
                         "type": "Microsoft.Network/applicationGateways/backendAddressPools"
                     },
                     {
-                        //"name": "oidc-pool",
                         "name": "[concat(parameters('hostName1'),'-pool')]",
                         "properties": {
                             "backendAddresses": [
-                                //{
-                                //  "fqdn": "s141d01-signin-oidc-1.azurewebsites.net"
-                                //},
                                 {
-                                    //"fqdn": "s141d01-signin-oidc-2.azurewebsites.net"
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
-                                    //"fqdn": "[if(equals(parameters('hostName1'),'oidc'), concat(parameters('hostName1'),'-1'), concat(parameters('hostName2'),'-1'))]"
                                     "fqdn": "[variables('domains').oidcFqdn1]"
-
                                 },
                                 {
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
                                     "fqdn": "[variables('domains').oidcFqdn2]"
                                 }
                             ]
                         }
                     },
                     {
-                        //"name": "interactions-pool",
                         "name": "[concat(parameters('hostName2'),'-pool')]",
                         "properties": {
                             "backendAddresses": [
                                 {
-                                    //"fqdn": "s141d01-signin-interactions-1.azurewebsites.net"
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName1'),'.azurewebsites.net')]"
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',variables('backendHostName').backendHostName1,'.azurewebsites.net')]"
                                     "fqdn": "[variables('domains').interactions1]"
                                 },
                                 {
-                                    //"fqdn": "s141d01-signin-interactions-2.azurewebsites.net"
-                                    //"fqdn": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('backendHostName2'),'.azurewebsites.net')]"
                                     "fqdn": "[variables('domains').interactions2]"
                                 }
                             ]
@@ -355,7 +317,6 @@
                         "type": "Microsoft.Network/applicationGateways/backendHttpSettingsCollection"
                     },
                     {
-                        //"name": "oidc-backend-setting",
                         "name": "[concat(parameters('hostName1'),'-backend-setting')]",
                         "properties": {
                             "port": 443,
@@ -374,7 +335,6 @@
                         }
                     },
                     {
-                        //"name": "interactions-backend-setting",
                         "name": "[concat(parameters('hostName2'),'-backend-setting')]",
                         "properties": {
                             "port": 443,
@@ -417,7 +377,6 @@
                         "type": "Microsoft.Network/applicationGateways/httpListeners"
                     },
                     {
-                        //"name": "oidc-ssl-listener",
                         "name": "[concat(parameters('hostName1'),'-ssl-listener')]",
                         "properties": {
                             "frontendIPConfiguration": {
@@ -430,17 +389,12 @@
                             "sslCertificate": {
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
-                            //"hostName": "dev-oidc.signin.education.gov.uk",
-                            //"hostName": "[concat(parameters('environmentName'),'-',parameters('hostName'),'.',parameters('project'),'.',parameters('domainSuffix'))]",
-                            //"hostName": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
                             "hostName": "[variables('domains').url1]",
                             "hostNames": [],
                             "requireServerNameIndication": true
-
                         }
                     },
                     {
-                        //"name": "interactions-ssl-listener",
                         "name": "[concat(parameters('hostName2'),'-ssl-listener')]",
                         "properties": {
                             "frontendIPConfiguration": {
@@ -453,8 +407,6 @@
                             "sslCertificate": {
                                 "id": "[variables('applicationGateway').sslCertificate.resourceId]"
                             },
-                            //"hostName": "dev-interactions.signin.education.gov.uk",
-                            //"hostName": "[if(equals(parameters('isProduction'),'Yes'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
                             "hostName": "[variables('domains').url2]",
                             "hostNames": [],
                             "requireServerNameIndication": true
@@ -479,7 +431,6 @@
                         "type": "Microsoft.Network/applicationGateways/requestRoutingRules"
                     },
                     {
-                        //"name": "oidc-ruleset",
                         "name": "[concat(parameters('hostName1'),'-ruleset')]",
                         "properties": {
                             "ruleType": "Basic",
@@ -498,7 +449,6 @@
                         }
                     },
                     {
-                        //"name": "interactions-ruleset",
                         "name": "[concat(parameters('hostName2'),'-ruleset')]",
                         "properties": {
                             "ruleType": "Basic",
@@ -539,7 +489,6 @@
                         "type": "Microsoft.Network/applicationGateways/probes"
                     },
                     {
-                        //"name": "oidc-backend-setting-probe",
                         "name": "[concat(parameters('hostName1'),'-backend-setting-probe')]",
                         "properties": {
                             "protocol": "Https",
@@ -557,7 +506,6 @@
                         }
                     },
                     {
-                        //"name": "interactions-backend-setting-probe",
                         "name": "[concat(parameters('hostName2'),'-backend-setting-probe')]",
                         "properties": {
                             "protocol": "Https",
@@ -577,7 +525,6 @@
                 ],
                 "rewriteRuleSets": [
                     {
-                        //"name": "oidc_rewrite",
                         "name": "[concat(parameters('hostName1'),'_rewrite')]",
                         "properties": {
                             "rewriteRules": [
@@ -599,7 +546,6 @@
                         }
                     },
                     {
-                        //"name": "interactions_rewrite",
                         "name": "[concat(parameters('hostName2'),'_rewrite')]",
                         "properties": {
                             "rewriteRules": [
