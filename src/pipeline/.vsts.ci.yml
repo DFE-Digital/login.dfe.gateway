@@ -26,9 +26,6 @@ stages:
         steps:
           - pwsh: write-host 'placeholder for predeploy'
 
-    variables:
-      - group: platform-global
-
   - stage: deployCoreDev
     dependsOn: preDeploy
     displayName: Core - DEV
