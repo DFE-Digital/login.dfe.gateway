@@ -27,8 +27,6 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
-  - group: platform-global
-  
     overrideParameters: '
     -applicationName "${{parameters.applicationName}}"
     -environmentName "${{parameters.environmentName}}"
