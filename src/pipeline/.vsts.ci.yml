@@ -9,142 +9,142 @@ resources:
 trigger:
   branches:
     include:
-    - master
-    - develop
+      - master
+      - develop
     #- feature/*
     # exclude:
     # - feature/*
 
 stages:
-
   - stage: preDeploy
     displayName: Pre Deploy
     jobs:
-    - job: preDeployJob
-      displayName: Pre deploy
-      pool:
-        vmImage: ubuntu-latest
-      steps:
-      - pwsh: write-host 'placeholder for predeploy'
+      - job: preDeployJob
+        displayName: Pre deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - pwsh: write-host 'placeholder for predeploy'
+
+    variables:
+      - group: platform-global
 
   - stage: deployCoreDev
     dependsOn: preDeploy
     displayName: Core - DEV
     jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(devServiceConnection)
+          subscriptionId: $(devSubscriptionId)
+          environmentName: dev
+          environmentId: d01
 
   - stage: deployCoreTest
     dependsOn: preDeploy
     displayName: Core - TEST
     jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: test
-        environmentId: t01
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: test
+          environmentId: t01
 
   - stage: deployCoreInt
     dependsOn: preDeploy
     displayName: Core - INT
     jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: int
-        environmentId: t03
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: int
+          environmentId: t03
 
   - stage: deployCorePreProd
     dependsOn: preDeploy
     displayName: Core - PreProd
     jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: pp
-        environmentId: t02
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: pp
+          environmentId: t02
 
   - stage: deployCoreProd
     dependsOn: preDeploy
     displayName: Core - Prod
     jobs:
-    - template: core-deploy.yml
-      parameters:
-        serviceConnection: $(prodServiceConnection)
-        subscriptionId: $(prodSubscriptionId)
-        environmentName: pr
-        environmentId: p01
-  
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(prodServiceConnection)
+          subscriptionId: $(prodSubscriptionId)
+          environmentName: pr
+          environmentId: p01
+
   - stage: deployAgDev
     displayName: Gateway - DEV
-    dependsOn: 
-    - deployCoreDev
+    dependsOn:
+      - deployCoreDev
     jobs:
-    - template: ag-deploy.yml
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        subscriptionId: $(devSubscriptionId)
-        environmentName: dev
-        environmentId: d01
-        sslCertificateName: non-prod-gateway
+      - template: ag-deploy.yml
+        parameters:
+          serviceConnection: $(devServiceConnection)
+          subscriptionId: $(devSubscriptionId)
+          environmentName: dev
+          environmentId: d01
+          sslCertificateName: non-prod-gateway
 
   - stage: deployAgTest
     displayName: Gateway - TEST
-    dependsOn: 
-    - deployCoreTest
+    dependsOn:
+      - deployCoreTest
     jobs:
-    - template: ag-deploy.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: test
-        environmentId: t01
-        sslCertificateName: non-prod-gateway
+      - template: ag-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: test
+          environmentId: t01
+          sslCertificateName: non-prod-gateway
 
   - stage: deployAgInt
     displayName: Gateway - INT
-    dependsOn: 
-    - deployCoreInt
+    dependsOn:
+      - deployCoreInt
     jobs:
-    - template: ag-deploy-int.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: int
-        environmentId: t03
-        sslCertificateName: non-prod-gateway
+      - template: ag-deploy-int.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: int
+          environmentId: t03
+          sslCertificateName: non-prod-gateway
 
   - stage: deployAgPreProd
     displayName: Gateway - PreProd
-    dependsOn: 
-    - deployCorePreProd
+    dependsOn:
+      - deployCorePreProd
     jobs:
-    - template: ag-deploy.yml
-      parameters:
-        serviceConnection: $(testServiceConnection)
-        subscriptionId: $(testSubscriptionId)
-        environmentName: pp
-        environmentId: t02
-        sslCertificateName: non-prod-gateway
+      - template: ag-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: pp
+          environmentId: t02
+          sslCertificateName: non-prod-gateway
 
   - stage: deployAgProd
     displayName: Gateway - Prod
-    dependsOn: 
-    - deployCoreProd
+    dependsOn:
+      - deployCoreProd
     jobs:
-    - template: ag-deploy-pr.yml
-      parameters:
-        serviceConnection: $(prodServiceConnection)
-        subscriptionId: $(prodSubscriptionId)
-        environmentName: pr
-        environmentId: p01
-        sslCertificateName: signin-generic
-
-
+      - template: ag-deploy-pr.yml
+        parameters:
+          serviceConnection: $(prodServiceConnection)
+          subscriptionId: $(prodSubscriptionId)
+          environmentName: pr
+          environmentId: p01
+          sslCertificateName: signin-generic
