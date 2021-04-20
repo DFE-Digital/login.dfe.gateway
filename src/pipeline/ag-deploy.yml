@@ -47,10 +47,16 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     variables:
-      keyVaultName: "${{parameters.projectId}}${{parameters.environmentId}}-signin-global-kv"
-      sslCertificateName: "${{parameters.sslCertificateName}}"
-      resourceGroupName: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
-      gatewayIdentityName: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+    - group: platform-${{parameters.environmentName}}
+    - name: keyVaultName
+      value: "${{parameters.projectId}}${{parameters.environmentId}}-signin-global-kv"
+    - name: sslCertificateName
+      value: "${{parameters.sslCertificateName}}"
+    - name: resourceGroupName
+      value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
+    - name: gatewayIdentityName
+    - value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+
     strategy:
       runOnce:
         deploy:
@@ -85,5 +91,6 @@ jobs:
                 resourceGroupName: $(resourceGroupName)
                 location: "${{parameters.deploymentLocation}}"
                 templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
-                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "${{parameters.subnetName}}" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" '
+                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "${{parameters.subnetName}}" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -domainSuffix "${{parameters.domainSuffix}}" -hostName1 "$(oidc)" -hostName2 "${{parameters.hostName2}}" -project "$(signin)" -isProduction "$(false)" '
                 processOutputs: false
+                tags: $(Tags)
