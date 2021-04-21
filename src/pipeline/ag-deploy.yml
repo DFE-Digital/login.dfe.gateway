@@ -24,18 +24,6 @@ parameters:
   - name: subnetName
     type: string
     default: gateway
-  - name: domainSuffix
-    type: string
-    default: education.gov.uk
-  - name: hostName1
-    type: string
-    default: oidc
-  - name: hostName2
-    type: string
-    default: interactions
-  - name: project
-    type: string
-    default: signin
   - name: isProduction
     type: string
     default: false
