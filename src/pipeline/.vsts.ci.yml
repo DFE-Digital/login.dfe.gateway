@@ -145,3 +145,4 @@ stages:
           environmentName: pr
           environmentId: p01
           sslCertificateName: signin-generic
+          isProduction: true
