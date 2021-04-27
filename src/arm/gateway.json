@@ -44,12 +44,14 @@
         },
         "hostName1": {
             "type": "string",
+            "defaultValue": "interactions",
             "metadata": {
                 "description": "Web App name"
             }
         },
         "hostName2": {
             "type": "string",
+            "defaultValue": "s141",
             "metadata": {
                 "description": "Web App name"
             }
