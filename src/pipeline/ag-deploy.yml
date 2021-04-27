@@ -43,7 +43,7 @@ jobs:
       - name: resourceGroupName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
       - name: gatewayIdentityName
-      - value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+        value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
 
     strategy:
       runOnce:
