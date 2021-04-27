@@ -44,14 +44,14 @@
         },
         "hostName1": {
             "type": "string",
-            "defaultValue": "interactions",
+            "defaultValue": "oidc",
             "metadata": {
                 "description": "Web App name"
             }
         },
         "hostName2": {
             "type": "string",
-            "defaultValue": "s141",
+            "defaultValue": "interactions",
             "metadata": {
                 "description": "Web App name"
             }
