@@ -36,7 +36,7 @@
     "variables": {
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
-            "vnetName": "[concat(variables('baseName'), '-vnet')]"
+            "vnetName": "[concat(variables('baseName'), '-vnet-3075')]"
         }
     },
     "resources": [
