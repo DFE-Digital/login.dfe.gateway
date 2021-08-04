@@ -84,4 +84,4 @@ jobs:
                 templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
                 armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "${{parameters.subnetName}}" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
                 processOutputs: false
-                tags: "${{parameters.Tags}}"
+                tags: $(Tags)
