@@ -111,6 +111,7 @@ stages:
           environmentName: test
           environmentId: t01
           sslCertificateName: non-prod-gateway
+          Tags: Tags
 
   - stage: deployAgInt
     displayName: Gateway - INT
@@ -126,6 +127,7 @@ stages:
           environmentName: int
           environmentId: t03
           sslCertificateName: non-prod-gateway
+          Tags: Tags
 
   - stage: deployAgPreProd
     displayName: Gateway - PreProd
@@ -141,6 +143,7 @@ stages:
           environmentName: pp
           environmentId: t02
           sslCertificateName: non-prod-gateway
+          Tags: Tags
 
   - stage: deployAgProd
     displayName: Gateway - Prod
@@ -157,3 +160,4 @@ stages:
           environmentId: p01
           sslCertificateName: signin-generic
           isProduction: true
+          Tags: Tags
