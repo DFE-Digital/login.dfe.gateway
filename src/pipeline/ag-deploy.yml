@@ -47,6 +47,8 @@ jobs:
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
       - name: gatewayIdentityName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+      - name: Tags
+        value: "${{parameters.Tags}}"
 
     strategy:
       runOnce:
