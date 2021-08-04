@@ -24,6 +24,9 @@ parameters:
 - name: subnetName
   type: string
   default: gateway
+- name: Tags
+  type: string
+
 jobs:
 - deployment: deploy
   displayName: 'deploy ag - ${{parameters.environmentName}}'
