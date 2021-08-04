@@ -85,6 +85,8 @@ stages:
     displayName: Gateway - DEV
     dependsOn:
       - deployCoreDev
+    variables:
+      - group: platform-dev
     jobs:
       - template: ag-deploy.yml
         parameters:
@@ -98,6 +100,8 @@ stages:
     displayName: Gateway - TEST
     dependsOn:
       - deployCoreTest
+    variables:
+      - group: platform-test
     jobs:
       - template: ag-deploy.yml
         parameters:
@@ -111,6 +115,8 @@ stages:
     displayName: Gateway - INT
     dependsOn:
       - deployCoreInt
+    variables:
+      - group: platform-int
     jobs:
       - template: ag-deploy.yml
         parameters:
@@ -124,6 +130,8 @@ stages:
     displayName: Gateway - PreProd
     dependsOn:
       - deployCorePreProd
+    variables:
+      - group: platform-pp
     jobs:
       - template: ag-deploy.yml
         parameters:
@@ -137,6 +145,8 @@ stages:
     displayName: Gateway - Prod
     dependsOn:
       - deployCoreProd
+    variables:
+      - group: platform-pr
     jobs:
       - template: ag-deploy.yml
         parameters:

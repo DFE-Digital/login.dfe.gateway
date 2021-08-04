@@ -27,6 +27,9 @@ parameters:
   - name: isProduction
     type: string
     default: false
+  - name: Tags
+    type: string
+
 
 jobs:
   - deployment: deploy
