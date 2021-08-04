@@ -28,7 +28,7 @@ parameters:
     type: string
     default: false
   - name: Tags
-    type: string
+    type: object
 
 
 jobs:
