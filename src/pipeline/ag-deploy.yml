@@ -47,6 +47,8 @@ jobs:
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
       - name: gatewayIdentityName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+      - name: tags
+        value: "${{parameters.Tags}}"
 
     strategy:
       runOnce:
@@ -84,4 +86,4 @@ jobs:
                 templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
                 armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "${{parameters.subnetName}}" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
                 processOutputs: false
-                tags: $(Tags)
+                tags: $(tags)
