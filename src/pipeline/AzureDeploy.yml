@@ -15,6 +15,9 @@ trigger:
     # exclude:
     # - feature/*
 
+variables:
+  - group: platform-global
+
 stages:
   - stage: preDeploy
     displayName: Pre Deploy
@@ -81,7 +84,7 @@ stages:
           environmentName: pr
           environmentId: p01
 
-  - stage: deployAgDev
+  - stage: deployGatewayDev
     displayName: Gateway - DEV
     dependsOn:
       - deployCoreDev
@@ -96,7 +99,7 @@ stages:
           environmentId: d01
           sslCertificateName: non-prod-gateway
 
-  - stage: deployAgTest
+  - stage: deployGatewayTest
     displayName: Gateway - TEST
     dependsOn:
       - deployCoreTest
@@ -111,7 +114,7 @@ stages:
           environmentId: t01
           sslCertificateName: non-prod-gateway
 
-  - stage: deployAgInt
+  - stage: deployGatewayInt
     displayName: Gateway - INT
     dependsOn:
       - deployCoreInt
@@ -126,7 +129,7 @@ stages:
           environmentId: t03
           sslCertificateName: non-prod-gateway
 
-  - stage: deployAgPreProd
+  - stage: deployGatewayPreProd
     displayName: Gateway - PreProd
     dependsOn:
       - deployCorePreProd
@@ -141,7 +144,7 @@ stages:
           environmentId: t02
           sslCertificateName: non-prod-gateway
 
-  - stage: deployAgProd
+  - stage: deployGatewayProd
     displayName: Gateway - Prod
     dependsOn:
       - deployCoreProd
