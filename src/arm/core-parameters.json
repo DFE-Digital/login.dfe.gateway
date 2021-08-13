@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "applicationName": {
+      "value": "gateway"
+    },
+    "environmentName": {
+      "value": "dev"
+    },
+    "vnetAddressPrefix": {
+      "value": "192.168.64.0/18"
+    },
+    "serviceSubnetName": {
+      "value": "gateway"
+    },
+    "serviceSubnetPrefix": {
+      "value": "192.168.97.0/27"
+    }
+  }
+}

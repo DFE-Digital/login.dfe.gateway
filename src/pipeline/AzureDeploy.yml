@@ -88,7 +88,7 @@ stages:
     variables:
       - group: platform-dev
     jobs:
-      - template: ag-deploy.yml
+      - template: gateway-deploy.yml
         parameters:
           serviceConnection: $(devServiceConnection)
           subscriptionId: $(devSubscriptionId)
@@ -103,7 +103,7 @@ stages:
     variables:
       - group: platform-test
     jobs:
-      - template: ag-deploy.yml
+      - template: gateway-deploy.yml
         parameters:
           serviceConnection: $(testServiceConnection)
           subscriptionId: $(testSubscriptionId)
@@ -118,7 +118,7 @@ stages:
     variables:
       - group: platform-int
     jobs:
-      - template: ag-deploy.yml
+      - template: gateway-deploy.yml
         parameters:
           serviceConnection: $(testServiceConnection)
           subscriptionId: $(testSubscriptionId)
@@ -133,7 +133,7 @@ stages:
     variables:
       - group: platform-pp
     jobs:
-      - template: ag-deploy.yml
+      - template: gateway-deploy.yml
         parameters:
           serviceConnection: $(testServiceConnection)
           subscriptionId: $(testSubscriptionId)
@@ -148,7 +148,7 @@ stages:
     variables:
       - group: platform-pr
     jobs:
-      - template: ag-deploy.yml
+      - template: gateway-deploy.yml
         parameters:
           serviceConnection: $(prodServiceConnection)
           subscriptionId: $(prodSubscriptionId)
