@@ -1,0 +1,161 @@
+name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
+resources:
+  repositories:
+    - repository: devopsTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/operations-devops-pipeline-templates
+
+trigger:
+  branches:
+    include:
+      - master
+      - develop
+    #  - feature/*
+    # exclude:
+    # - feature/*
+
+variables:
+  - group: platform-global
+
+stages:
+  - stage: preDeploy
+    displayName: Pre Deploy
+    jobs:
+      - job: preDeployJob
+        displayName: Pre deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - pwsh: write-host 'placeholder for predeploy'
+
+  - stage: deployCoreDev
+    dependsOn: preDeploy
+    displayName: Core - DEV
+    jobs:
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(devServiceConnection)
+          subscriptionId: $(devSubscriptionId)
+          environmentName: dev
+          environmentId: d01
+
+  - stage: deployCoreTest
+    dependsOn: preDeploy
+    displayName: Core - TEST
+    jobs:
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: test
+          environmentId: t01
+
+  - stage: deployCoreInt
+    dependsOn: preDeploy
+    displayName: Core - INT
+    jobs:
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: int
+          environmentId: t03
+
+  - stage: deployCorePreProd
+    dependsOn: preDeploy
+    displayName: Core - PreProd
+    jobs:
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: pp
+          environmentId: t02
+
+  - stage: deployCoreProd
+    dependsOn: preDeploy
+    displayName: Core - Prod
+    jobs:
+      - template: core-deploy.yml
+        parameters:
+          serviceConnection: $(prodServiceConnection)
+          subscriptionId: $(prodSubscriptionId)
+          environmentName: pr
+          environmentId: p01
+
+  - stage: deployGatewayDev
+    displayName: Gateway - DEV
+    dependsOn:
+      - deployCoreDev
+    variables:
+      - group: platform-dev
+    jobs:
+      - template: gateway-deploy.yml
+        parameters:
+          serviceConnection: $(devServiceConnection)
+          subscriptionId: $(devSubscriptionId)
+          environmentName: dev
+          environmentId: d01
+          sslCertificateName: non-prod-gateway
+
+  - stage: deployGatewayTest
+    displayName: Gateway - TEST
+    dependsOn:
+      - deployCoreTest
+    variables:
+      - group: platform-test
+    jobs:
+      - template: gateway-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: test
+          environmentId: t01
+          sslCertificateName: non-prod-gateway
+
+  - stage: deployGatewayInt
+    displayName: Gateway - INT
+    dependsOn:
+      - deployCoreInt
+    variables:
+      - group: platform-int
+    jobs:
+      - template: gateway-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: int
+          environmentId: t03
+          sslCertificateName: non-prod-gateway
+
+  - stage: deployGatewayPreProd
+    displayName: Gateway - PreProd
+    dependsOn:
+      - deployCorePreProd
+    variables:
+      - group: platform-pp
+    jobs:
+      - template: gateway-deploy.yml
+        parameters:
+          serviceConnection: $(testServiceConnection)
+          subscriptionId: $(testSubscriptionId)
+          environmentName: pp
+          environmentId: t02
+          sslCertificateName: non-prod-gateway
+
+  - stage: deployGatewayProd
+    displayName: Gateway - Prod
+    dependsOn:
+      - deployCoreProd
+    variables:
+      - group: platform-pr
+    jobs:
+      - template: gateway-deploy.yml
+        parameters:
+          serviceConnection: $(prodServiceConnection)
+          subscriptionId: $(prodSubscriptionId)
+          environmentName: pr
+          environmentId: p01
+          sslCertificateName: signin-generic
+          isProduction: true

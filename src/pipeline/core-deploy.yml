@@ -27,7 +27,9 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
-    overrideParameters: '
+  - group: platform-${{parameters.environmentName}}
+  - name: overrideParameters
+    value: '
     -applicationName "${{parameters.applicationName}}"
     -environmentName "${{parameters.environmentName}}"
     '
@@ -45,3 +47,4 @@ jobs:
             templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
             processOutputs: false
+            tags: $(Tags)
