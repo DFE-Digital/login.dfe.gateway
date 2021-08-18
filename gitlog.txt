@@ -1,0 +1,655 @@
+commit dab836db615f19bd301816298dc852db05eeb8d5
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Oct 26 12:56:35 2020 +0000
+
+    fix: default rule name changed
+
+commit d721c1c400559803bc86771f2b998ba223563028
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Oct 26 12:36:33 2020 +0000
+
+    fix: ag arm fixes
+
+commit e63dddda3f8624015dfd73ee6604eb4452578a80
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Oct 26 12:27:40 2020 +0000
+
+    fix: ag deploy using correct path
+
+commit e5aa525d3bb2133b3559a4edc9e0042989a3738a
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Oct 26 12:20:51 2020 +0000
+
+    fix: paths
+
+commit 5bb6ea974a82937982aedc1b9c2ddbb5f81cac33
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Oct 26 12:02:13 2020 +0000
+
+    chore: simplified AG deployment for multisite use
+
+commit 64ccb13a0134d550c90791b07fde8222d51086d3
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Sun Sep 6 12:27:47 2020 +0100
+
+    fix: ag setup
+
+commit 4b9771a3a3f15bf5ac0c7f1a3abe0708318429ed
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Sun Sep 6 11:30:01 2020 +0100
+
+    fix: kv policies
+
+commit 52ba556df473a6049ce8ea14cd8a1b515ecae8df
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 20 11:57:07 2020 +0100
+
+    chore: added prod gateway
+
+commit cb3f3bca7642d6d6edc3c70832cced8d647aac05
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Fri Aug 14 16:14:27 2020 +0100
+
+    fix: typo on pp
+
+commit a06e289bb4bb1654621b12c85d140be96630ec41
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Fri Aug 14 16:13:10 2020 +0100
+
+    chore: added pp env
+
+commit 1674bfcd74fcbb62192b64a5f76350f294b9ba54
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 6 10:56:59 2020 +0100
+
+    fix: deps
+
+commit cb0c6f077a91f4d629c2d7549bad072079a3ef6b
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 6 10:53:04 2020 +0100
+
+    fix: pipeline service connection fix
+
+commit 7f2da888f1cac28f913e68b90a69c021cfeea735
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 6 10:46:52 2020 +0100
+
+    change: added int stage
+
+commit 35ed3b5084b260d57485a9707be2e9fbabd402d9
+Merge: 95c34ff 6b9a182
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 6 10:35:02 2020 +0100
+
+    Merge branch 'master' of https://github.com/DFE-Digital/login.dfe.gateway
+
+commit 95c34ff9008ed09801ee09da1146149895889ccb
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Thu Aug 6 10:34:30 2020 +0100
+
+    fix: ag keyvault for test
+
+commit 6b9a182362f53080bf0dbf936c8f1482b5c4bfe3
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Aug 4 20:14:31 2020 +0100
+
+    hhh
+
+commit 0ba1467ac60488b94d221cb62dfe3f3ea6bbc2f1
+Merge: 6dcd0dd 2386a9a
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Aug 4 20:14:09 2020 +0100
+
+    Merge branch 'master' of https://github.com/DFE-Digital/login.dfe.gateway into master
+
+commit 6dcd0ddc6200c478bb0496ec05d3d045579c74d7
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Aug 4 20:05:20 2020 +0100
+
+    change: vnet shrunk
+
+commit 2386a9a5bc689fcd2163bed0e672d215e6850c09
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 16:33:48 2020 +0100
+
+    fix: deps
+
+commit 01dd429a35785f0f04118c76672494051e33c106
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 16:29:03 2020 +0100
+
+    fix: stage names
+
+commit da1649dcf0e8daaead83d36e0d8d692141c12f88
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 16:28:16 2020 +0100
+
+    fix: stages
+
+commit d5e6727d7514cb1c79adc1412bc6bb7c5b06d3ac
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 16:24:43 2020 +0100
+
+    fix: stage name
+
+commit 6eafa20a84f7f2b43b280abc800a1311b128d34b
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 16:24:03 2020 +0100
+
+    chore: enabled AG for test
+
+commit fbe18ee925eb78c1b84fdc2d33189ed6d6bf72cc
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 14:07:04 2020 +0100
+
+    fix: removed test dependencies
+
+commit 10a74a8ba877af00d27e3e5a6b124ee8fb4692df
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Mon Aug 3 14:05:11 2020 +0100
+
+    fix: correct KV name
+
+commit b94ad3297f585672dc3f1969ac56223a04f2a9fe
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 17:22:25 2020 +0100
+
+    fix: paths on rules
+
+commit 25e4c4415f7202612827a1bef77b05eb5bdfdb83
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 15:37:22 2020 +0100
+
+    fix: removed unused deploy step
+
+commit 37dc928c3ff34c9198f327b31f94812811f458d4
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 15:35:00 2020 +0100
+
+    fix: removed stub build
+
+commit 680ca1a1f9501a06d50a40c6a58123d079970059
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 15:33:32 2020 +0100
+
+    chore: stub service for deployment
+
+commit 475dc1aa25ffd2894f1f30e4386ea30f3e67785f
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:56:04 2020 +0100
+
+    fix: pai checkout
+
+commit 5fc428d1ab1e35f8ae00e2f440962ab02f372f09
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:53:40 2020 +0100
+
+    fix: checkout
+
+commit 1c7bff2204bf0d275620c0b2edaebc0b5192d0b2
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:51:20 2020 +0100
+
+    fix: removed dupe checkouts
+
+commit 58933420ce8ce2af929e80fce311cdbde8242807
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:49:16 2020 +0100
+
+    fix: cleanup
+
+commit 84eca75b11d767f698b31e51db80b772c5e7794c
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:33:01 2020 +0100
+
+    cleanup: steps
+
+commit b20cdee2f05e625ef02c07e3f5e3ac01393031e9
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:29:13 2020 +0100
+
+    fix: reinstate test apps
+
+commit a3944f08bde236953412e546087302d8f0e70008
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 12:17:48 2020 +0100
+
+    fix: secret permissions
+
+commit 72c76ac6fde97aa88b18c1d359a5c67ef6581852
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:51:42 2020 +0100
+
+    fix ports
+
+commit 1e49c6a95b784953080c7a55e5ef7d7b9290553d
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:49:39 2020 +0100
+
+    fix: identities are weird
+
+commit c066291e16208a9991b9f4eabf49c08993e8fc1e
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:45:21 2020 +0100
+
+    fix: passing ident to template
+
+commit 35de1e6f040e33364e22a89fb7bc27f6659c3817
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:38:50 2020 +0100
+
+    fix: using sid
+
+commit 85aecd841ba0859d608d0c385ccb84402ef7fc75
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:35:17 2020 +0100
+
+    fix: listener id
+
+commit bd13fa300942335beed91a73df6e96478aecec63
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:25:34 2020 +0100
+
+    fix: vars
+
+commit cc994e1aaab3c7431fd2008747b53aaf9f4e5ac5
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:20:22 2020 +0100
+
+    test - params
+
+commit 9a0ea83500a237fea98f29ed8d45277c1be7f874
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:20:02 2020 +0100
+
+    fix: steps
+
+commit 7168670e82217d6443f2ad4d0c7fb87de3df4349
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:10:25 2020 +0100
+
+    fix: typo
+
+commit fac22b917a016d7011a53484dcc14c5c1539f259
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:09:26 2020 +0100
+
+    fix: json parsing
+
+commit b34ebdabc5d579132f38c4861361a7ce48c5e8aa
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:08:43 2020 +0100
+
+    fix unused param
+
+commit f8f9abd501b974c9520136db690dd063c24e45f7
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:08:00 2020 +0100
+
+    fix: sslCert name
+
+commit 2681c0feedbacf05d3394fd852879b7927e458c3
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 10:07:00 2020 +0100
+
+    chore: ssl cert on build
+
+commit e129a05adb38251c13159b8ee77d9c4e82a80b37
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 09:36:11 2020 +0100
+
+    fix: deploy
+
+commit d8d4afcccb4f4b53bf9e6faab3b1734b16d5d017
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:33:37 2020 +0100
+
+    fix: typo
+
+commit c5dd018bc35b91b3628a98e61e6b1e1ae38fd768
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:32:02 2020 +0100
+
+    fix: vars
+
+commit 44869cd4fd5ff6e17d17ca4111ff63717aca0a35
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:28:10 2020 +0100
+
+    fix: pre/post
+
+commit 1fc1b715572a1da0e49c4792f057475bf9c988a9
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:19:06 2020 +0100
+
+    fix: spn
+
+commit 19c431d654c8bc5a5b475bda3ce635acec309ad4
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:16:34 2020 +0100
+
+    fix: jmes
+
+commit be4f5982f59b825b8a35e7b475fb7bf3b4c11037
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 01:00:59 2020 +0100
+
+    fix: set policy
+
+commit 112dd8d7be5a04738ce3fa3db385b0c61b9204a3
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:57:22 2020 +0100
+
+    fix: principal
+
+commit 9f49dc7089f2dec0c15873bb17501c222f966dc0
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:53:30 2020 +0100
+
+    fix: deps
+
+commit 5b3496f86808fb5a0ce53b19d6f31e2b953ece4a
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:52:57 2020 +0100
+
+    temp: removed unused items
+
+commit 8398deb06549570b2babbd2ce4c27634933d2cf3
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:49:29 2020 +0100
+
+    fox: core
+
+commit 57614fb0f945662e7b207825cf7edbde513c4e43
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:46:30 2020 +0100
+
+    fix: pscore
+
+commit 3652be2b3da714f988457a3765fd7988e74cfcec
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:17:07 2020 +0100
+
+    fix: typos
+
+commit c8f3ee2ee49eaedd7f27198b477d13eed7800ca5
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:16:13 2020 +0100
+
+    fix: assign id
+
+commit 6bc6f1b3583e9b2bfa7f01bc0b59973b6244ee42
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:11:45 2020 +0100
+
+    fix: order
+
+commit d97841892b4aa63932451b52af52ac1c3b5d76ae
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:05:11 2020 +0100
+
+    fix: fix
+
+commit f4555f6a9c5e4cf3215a1313dc40d2ebfc578a8a
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:03:57 2020 +0100
+
+    FIX: names
+
+commit 316484d941b8022eb9d91f6cac533b4cd96fbd39
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Wed Jul 29 00:00:56 2020 +0100
+
+    fix: cli
+
+commit 50e37039de3e8d2637700f5a7f1db9c0d5606c38
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Jul 28 23:56:22 2020 +0100
+
+    fix: removed dupe displayName
+
+commit d32b4c969d988410ab157d31649182d21bd4c11b
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Jul 28 23:55:28 2020 +0100
+
+    change: create AG id
+
+commit f9325808783ba60c82a057de8af6e110753186a6
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Tue Jul 28 17:20:10 2020 +0100
+
+    fix: identity added
+
+commit e0deaee8cd650dc0d81b889bf5fbc414e5134069
+Author: Paul Sheridan <paul@phobos-software.net>
+Date:   Fri Jul 17 09:16:54 2020 +0100
+
+    fix: stub asps
+
+commit 8d00e661ece2248c739e7094ff99f9156a6ab3b6
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 17:33:19 2020 +0100
+
+    fix: added default path
+
+commit f4ea3f30653bc8acb25d906bf6d368c3cd6f3474
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 17:28:53 2020 +0100
+
+    fix: added default pathMap
+
+commit 6cee21bf37301e2196d465674b3e0e551bbe8674
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 17:02:29 2020 +0100
+
+    fix: probe id was bad
+
+commit 5b499d7d7c2cacd0bd6c5c46a598bd55b4b6ac64
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 16:58:00 2020 +0100
+
+    fix: rIds split
+
+commit 62e309772a641fb71dd431c1f01fae62d44adcba
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 16:14:30 2020 +0100
+
+    fix: replaced default settings on path map
+
+commit 2644198904ac81e06869338997f4c3ce34f7e72a
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 16:11:38 2020 +0100
+
+    fix: pool id fix
+
+commit 33b3a03378f529cc5296ba87230c061d6aa101cb
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 16:04:46 2020 +0100
+
+    fix: port id resolution
+
+commit df3ad2a83a52c1db4eb6abf0b3c65bc578a935e0
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 16:01:31 2020 +0100
+
+    fix: pip ai version
+
+commit 02756411f900cd9873ebc5c5a297cf6b249f284a
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 15:57:46 2020 +0100
+
+    fix: typo
+
+commit acd2eb65703a6adcdee7faf72199212f5b8d7d95
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 15:55:23 2020 +0100
+
+    fix: removed variable circular deps
+
+commit 988694b32ee8c71cf54043601cbf7de621ce8785
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 14:52:59 2020 +0100
+
+    fix: vnet name not passed
+
+commit d8b27a37dd7afcc4890380ed553139e65a893f52
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 14:52:20 2020 +0100
+
+    fix: knowns and unknowns deployment
+
+commit c88098a29a3fde50b7bb99202150726aa985f68a
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 14:43:19 2020 +0100
+
+    change: path based rule deployment #1
+
+commit 747c7fa4af339568794e299be636a211db81ebdd
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:36:41 2020 +0100
+
+    fix: rgName was backward
+
+commit b70edd358bed4f60ef9814fc6e88be550c9ca45c
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:34:00 2020 +0100
+
+    fixL: circ ref on names
+
+commit 6bcca1941f596c0b99f738adc6c74c608baf84f6
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:31:11 2020 +0100
+
+    fix: ag template #1
+
+commit 3d541a0c5ba77aa5b7d916c641fe3b29bcf6eb3d
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:25:36 2020 +0100
+
+    fix: process outputs fix
+
+commit 5ff0359f8a0b40679a23db10556ed22ea52a7aac
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:23:34 2020 +0100
+
+    change: renamed core deployment
+
+commit e57d6b9bc1378a96146092ca3b75ee296aea0e68
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:22:14 2020 +0100
+
+    fix: subnet was borked
+
+commit bb6334475c0a17cde967679402f7fd5129d4a734
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:20:23 2020 +0100
+
+    fix: final paths
+
+commit 246b63fbd9e9eb131f690906cecbcc2521f64305
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:19:23 2020 +0100
+
+    fix: p[aths
+
+commit 3a8e6c5b21389aa0dfcc22530d4f1b05f7e93d7c
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:17:27 2020 +0100
+
+    fix: paths
+
+commit e9905436edd18ca88af567be6b5b652432ad65b7
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:15:48 2020 +0100
+
+    fix: paths
+
+commit cb590e93caee75c262836fa9cb48327c163e5d85
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:13:51 2020 +0100
+
+    fix: localpath
+
+commit 682f1da3dcf743526fc03879b1b0ecc261db5436
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:11:42 2020 +0100
+
+    fix: paths
+
+commit 9c488f40127b1e2be449f0e7c18be404aed44cdc
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:10:22 2020 +0100
+
+    fix: checkout
+
+commit 34f44353d23406a534fba578326d04bfec1479cd
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:09:06 2020 +0100
+
+    fix: paths
+
+commit fcda1f413ed1603f62960b2b1380db8da0827394
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:05:25 2020 +0100
+
+    fix: path
+
+commit 8f14397c12ca02d6a6ba6ae6d7bc1e74968bd9b1
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:04:07 2020 +0100
+
+    fix: pwsh on wrong file
+
+commit ab68d56db901f1581e2935688889881d909bb798
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 12:03:19 2020 +0100
+
+    fix: checkout
+
+commit 643b9ac539952f3c29db07170e3f66cc659326a6
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:59:53 2020 +0100
+
+    fix: path
+
+commit 708a6cc26e1a6b69c4ab2b2a99c7320b3fe20389
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:58:46 2020 +0100
+
+    fix: variable case
+
+commit 4dbed821a4547a664f66c2cd3834fdbcd1b85534
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:57:48 2020 +0100
+
+    fix: pipeline not build
+
+commit 48a4c669d66a2cc8989be762bc190b95cb3e9401
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:56:12 2020 +0100
+
+    fix: template name
+
+commit e557fba7412f55b03c5029769656d5a6f88bd128
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:55:26 2020 +0100
+
+    fix: no artifact in use
+
+commit 2f06e2860603de70704c8fc9ad3b75485b93aae3
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:54:03 2020 +0100
+
+    fix: template name fixed
+
+commit e2d2bacdbcaac4a7e567bfc48fc35fc056cd3fde
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:52:14 2020 +0100
+
+    fix: remove unused param
+
+commit 071f5f4cc26569cd89c27da819e078eb52dafb6b
+Author: Paul <paul@phobos-software.net>
+Date:   Wed Jul 8 11:49:27 2020 +0100
+
+    init: new project

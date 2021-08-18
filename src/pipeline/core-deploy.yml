@@ -1,0 +1,50 @@
+parameters:
+- name: serviceConnection
+  type: string
+- name: subscriptionId
+  type: string
+- name: environmentName
+  type: string
+- name: applicationName
+  type: string
+  default: gateway
+- name: deploymentLocation
+  type: string
+  default: 'westeurope'
+- name: projectId
+  type: string
+  default: 's141'
+- name: environmentId
+  type: string
+- name: projectCoreRgSuffix
+  type: string
+  default: projectcore
+
+jobs:
+- deployment: deploy
+  displayName: deploy core vnet - ${{parameters.environmentName}}
+  environment: ${{parameters.environmentName}}
+  pool:
+    vmImage: ubuntu-latest
+  variables:
+  - group: platform-${{parameters.environmentName}}
+  - name: overrideParameters
+    value: '
+    -applicationName "${{parameters.applicationName}}"
+    -environmentName "${{parameters.environmentName}}"
+    '
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+          parameters:
+            serviceConnection: ${{parameters.serviceConnection}}
+            subscriptionId: ${{parameters.subscriptionId}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+            location: ${{parameters.deploymentLocation}}
+            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
+            armParameterOverrideString: $(overrideParameters)
+            processOutputs: false
+            tags: $(Tags)
