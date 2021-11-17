@@ -165,8 +165,8 @@
             "oidcFqdn2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-2','.azurewebsites.net')]",
             "interactions1": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-1','.azurewebsites.net')]",
             "interactions2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-2','.azurewebsites.net')]",
-            "oidcUrl": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
-            "interactionsUrl": "[if(equals(parameters('isProduction'),'false'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
+            "oidcUrl": "[if(parameters('isProduction'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+            "interactionsUrl": "[if(parameters('isProduction'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
 
         }
     },
