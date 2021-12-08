@@ -25,7 +25,7 @@ parameters:
     type: string
     default: gateway
   - name: isProduction
-    type: string
+    type: boolean
     default: false
 
 jobs:
