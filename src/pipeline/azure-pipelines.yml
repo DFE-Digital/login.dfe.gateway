@@ -98,7 +98,7 @@ stages:
           environmentName: dev
           environmentId: d01
           sslCertificateName: non-prod-gateway
-          isProduction: true
+          isProduction: false
 
   - stage: deployGatewayTest
     displayName: Gateway - TEST
@@ -114,6 +114,7 @@ stages:
           environmentName: test
           environmentId: t01
           sslCertificateName: non-prod-gateway
+          isProduction: false
 
   - stage: deployGatewayInt
     displayName: Gateway - INT
@@ -129,6 +130,7 @@ stages:
           environmentName: int
           environmentId: t03
           sslCertificateName: non-prod-gateway
+          isProduction: false
 
   - stage: deployGatewayPreProd
     displayName: Gateway - PreProd
@@ -144,6 +146,7 @@ stages:
           environmentName: pp
           environmentId: t02
           sslCertificateName: non-prod-gateway
+          isProduction: false
 
   - stage: deployGatewayProd
     displayName: Gateway - Prod
