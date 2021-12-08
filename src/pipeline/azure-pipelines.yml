@@ -98,6 +98,7 @@ stages:
           environmentName: dev
           environmentId: d01
           sslCertificateName: non-prod-gateway
+          isProduction: false
 
   - stage: deployGatewayTest
     displayName: Gateway - TEST
