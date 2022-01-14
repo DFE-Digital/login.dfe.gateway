@@ -203,8 +203,8 @@
                  "webApplicationFirewallConfiguration": {
                     "enabled": true,
                     "firewallMode": "Detection",
-                    "ruleSetType": "",
-                    "ruleSetVersion": ""
+                    "ruleSetType": "OWASP",
+                    "ruleSetVersion": "3.0"
                 },
                 "gatewayIPConfigurations": [
                     {
