@@ -204,7 +204,7 @@
                     "enabled": true,
                     "firewallMode": "Detection",
                     "ruleSetType": "OWASP",
-                    "ruleSetVersion": "3.0"
+                    "ruleSetVersion": "3.1"
                 },
                 "gatewayIPConfigurations": [
                     {
