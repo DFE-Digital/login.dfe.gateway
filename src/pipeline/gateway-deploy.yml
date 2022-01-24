@@ -26,7 +26,7 @@ parameters:
     default: gateway
   - name: isProduction
     type: string
-    default: false
+    default: true
 
 jobs:
   - deployment: deploy
