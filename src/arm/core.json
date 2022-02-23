@@ -21,14 +21,14 @@
             "metadata": {
                 "description": "Service subnet name"
             },
-            "defaultValue": "GatewaySubnet"
+            "defaultValue": "gateway"
         },
         "serviceSubnetPrefix": {
             "type": "string",
             "metadata": {
                 "description": "Service subnet address prefix"
             },
-            "defaultValue": "192.168.97.0/25"
+            "defaultValue": "192.168.97.0/27"
         }
     },
     "functions": [
