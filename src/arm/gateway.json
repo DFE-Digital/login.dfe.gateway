@@ -213,7 +213,7 @@
                 }
             },
              "zones": [
-                        "2"
+                        ""
                     ],
             "properties": {
                 "sku": {
