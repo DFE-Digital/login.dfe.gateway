@@ -70,6 +70,24 @@
             "metadata": {
                 "description": "Overide with 'true' for production"
             }
+        },
+        "capacity": {
+            "type": "int",
+            "defaultValue": 2,
+            "maxValue": 32,
+            "minValue": 2,
+            "metadata": {
+                "description": "Capacity (instance count) of application gateway"
+      }
+    },
+        "autoScaleMaxCapacity": {
+            "type": "int",
+            "defaultValue": 10,
+            "maxValue": 32,
+            "minValue": 1,
+            "metadata": {
+                "description": "Autoscale capacity (instance count) of application gateway"
+            }
         }
     },
     "functions": [
@@ -198,8 +216,12 @@
                 "sku": {
                     "name": "WAF_v2",
                     "tier": "WAF_v2",
-                    "capacity": 2
+                    "capacity": "[parameters('capacity')]"
                 },
+                 "autoscaleConfiguration": {
+                    "minCapacity": "[parameters('capacity')]",
+                    "maxCapacity": "[parameters('autoScaleMaxCapacity')]"
+                    },
                  "webApplicationFirewallConfiguration": {
                     "enabled": true,
                     "firewallMode": "Detection",
@@ -261,10 +283,8 @@
                         "type": "Microsoft.Network/applicationGateways/frontendPorts"
                     }
                 ],
-                "autoscaleConfiguration": {
-                        "maxCapacity": 4,
-                        "minCapacity": 2
-                    },
+                
+              
                 "zones": [
                         "1,2,3"
                     ],
