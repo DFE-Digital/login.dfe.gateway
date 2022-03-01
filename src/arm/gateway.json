@@ -218,10 +218,10 @@
                     "tier": "WAF_v2",
                     "capacity": "[parameters('capacity')]"
                 },
-                 "autoscaleConfiguration": {
-                    "minCapacity": "[parameters('capacity')]",
-                    "maxCapacity": "[parameters('autoScaleMaxCapacity')]"
-                    },
+                //  "autoscaleConfiguration": {
+                //     "minCapacity": "[parameters('capacity')]",
+                //     "maxCapacity": "[parameters('autoScaleMaxCapacity')]"
+                //     },
                  "webApplicationFirewallConfiguration": {
                     "enabled": true,
                     "firewallMode": "Detection",
