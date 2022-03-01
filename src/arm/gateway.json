@@ -261,6 +261,13 @@
                         "type": "Microsoft.Network/applicationGateways/frontendPorts"
                     }
                 ],
+                "autoscaleConfiguration": {
+                        "maxCapacity": 4,
+                        "minCapacity": 2
+                    },
+                "zones": [
+                        "1,2,3"
+                    ],
                 "backendAddressPools": [
                     {
                         "name": "[variables('applicationGateway').hostedServices.default.poolName]",
