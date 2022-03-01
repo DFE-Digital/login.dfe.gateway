@@ -213,7 +213,7 @@
                 }
             },
              "zones": [
-                        "3"
+                        "1"
                     ],
             "properties": {
                 "sku": {
@@ -230,6 +230,10 @@
                     "firewallMode": "Detection",
                     "ruleSetType": "OWASP",
                     "ruleSetVersion": "3.1"
+                },
+                 "autoscaleConfiguration": {
+                    "minCapacity": 2,
+                    "maxCapacity": 10
                 },
                 "gatewayIPConfigurations": [
                     {
