@@ -63,6 +63,13 @@
                             "addressPrefix": "[parameters('serviceSubnetPrefix')]"
                         },
                         "type": "Microsoft.Network/virtualNetworks/subnets"
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "192.168.64.0/24"
+                        },
+                        "type": "Microsoft.Network/virtualNetworks/subnets"
                     }
                 ],
                 "virtualNetworkPeerings": [],
