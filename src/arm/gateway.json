@@ -79,7 +79,7 @@
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
             "applicationGateway": {
-                "name": "[concat(variables('baseName'), '-ag')]",
+                "name": "[concat(variables('baseName'), '-ag-test')]",
                 "hostedServices": {
                     "default": {
                         "backendPoolName": "default-pool",
