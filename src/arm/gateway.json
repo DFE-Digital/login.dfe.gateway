@@ -18,7 +18,8 @@
             "type": "string"
         },
         "subnetName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "GatewaySubnet"
         },
         "sslKeyVaultCertSecretId": {
             "type": "string"
