@@ -209,12 +209,13 @@
                 },
                 "gatewayIPConfigurations": [
                     {
-                        "name": "gateway-ip-config",
+                        "name": "appGatewayIpConfig",
                         "properties": {
                             "subnet": {
                                 "id": "[variables('resourceIds').subnetResourceId]"
                             }
-                        }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/gatewayIPConfigurations"
                     }
                 ],
                 "sslCertificates": [
