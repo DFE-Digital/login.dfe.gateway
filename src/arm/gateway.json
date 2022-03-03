@@ -213,7 +213,8 @@
                             "subnet": {
                                 "id": "[variables('resourceIds').subnetResourceId]"
                             }
-                        }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/gatewayIPConfigurations"
                     }
                 ],
                 "sslCertificates": [
