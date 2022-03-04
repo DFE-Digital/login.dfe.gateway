@@ -88,3 +88,12 @@ jobs:
                 armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "gateway-new" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
                 processOutputs: false
                 tags: $(Tags)
+            - task: AzureCLI@2
+              name: startGateWay
+              displayName: Start GateWay
+              inputs:
+                azureSubscription: "${{parameters.serviceConnection}}"
+                scriptType: pscore
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az network application-gateway start --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
