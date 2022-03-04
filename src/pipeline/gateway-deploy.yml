@@ -44,6 +44,10 @@ jobs:
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
       - name: gatewayIdentityName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
+      - name: subscriptionId
+        value: "${{parameters.subscriptionId}}"
+      - name: applicationName
+        value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
 
     strategy:
       runOnce:
@@ -72,6 +76,8 @@ jobs:
                   $certId = $cert.sid
                   write-host putting cert secret id on the pipeline
                   write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
+
+                  az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
             - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
               parameters:
                 serviceConnection: "${{parameters.serviceConnection}}"
