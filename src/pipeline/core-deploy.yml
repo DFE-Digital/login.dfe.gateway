@@ -33,16 +33,6 @@ jobs:
     -applicationName "${{parameters.applicationName}}"
     -environmentName "${{parameters.environmentName}}"
     '
-  - name: resourceGroupName
-    value: '${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}'
-  - name: resourceGroupNameGateway
-        value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
-  - name: subscriptionId
-        value: "${{parameters.subscriptionId}}"
-  - name: applicationName
-        value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
-  - name: subnet
-        value: "${{parameters.applicationName}}"
   strategy:
     runOnce:
       deploy:
@@ -55,15 +45,15 @@ jobs:
             scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
-              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAMEGATEWAY --name $env:APPLICATIONNAME
+              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
               az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway-new
-              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name $env:SUBNET
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway
         - checkout: self
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
             subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: $(resourceGroupName)
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
             location: ${{parameters.deploymentLocation}}
             templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
             armParameterOverrideString: $(overrideParameters)
