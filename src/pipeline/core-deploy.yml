@@ -55,7 +55,7 @@ jobs:
             scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
-              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPGATEWAY --name $env:APPLICATIONNAME
+              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAMEGATEWAY --name $env:APPLICATIONNAME
               az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway-new
               az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name $env:SUBNET
         - checkout: self
