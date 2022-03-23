@@ -34,7 +34,7 @@ jobs:
     -environmentName "${{parameters.environmentName}}"
     '
   - name: resourceGroupName
-    value: '${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}'
+    value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
   - name: resourceGroupNameGateway
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
   - name: subscriptionId
