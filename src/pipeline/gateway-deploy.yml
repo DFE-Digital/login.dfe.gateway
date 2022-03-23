@@ -77,7 +77,6 @@ jobs:
                   write-host putting cert secret id on the pipeline
                   write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
 
-                  az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
             - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
               parameters:
                 serviceConnection: "${{parameters.serviceConnection}}"

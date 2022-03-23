@@ -37,6 +37,17 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - task: AzureCLI@2
+          name: startGateWay
+          displayName: Stop GateWay & remove old subnet
+          inputs:
+            azureSubscription: "${{parameters.serviceConnection}}"
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway-new
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway
         - checkout: self
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
