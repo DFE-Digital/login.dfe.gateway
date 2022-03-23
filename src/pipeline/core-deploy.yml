@@ -35,7 +35,7 @@ jobs:
     '
   - name: resourceGroupName
     value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
-  - name: resourceGroupNameGateway
+  - name: resourceGroupGateway
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
   - name: subscriptionId
         value: "${{parameters.subscriptionId}}"
