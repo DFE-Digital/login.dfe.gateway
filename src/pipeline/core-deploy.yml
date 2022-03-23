@@ -28,6 +28,11 @@ jobs:
     vmImage: ubuntu-latest
   variables:
   - group: platform-${{parameters.environmentName}}
+  - name: overrideParameters
+    value: '
+    -applicationName "${{parameters.applicationName}}"
+    -environmentName "${{parameters.environmentName}}"
+    '
   - name: resourceGroupName
     value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
   - name: resourceGroupGateway
@@ -38,13 +43,6 @@ jobs:
     value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
   - name: subnet
     value: "${{parameters.applicationName}}"
-  - name: vnet
-    value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-vnet"
-  - name: overrideParameters
-    value: '
-    -applicationName "${{parameters.applicationName}}"
-    -environmentName "${{parameters.environmentName}}"
-    '
   strategy:
     runOnce:
       deploy:
@@ -58,8 +56,8 @@ jobs:
             scriptLocation: inlineScript
             inlineScript: |
               az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPGATEWAY --name $env:APPLICATIONNAME
-              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --vnet-name $env:VNET --name gateway-new
-              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --vnet-name $env:VNET --name $env:SUBNET
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name gateway-new
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --name $env:SUBNET
         - checkout: self
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
