@@ -36,13 +36,13 @@ jobs:
   - name: resourceGroupName
     value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
   - name: resourceGroupGateway
-        value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
+    value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
   - name: subscriptionId
-        value: "${{parameters.subscriptionId}}"
+    value: "${{parameters.subscriptionId}}"
   - name: applicationName
-        value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
+    value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
   - name: subnet
-        value: "${{parameters.applicationName}}"
+    value: "${{parameters.applicationName}}"
   strategy:
     runOnce:
       deploy:
