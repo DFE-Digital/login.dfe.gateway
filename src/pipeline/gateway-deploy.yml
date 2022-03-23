@@ -42,16 +42,12 @@ jobs:
         value: "${{parameters.sslCertificateName}}"
       - name: resourceGroupName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}gateway"
-      - name: resourceGroupVnet
-        value: "${{parameters.projectId}}${{parameters.environmentId}}-projectcore"
       - name: gatewayIdentityName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.environmentName}}-gateway-id"
       - name: subscriptionId
         value: "${{parameters.subscriptionId}}"
       - name: applicationName
         value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-ag"
-      - name: vnet
-        value: "${{lower(parameters.applicationName)}}-${{lower(parameters.environmentName)}}-vnet"
 
     strategy:
       runOnce:
@@ -88,7 +84,7 @@ jobs:
                 resourceGroupName: $(resourceGroupName)
                 location: "${{parameters.deploymentLocation}}"
                 templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
-                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "gateway" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
+                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}" -vnetName "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet" -subnetName "gateway-new" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
                 processOutputs: false
                 tags: $(Tags)
             - task: AzureCLI@2
@@ -99,5 +95,4 @@ jobs:
                 scriptType: pscore
                 scriptLocation: inlineScript
                 inlineScript: |
-                  az network vnet subnet delete --resource-group $env:RESOURCEGROUPVNET --vnet-name $env:VNET --name gateway-new
                   az network application-gateway start --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME

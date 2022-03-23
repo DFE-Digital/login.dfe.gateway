@@ -57,7 +57,9 @@ jobs:
             scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
-              az network application-gateway start --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPGATEWAY --name $env:APPLICATIONNAME
+              az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPGATEWAY --name $env:APPLICATIONNAME
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --vnet-name $env:VNET --name gateway-new
+              az network vnet subnet delete --resource-group $env:RESOURCEGROUPNAME --vnet-name $env:VNET --name $env:SUBNET
         - checkout: self
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
