@@ -100,4 +100,3 @@ jobs:
                 scriptLocation: inlineScript
                 inlineScript: |
                   az network vnet subnet delete --resource-group $env:RESOURCEGROUPVNET --vnet-name $env:VNET --name gateway-new
-                  az network application-gateway start --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
