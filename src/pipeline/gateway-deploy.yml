@@ -92,8 +92,8 @@ jobs:
                 processOutputs: false
                 tags: $(Tags)
             - task: AzureCLI@2
-              name: Remove extra subnet
-              displayName: 
+              name: removeExtraSubnet
+              displayName: Remove extra subnet
               inputs:
                 azureSubscription: "${{parameters.serviceConnection}}"
                 scriptType: pscore
