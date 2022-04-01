@@ -32,6 +32,7 @@ jobs:
     value: '
     -applicationName "${{parameters.applicationName}}"
     -environmentName "${{parameters.environmentName}}"
+    -serviceSubnetPrefix "$(gatewaySubnetPrefix)"
     '
   strategy:
     runOnce:
