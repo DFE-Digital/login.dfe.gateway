@@ -66,7 +66,7 @@
         },
         "isProduction": {
             "type": "bool",
-            "defaultValue": false,
+            "defaultValue": true,
             "metadata": {
                 "description": "Overide with 'true' for production"
             }
@@ -196,9 +196,15 @@
             },
             "properties": {
                 "sku": {
-                    "name": "Standard_v2",
-                    "tier": "Standard_v2",
+                    "name": "WAF_v2",
+                    "tier": "WAF_v2",
                     "capacity": 2
+                },
+                 "webApplicationFirewallConfiguration": {
+                    "enabled": true,
+                    "firewallMode": "Detection",
+                    "ruleSetType": "OWASP",
+                    "ruleSetVersion": "3.1"
                 },
                 "gatewayIPConfigurations": [
                     {
