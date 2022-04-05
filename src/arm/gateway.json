@@ -92,13 +92,15 @@
                 "frontEndPortName": "gateway-frontend-port",
                 "frontEndIpConfigurationName": "gateway-frontend-ip-config"
             },
-            "publicIpName": "[concat(variables('baseName'), '-pip')]"
+            "publicIpName": "[concat(variables('baseName'), '-pip')]",
+            "wafPolicy": "[concat(variables('baseName'), '-waf-policy')]"
         },
         "resourceIds": {
             "userAssignedIdentityId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]",
             "publicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('resourceNames').publicIpName)]",
             "vnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
             "subnetResourceId": "[resourceId(parameters('projectCoreRgName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]",
+            "wafPolicyId": "[resourceId('Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies', variables('resourceNames').wafPolicy)]",
             "applicationGateway": {
                 "resourceId": "[resourceId('Microsoft.Network/applicationGateways', variables('resourceNames').applicationGateway.name)]",
                 "hostedServices": {
@@ -172,6 +174,38 @@
     },
     "resources": [
         {
+            "apiVersion": "2019-09-01",
+            "type": "Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies",
+            "name": "[variables('resourceNames').wafPolicy]",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "customRules": [],
+                "policySettings": {
+                    "fileUploadLimitInMb": 100,
+                    "maxRequestBodySizeInKb": 128,
+                    "mode": "Detection",
+                    "requestBodyCheck": true,
+                    "state": "Enabled"
+                },
+                "managedRules": {
+                    "exclusions": [],
+                    "managedRuleSets": [
+                        {
+                            "ruleSetType": "OWASP",
+                            "ruleSetVersion": "3.1",
+                            "ruleGroupOverrides": []
+                        },
+                        {
+                            "ruleSetType": "Microsoft_BotManagerRuleSet",
+                            "ruleSetVersion": "0.1",
+                            "ruleGroupOverrides": []
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "apiVersion": "2020-04-01",
             "type": "Microsoft.Network/publicIPAddresses",
             "sku": {
@@ -200,15 +234,9 @@
                     "tier": "WAF_v2",
                     "capacity": 2
                 },
-                "webApplicationFirewallConfiguration": {
-                    "enabled": true,
-                    "firewallMode": "Detection",
-                    "ruleSetType": "OWASP",
-                    "ruleSetVersion": "3.1",
-                    "disabledRuleGroups": [],
-                    "requestBodyCheck": true,
-                    "maxRequestBodySizeInKb": 128,
-                    "fileUploadLimitInMb": 100
+                "forceFirewallPolicyAssociation": true,
+                "firewallPolicy": {
+                    "id": "[variables('resourceIds').wafPolicyId]"
                 },
                 "gatewayIPConfigurations": [
                     {
