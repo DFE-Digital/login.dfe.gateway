@@ -610,7 +610,10 @@
                         }
                     }
                 ]
-            }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies', variables('resourceNames').wafPolicy)]"
+            ]
         }
     ],
     "outputs": {
