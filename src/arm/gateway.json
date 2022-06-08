@@ -609,7 +609,11 @@
                             ]
                         }
                     }
-                ]
+                ],
+                "sslPolicy": {
+                    "policyType": "Predefined",
+                    "policyName": "AppGwSslPolicy20170401S"
+                }
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies', variables('resourceNames').wafPolicy)]"
