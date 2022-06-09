@@ -94,6 +94,7 @@ jobs:
             - task: AzureCLI@2
               name: removeExtraSubnet
               displayName: Remove extra subnet
+              condition: always()
               inputs:
                 azureSubscription: "${{parameters.serviceConnection}}"
                 scriptType: pscore
