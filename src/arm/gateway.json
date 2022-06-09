@@ -237,6 +237,14 @@
                 "firewallPolicy": {
                     "id": "[variables('resourceIds').wafPolicyId]"
                 },
+                "sslPolicy": {
+                    "policyType": "Predefined",
+                    "policyName": "AppGwSslPolicy20170401S"
+                },
+                "autoscaleConfiguration": {
+                    "minCapacity": 2,
+                    "maxCapacity": 10
+                },
                 "gatewayIPConfigurations": [
                     {
                         "name": "gateway-ip-config",
@@ -608,15 +616,7 @@
                             ]
                         }
                     }
-                ],
-                "sslPolicy": {
-                    "policyType": "Predefined",
-                    "policyName": "AppGwSslPolicy20170401S"
-                },
-                "autoscaleConfiguration": {
-                    "minCapacity": 2,
-                    "maxCapacity": 10
-                }
+                ]
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies', variables('resourceNames').wafPolicy)]"
