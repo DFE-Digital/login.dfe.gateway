@@ -613,6 +613,10 @@
                 "sslPolicy": {
                     "policyType": "Predefined",
                     "policyName": "AppGwSslPolicy20170401S"
+                },
+                "autoscaleConfiguration": {
+                    "minCapacity": 2,
+                    "maxCapacity": 10
                 }
             },
             "dependsOn": [
