@@ -231,12 +231,19 @@
             "properties": {
                 "sku": {
                     "name": "WAF_v2",
-                    "tier": "WAF_v2",
-                    "capacity": 2
+                    "tier": "WAF_v2"
                 },
                 "forceFirewallPolicyAssociation": true,
                 "firewallPolicy": {
                     "id": "[variables('resourceIds').wafPolicyId]"
+                },
+                "sslPolicy": {
+                    "policyType": "Predefined",
+                    "policyName": "AppGwSslPolicy20170401S"
+                },
+                "autoscaleConfiguration": {
+                    "minCapacity": 2,
+                    "maxCapacity": 10
                 },
                 "gatewayIPConfigurations": [
                     {
