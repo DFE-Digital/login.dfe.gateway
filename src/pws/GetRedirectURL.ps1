@@ -1,4 +1,4 @@
-Get-ChildItem -Path Env:\ | Format-List
+
 $sqlServerFQDN = $env:SERVERNAME
 
 $databaseName = $env:DATABASENAME
@@ -21,3 +21,5 @@ $results = $results -replace '"',''
 write-host "##vso[task.setvariable variable=redirectUrls]$results"
 
 write-host $redirectUrls
+
+Get-ChildItem -Path Env:\ | Format-List
