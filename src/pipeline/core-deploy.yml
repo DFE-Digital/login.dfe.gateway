@@ -64,9 +64,8 @@ jobs:
                 select @results as results
               "
 
-              $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
 
-              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $pwd  -query $userQuery  -Verbose 
+              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $env:SQLADMINISTRATORLOGINPASSWORD  -query $userQuery  -Verbose 
               $results = $results -replace '"',''
               write-host "##vso[task.setvariable variable=redirectUrls]$results"
 
