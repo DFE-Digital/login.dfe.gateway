@@ -52,84 +52,52 @@ jobs:
         value: "${{parameters.applicationName}}-${{parameters.environmentName}}-vnet"
       - name:  projectCoreRgName
         value: "${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}"
-      - name:  projectCore
-        value: "${{parameters.projectId}}${{parameters.environmentId}}"
     strategy:
       runOnce:
         deploy:
           steps:
             - checkout: self
-            # - task: AzureCLI@2
-            #   name: preDeploy
-            #   displayName: Pre Deploy
-            #   inputs:
-            #     azureSubscription: "${{parameters.serviceConnection}}"
-            #     scriptType: pscore
-            #     scriptLocation: inlineScript
-            #     inlineScript: |
-            #       write-host creating identity for ag
-            #       $ident = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME | ConvertFrom-Json
-            #       write-host created identity : $ident.name
-            #       write-host setting kv policy for $ident.name
+            - task: AzureCLI@2
+              name: preDeploy
+              displayName: Pre Deploy
+              inputs:
+                azureSubscription: "${{parameters.serviceConnection}}"
+                scriptType: pscore
+                scriptLocation: inlineScript
+                inlineScript: |
+                  write-host creating identity for ag
+                  $ident = az identity create -g $env:RESOURCEGROUPNAME -n $env:GATEWAYIDENTITYNAME | ConvertFrom-Json
+                  write-host created identity : $ident.name
+                  write-host setting kv policy for $ident.name
 
-            #       write-host set keyvault policy for ag identity
-            #       az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers --secret-permissions get list
+                  write-host set keyvault policy for ag identity
+                  az keyvault set-policy --name $env:KEYVAULTNAME --object-id $ident.principalId --certificate-permissions get getissuers list listissuers --secret-permissions get list
 
-            #       write-host retrieving ssl certificate
-            #       $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
-            #       write-host found $cert.id
-            #       $certId = $cert.sid
-            #       write-host putting cert secret id on the pipeline
-            #       write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
+                  write-host retrieving ssl certificate
+                  $cert = az keyvault certificate show --vault-name $env:KEYVAULTNAME -n $env:SSLCERTIFICATENAME | ConvertFrom-Json
+                  write-host found $cert.id
+                  $certId = $cert.sid
+                  write-host putting cert secret id on the pipeline
+                  write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
 
-            #       az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
-            - task: AzurePowerShell@5
-                displayName: Add Firewall Rules to SQL Server
-                inputs:
-                  azureSubscription: $(serviceConnection)
-                  scriptLocation: inlineScript
-                  inlineScript: |
-                    $projectCore = $env:PROJECTCORE
-                    $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
-
-                    $databaseName = "$projectCore-signin-organisations-db"
-
-                    $userQuery = "
-                      declare @results varchar(max)
-
-                      select @results = coalesce(@results + ',', '') +  [redirectUrl]
-                      from [dbo].[serviceRedirectUris]
-                      order by [redirectUrl]
-
-                      select @results as results
-                    "
-
-
-                    $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -query $userQuery -Verbose
-                    $results = $results -replace '"',''
-                    write-host "##vso[task.setvariable variable=redirectUrls]$results"
-
-                    write-host $redirectUrls
-
-                  azurePowerShellVersion: 'LatestVersion'
-                  pwsh: true
-            # - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
-            #   parameters:
-            #     serviceConnection: "${{parameters.serviceConnection}}"
-            #     subscriptionId: "${{parameters.subscriptionId}}"
-            #     resourceGroupName: $(resourceGroupName)
-            #     location: "${{parameters.deploymentLocation}}"
-            #     templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
-            #     armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
-            #     processOutputs: false
-            #     tags: $(Tags)
-            # - task: AzureCLI@2
-            #   name: removeExtraSubnet
-            #   displayName: Remove extra subnet
-            #   condition: always()
-            #   inputs:
-            #     azureSubscription: "${{parameters.serviceConnection}}"
-            #     scriptType: pscore
-            #     scriptLocation: inlineScript
-            #     inlineScript: |
-            #       az network vnet subnet delete --name gateway-new --resource-group $env:PROJECTCORERGNAME --vnet-name $env:VNET
+                  az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
+            - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+              parameters:
+                serviceConnection: "${{parameters.serviceConnection}}"
+                subscriptionId: "${{parameters.subscriptionId}}"
+                resourceGroupName: $(resourceGroupName)
+                location: "${{parameters.deploymentLocation}}"
+                templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
+                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" '
+                processOutputs: false
+                tags: $(Tags)
+            - task: AzureCLI@2
+              name: removeExtraSubnet
+              displayName: Remove extra subnet
+              condition: always()
+              inputs:
+                azureSubscription: "${{parameters.serviceConnection}}"
+                scriptType: pscore
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az network vnet subnet delete --name gateway-new --resource-group $env:PROJECTCORERGNAME --vnet-name $env:VNET

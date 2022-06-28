@@ -39,13 +39,43 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
-          parameters:
-            serviceConnection: ${{parameters.serviceConnection}}
-            subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
-            location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
-            armParameterOverrideString: $(overrideParameters)
-            processOutputs: false
-            tags: $(Tags)
+        - task: AzurePowerShell@5
+                displayName: Add Firewall Rules to SQL Server
+                inputs:
+                  azureSubscription: $(serviceConnection)
+                  scriptLocation: inlineScript
+                  inlineScript: |
+                    $projectCore = $env:PROJECTCORE
+                    $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
+
+                    $databaseName = "$projectCore-signin-organisations-db"
+
+                    $userQuery = "
+                      declare @results varchar(max)
+
+                      select @results = coalesce(@results + ',', '') +  [redirectUrl]
+                      from [dbo].[serviceRedirectUris]
+                      order by [redirectUrl]
+
+                      select @results as results
+                    "
+
+
+                    $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -query $userQuery -Verbose
+                    $results = $results -replace '"',''
+                    write-host "##vso[task.setvariable variable=redirectUrls]$results"
+
+                    write-host $redirectUrls
+
+                  azurePowerShellVersion: 'LatestVersion'
+                  pwsh: true
+        # - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+        #   parameters:
+        #     serviceConnection: ${{parameters.serviceConnection}}
+        #     subscriptionId: ${{parameters.subscriptionId}}
+        #     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+        #     location: ${{parameters.deploymentLocation}}
+        #     templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
+        #     armParameterOverrideString: $(overrideParameters)
+        #     processOutputs: false
+        #     tags: $(Tags)
