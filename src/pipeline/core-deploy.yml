@@ -78,7 +78,7 @@ jobs:
         - task: replacetokens@5
           displayName: 'Replace tokens'
           inputs:
-            rootDirectory: ${{parameters.SourcePath}}/src/pws/
+            rootDirectory: $(System.DefaultWorkingDirectory)/src/pws/
             targetFiles: |
               GetRedirectURL.ps1
             encoding: 'auto'
