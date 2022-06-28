@@ -34,22 +34,37 @@ jobs:
     -environmentName "${{parameters.environmentName}}"
     -serviceSubnetPrefix "$(gatewaySubnetPrefix)"
     '
-  - name:  projectCore
-    value: "${{parameters.projectId}}${{parameters.environmentId}}"
+  - name:  serverName
+    value: "${{parameters.projectId}}${{parameters.environmentId}}-signin-shd-sql.database.windows.net"
+  - name:  databaseName
+    value: "${{parameters.projectId}}${{parameters.environmentId}}-signin-organisations-db"
   strategy:
     runOnce:
       deploy:
         steps:
         - checkout: self
+        - task: SqlAzureDacpacDeployment@1
+          inputs:
+            azureSubscription: ${{parameters.serviceConnection}}
+            AuthenticationType: 'servicePrincipal'
+            ServerName: $serverName
+            DatabaseName: $databaseName
+            deployType: 'InlineSqlTask'
+            SqlInline: |
+              declare @results varchar(max)
+              
+              select @results = coalesce(@results + ',', '') +  [redirectUrl]
+              from [dbo].[serviceRedirectUris]
+              order by [redirectUrl]
+              
+              select @results as results
+            IpDetectionMethod: 'AutoDetect'
         - task: AzurePowerShell@5
           displayName: SQL Server Redirect urls list
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
             ScriptType: 'InlineScript'
             inline: |
-              get-module -listavailable
-              Install-Module SQLPS
-              Import-Module SQLPS
               $projectCore = $env:PROJECTCORE
               $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
 
@@ -65,7 +80,9 @@ jobs:
                 select @results as results
               "
 
+              $access_token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
 
+              Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -AccessToken $access_token -query $userQuery -Verbose
               $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -query $userQuery -Verbose
               $results = $results -replace '"',''
               write-host "##vso[task.setvariable variable=redirectUrls]$results"
