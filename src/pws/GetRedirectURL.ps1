@@ -18,8 +18,6 @@ $userQuery = "
 
 $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username '__auditSqlLogin__' -Password '__auditSqlPassword__'  -query $userQuery  -Verbose 
 $results = $results -replace '"',''
-write-host "##vso[task.setvariable variable=redirectUrls]$results"
+Write-Host "##vso[task.setvariable variable=redirectUrls]$results"
 
-write-host $redirectUrls
-
-Get-ChildItem -Path Env:\ | Format-List
+Write-Output $redirectUrls
