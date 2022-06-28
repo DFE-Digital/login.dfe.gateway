@@ -109,16 +109,16 @@ jobs:
                 ScriptPath: '$(System.DefaultWorkingDirectory)/src/pws/GetRedirectURL.ps1'
                 azurePowerShellVersion: 'LatestVersion'
                 pwsh: true
-                - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
-                  parameters:
-                    serviceConnection: "${{parameters.serviceConnection}}"
-                    subscriptionId: "${{parameters.subscriptionId}}"
-                    resourceGroupName: $(resourceGroupName)
-                    location: "${{parameters.deploymentLocation}}"
-                    templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
-                    armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" -redirectUrls "($(gatewayIdentityName))"'
-                    processOutputs: false
-                    tags: $(Tags)
+            - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+              parameters:
+                serviceConnection: "${{parameters.serviceConnection}}"
+                subscriptionId: "${{parameters.subscriptionId}}"
+                resourceGroupName: $(resourceGroupName)
+                location: "${{parameters.deploymentLocation}}"
+                templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
+                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" -redirectUrls "($(gatewayIdentityName))"'
+                processOutputs: false
+                tags: $(Tags)
             - task: AzureCLI@2
               name: removeExtraSubnet
               displayName: Remove extra subnet
