@@ -25,7 +25,7 @@ jobs:
   displayName: deploy core vnet - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
   pool:
-    vmImage: windows-latest
+    vmImage: ubuntu-latest
   variables:
   - group: platform-${{parameters.environmentName}}
   - name: overrideParameters
@@ -82,9 +82,9 @@ jobs:
                 select @results as results
               "
 
-              $access_token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
+             $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
 
-              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -AccessToken $access_token -query $userQuery -Verbose
+              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $pwd  -query $userQuery  -Verbose 
               $results = $results -replace '"',''
               write-host "##vso[task.setvariable variable=redirectUrls]$results"
 
