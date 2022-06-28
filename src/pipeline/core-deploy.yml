@@ -47,8 +47,9 @@ jobs:
             azureSubscription: ${{parameters.serviceConnection}}
             ScriptType: 'InlineScript'
             inline: |
-              Install-Module SQLServer
-              Import-Module SqlServer
+              get-module -listavailable
+              Install-Module SQLPS
+              Import-Module SQLPS
               $projectCore = $env:PROJECTCORE
               $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
 
