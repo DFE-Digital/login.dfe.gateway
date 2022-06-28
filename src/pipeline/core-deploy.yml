@@ -49,7 +49,7 @@ jobs:
             azureSubscription: ${{parameters.serviceConnection}}
             ScriptType: 'InlineScript'
             inline: |
-              
+              dir env
               $sqlServerFQDN = $env:SERVERNAME
 
               $databaseName = $env:DATABASENAME
