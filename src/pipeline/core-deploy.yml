@@ -47,8 +47,8 @@ jobs:
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
             AuthenticationType: 'servicePrincipal'
-            ServerName: $serverName
-            DatabaseName: $databaseName
+            ServerName: $(serverName)
+            DatabaseName: $(databaseName)
             deployType: 'InlineSqlTask'
             SqlInline: |
               declare @results varchar(max)
