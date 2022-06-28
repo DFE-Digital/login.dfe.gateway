@@ -180,7 +180,157 @@
             "location": "[resourceGroup().location]",
             "tags": {},
             "properties": {
-                "customRules": [],
+                "customRules": [{
+                    "name": "rediredUriAllow",
+                    "priority": 10,
+                    "ruleType": "MatchRule",
+                    "action": "Allow",
+                    "matchConditions": [{
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://dfeconsent.azurewebsites.net/auth/cb", "https://dfeconsentuiuat.azurewebsites.net/auth/cb", "https://int-help.signin.education.gov.uk:443/auth/cb", "https://admin.multiplication-tables-check.service.gov.uk/auth-dso", "https://traineeteacherportal.education.gov.uk/default.aspx", "https://int-profile.signin.education.gov.uk:443/auth/cb", "https://s141t03-signin-pfl-as.azurewebsites.net:443/auth/cb", "https://signin-int-pfl-as.azurewebsites.net:443/auth/", "https://signin-int-pfllnx-as.azurewebsites.net:443/auth/cb", "https://int-services.signin.education.gov.uk:443/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://s141t03-signin-svc-as.azurewebsites.net:443/auth/cb", "https://signin-int-svc-as.azurewebsites.net:443/auth/cb", "https://signin-int-svclnx-as.azurewebsites.net:443/auth/cb", "https://tools.apprenticeships.education.gov.uk/grafana/login/generic_oauth", "https://schoolexperience.education.gov.uk/auth/callback", "https://schoolexperience.education.gov.uk/auth/dfe/callback", "https://int-manage.signin.education.gov.uk:443", "https://int-manage.signin.education.gov.uk:443/auth/cb", "https://s141t03-signin-mng-as.azurewebsites.net:443", "https://s141t03-signin-mng-as.azurewebsites.net:443/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://signin-int-mnglnx-as.azurewebsites.net:443", "https://signin-int-mnglnx-as.azurewebsites.net:443/auth/cb", "https://signin-pr-mnglnx-as.azurewebsites.net:443", "https://signin-pr-mnglnx-as.azurewebsites.net:443/auth/cb", "http://localhost:4431/oidc/cb", "https://int-gias.signin.education.gov.uk/oidc/cb", "https://localhost:4431/oidc/cb", "https://s141t03-signin-gias.azurewebsites.net/oidc/cb", "http://localhost/saml/cb", "https://int-kts-sa.signin.education.gov.uk/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://int-kts-sa.signin.education.gov.uk/saml/cb", "https://s141t03-sa.signin.education.gov.uk:443/oidc/cb", "https://s141t03-signin-kts.azurewebsites.net/oidc/cb", "https://s141t03-signin-saml-kts-sa.azurewebsites.net/saml/cb", "https://s141t03-signin-saml-as.azurewebsites.net:443", "https://s141t03-signin-saml-as.azurewebsites.net:443/oidc/cb", "https://saml-int.signin.education.gov.uk:443", "https://saml-int.signin.education.gov.uk:443/oidc/cb", "https://signin-int-saml-as.azurewebsites.net:443", "https://signin-int-saml-as.azurewebsites.net:443/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://int-kts.signin.education.gov.uk", "https://int-kts.signin.education.gov.uk/oidc/cb", "https://int-kts.signin.education.gov.uk:443", "https://int-kts.signin.education.gov.uk:443/oidc/cb", "https://s141t03-signin-saml-kts-la.azurewebsites.net/oidc/cb", "https://signin-pr-kts-as.azurewebsites.net", "https://signin-pr-kts-as.azurewebsites.net/oidc/cb", "https://signin-pr-kts-as.azurewebsites.net:443", "https://signin-pr-kts-as.azurewebsites.net:443/oidc/cb", "https://www.keytosuccess.education.gov.uk/cgi-bin/kts/index"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://collect.signin.education.gov.uk", "https://collect.signin.education.gov.uk/oidc/cb", "https://collect.signin.education.gov.uk:433", "https://collect.signin.education.gov.uk:433/oidc/cb", "https://int-collect.signin.education.gov.uk/oidc/cb", "https://a2c.education.gov.uk/signin-oidc", "https://webapp-t1pr-b-sip-a2c.azurewebsites.net/signin-oidc", "https://dqt.signin.education.gov.uk", "https://dqt.signin.education.gov.uk/oidc/cb", "https://dqt.signin.education.gov.uk:443"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://dqt.signin.education.gov.uk:443/oidc/cb", "https://int-dqt.signin.education.gov.uk/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net", "https://lgn-dqt-as-github.azurewebsites.net/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net:443", "https://lgn-dqt-as-github.azurewebsites.net:443/oidc/cb", "https://signin-dqt-as.azurewebsites.net", "https://signin-dqt-as.azurewebsites.net/oidc/cb", "https://signin-dqt-as.azurewebsites.net:443", "https://signin-dqt-as.azurewebsites.net:443/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://additional-teaching-payment.education.gov.uk/admin/auth/callback", "https://additional-teaching-payment.education.gov.uk/auth/callback", "https://www.claim-additional-teaching-payment.service.gov.uk/admin/auth/callback", "https://www.claim-additional-teaching-payment.service.gov.uk/auth/callback", "https://asp.signin.education.gov.uk", "https://asp.signin.education.gov.uk/oidc/cb", "https://asp.signin.education.gov.uk:443", "https://asp.signin.education.gov.uk:443/oidc/cb", "https://int-asp.signin.education.gov.uk/oidc/cb", "https://signin-pr-asp-as.azurewebsites.net"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://signin-pr-asp-as.azurewebsites.net/oidc/cb", "https://signin-pr-asp-as.azurewebsites.net:443", "https://signin-pr-asp-as.azurewebsites.net:443/oidc/cb", "https://dqt.signin.education.gov.uk", "https://dqt.signin.education.gov.uk/oidc/cb", "https://dqt.signin.education.gov.uk:443", "https://dqt.signin.education.gov.uk:443/oidc/cb", "https://int-dqt.signin.education.gov.uk/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net", "https://lgn-dqt-as-github.azurewebsites.net/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://lgn-dqt-as-github.azurewebsites.net:443", "https://lgn-dqt-as-github.azurewebsites.net:443/oidc/cb", "https://signin-dqt-as.azurewebsites.net", "https://signin-dqt-as.azurewebsites.net/oidc/cb", "https://signin-dqt-as.azurewebsites.net:443", "https://signin-dqt-as.azurewebsites.net:443/oidc/cb", "https://dqt.signin.education.gov.uk", "https://dqt.signin.education.gov.uk/oidc/cb", "https://dqt.signin.education.gov.uk:443", "https://dqt.signin.education.gov.uk:443/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://int-dqt.signin.education.gov.uk/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net", "https://lgn-dqt-as-github.azurewebsites.net/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net:443", "https://lgn-dqt-as-github.azurewebsites.net:443/oidc/cb", "https://signin-dqt-as.azurewebsites.net", "https://signin-dqt-as.azurewebsites.net/oidc/cb", "https://signin-dqt-as.azurewebsites.net:443", "https://signin-dqt-as.azurewebsites.net:443/oidc/cb", "https://coursedirectory.nationalcareersservice.org.uk/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://coursedirectory.nationalcareersservice.org.uk/Auth/Login", "https://aforms.signin.education.gov.uk/oidc/cb", "https://int-aforms.signin.education.gov.uk/oidc/cb", "https://signin-pr-aforms-as.azurewebsites.net/oidc/cb", "https://dfe-apprenticeships.eu.auth0.com/login/callback", "https://psp.signin.education.gov.uk/oidc/cb", "https://psp.signin.education.gov.uk:443/oidc/cb", "https://marketplace.preview.crowncommercial.gov.uk/auth/dfe/callback", "https://marketplace.service.crowncommercial.gov.uk/auth/dfe/callback", "https://int-support.signin.education.gov.uk:443"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://int-support.signin.education.gov.uk:443/auth/cb", "https://localhost:41020/auth/cb", "https://s141p01-signin-sup-as.azurewebsites.net:443", "https://s141p01-signin-sup-as.azurewebsites.net:443/auth/cb", "https://signin-pr-sup-as.azurewebsites.net:443", "https://signin-pr-sup-as.azurewebsites.net:443/auth/cb", "https://signin-pr-suplnx-as.azurewebsites.net:443", "https://signin-pr-suplnx-as.azurewebsites.net:443/auth/cb", "https://nndrclaims.education.gov.uk/auth/cb", "https://int-s2s.signin.education.gov.uk/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://s141t03-signin-saml-s2s.azurewebsites.net/oidc/cb", "https://s2s.signin.education.gov.uk/oidc/cb", "https://s2s.signin.education.gov.uk:443/oidc/cb", "https://dfedeveloperhub.azurewebsites.net/auth/cb", "https://dfedeveloperhubuiuat.azurewebsites.net/auth/cb", "http://teaching-jobs.service.gov.uk/auth/dfe/callback", "https://teaching-vacancies.service.gov.uk/auth/dfe/callback", "https://teachingjobs.education.gov.uk/auth/dfe/callback", "https://teachingjobs.service.gov.uk/auth/dfe/callback", "https://manage-tlevel-results.tlevels.gov.uk/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://s106p01-apply-as.azurewebsites.net/auth/dfe/callback", "https://sandbox.apply-for-teacher-training.education.gov.uk/auth/dfe/callback", "https://staging.apply-for-teacher-training.education.gov.uk/auth/dfe/callback", "https://www.apply-for-teacher-training.education.gov.uk/auth/dfe/callback", "https://dfedataproviderhub.azurewebsites.net/auth/cb", "https://dfedataproviderhubuiuat.azurewebsites.net/auth/cb", "https://migadm.signin.education.gov.uk:443", "https://migadm.signin.education.gov.uk:443/auth/cb", "https://signin-pr-migadm-as.azurewebsites.net:443", "https://signin-pr-migadm-as.azurewebsites.net:443/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://apply.apprenticeships.education.gov.uk/signin-oidc", "https://apply.apprenticeships.sfa.bis.gov.uk/signin-oidc", "https://idsr.gcs501.gcfb.co.uk/callback", "https://localhost:5443/callback", "https://bat-prod-manage-courses-frontend-app.azurewebsites.net/auth/dfe/callback", "https://bat-prod-mcfe-as.azurewebsites.net/auth/dfe/callback", "https://s121p01-mcfe-as.azurewebsites.net/auth/dfe/callback", "https://s121p01-ptt-as.azurewebsites.net", "https://s121p01-ptt-as.azurewebsites.net/auth/cb", "https://s121p01-ptt-as.azurewebsites.net/auth/dfe/callback"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://s121p01-ptt-as.azurewebsites.net/register/complete", "https://www.publish-teacher-training-courses.service.gov.uk/auth/dfe/callback", "https://www2.publish-teacher-training-courses.service.gov.uk/auth/dfe/callback", "https://dqt.signin.education.gov.uk", "https://dqt.signin.education.gov.uk/oidc/cb", "https://dqt.signin.education.gov.uk:443", "https://dqt.signin.education.gov.uk:443/oidc/cb", "https://int-dqt.signin.education.gov.uk/oidc/cb", "https://lgn-dqt-as-github.azurewebsites.net", "https://lgn-dqt-as-github.azurewebsites.net/oidc/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }, {
+                        "matchVariables": [{
+                            "variableName": "RequestUri"
+                        }],
+                        "operator": "Contains",
+                        "negationConditon": false,
+                        "matchValues": ["https://lgn-dqt-as-github.azurewebsites.net:443", "https://lgn-dqt-as-github.azurewebsites.net:443/oidc/cb", "https://signin-dqt-as.azurewebsites.net", "https://signin-dqt-as.azurewebsites.net/oidc/cb", "https://signin-dqt-as.azurewebsites.net:443", "https://signin-dqt-as.azurewebsites.net:443/oidc/cb", "https://s122p01-as-manageassessment-as.azurewebsites.net/auth/cb", "https://s122p01-platform-web-01.azurewebsites.net/auth/cb", "https://s122p01-platform-webtake-02.azurewebsites.net/auth/cb"],
+                        "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
+                    }]
+                }],
                 "policySettings": {
                     "fileUploadLimitInMb": 100,
                     "maxRequestBodySizeInKb": 128,
