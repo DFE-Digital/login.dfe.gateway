@@ -187,7 +187,7 @@
                     "action": "Allow",
                     "matchConditions": [{
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -195,7 +195,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -203,7 +203,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -211,7 +211,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -219,7 +219,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -227,7 +227,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -235,7 +235,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -243,7 +243,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -251,7 +251,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -259,7 +259,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -267,7 +267,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -275,7 +275,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -283,7 +283,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -291,7 +291,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -299,7 +299,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -307,7 +307,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -315,7 +315,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
@@ -323,7 +323,7 @@
                         "transforms": ["Lowercase", "UrlDecode", "UrlEncode"]
                     }, {
                         "matchVariables": [{
-                            "variableName": "RequestUri"
+                            "variableName": "QueryString"
                         }],
                         "operator": "Contains",
                         "negationConditon": false,
