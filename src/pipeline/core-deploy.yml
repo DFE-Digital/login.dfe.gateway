@@ -43,34 +43,34 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - task: SqlAzureDacpacDeployment@1
-          inputs:
-            azureSubscription: ${{parameters.serviceConnection}}
-            AuthenticationType: 'server'
-            ServerName: $(serverName)
-            DatabaseName: $(databaseName)
-            SqlUsername: $(sqlAdministratorLogin)
-            SqlPassword: $(sqlAdministratorLoginPassword)
-            deployType: 'InlineSqlTask'
-            SqlInline: |
-              declare @results varchar(max)
+        # - task: SqlAzureDacpacDeployment@1
+        #   inputs:
+        #     azureSubscription: ${{parameters.serviceConnection}}
+        #     AuthenticationType: 'server'
+        #     ServerName: $(serverName)
+        #     DatabaseName: $(databaseName)
+        #     SqlUsername: $(sqlAdministratorLogin)
+        #     SqlPassword: $(sqlAdministratorLoginPassword)
+        #     deployType: 'InlineSqlTask'
+        #     SqlInline: |
+        #       declare @results varchar(max)
               
-              select @results = coalesce(@results + ',', '') +  [redirectUrl]
-              from [dbo].[serviceRedirectUris]
-              order by [redirectUrl]
+        #       select @results = coalesce(@results + ',', '') +  [redirectUrl]
+        #       from [dbo].[serviceRedirectUris]
+        #       order by [redirectUrl]
               
-              select @results as results
-            IpDetectionMethod: 'AutoDetect'
+        #       select @results as results
+        #     IpDetectionMethod: 'AutoDetect'
         - task: AzurePowerShell@5
           displayName: SQL Server Redirect urls list
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
             ScriptType: 'InlineScript'
             inline: |
-              $projectCore = $env:PROJECTCORE
-              $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
+              
+              $sqlServerFQDN = $env:SERVERNAME
 
-              $databaseName = "$projectCore-signin-organisations-db"
+              $databaseName = $env:DATABASENAME
 
               $userQuery = "
                 declare @results varchar(max)
