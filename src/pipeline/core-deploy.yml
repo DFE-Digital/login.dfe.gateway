@@ -57,8 +57,6 @@ jobs:
               $user = $(AUDITSQLLOGIN)
               $pass = $(AUDITSQLLOGINPASSWORD)
 
-              write-host $user $env:SERVERNAME $env:SQLADMINISTRATORLOGINPASSWORD  $env:SQLADMINISTRATORLOGIN
-
               $userQuery = "
                 declare @results varchar(max)
 
