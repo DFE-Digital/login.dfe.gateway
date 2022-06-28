@@ -47,8 +47,8 @@ jobs:
             azureSubscription: ${{parameters.serviceConnection}}
             ScriptType: 'InlineScript'
             inline: |
-              Install-Module -Name SqlServer -AllowClobber
-              Import-Module -Name SqlServer -Force
+              Install-Module SQLServer
+              Import-Module SqlServer
               $projectCore = $env:PROJECTCORE
               $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
 
