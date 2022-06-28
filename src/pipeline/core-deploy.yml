@@ -54,7 +54,7 @@ jobs:
 
               $databaseName = $env:DATABASENAME
 
-              $user = $($env:SQLADMINISTRATORLOGIN)
+              $user = 'devSQLAdmin'
               $pass = $($env:SQLADMINISTRATORLOGINPASSWORD)
 
               $userQuery = "
