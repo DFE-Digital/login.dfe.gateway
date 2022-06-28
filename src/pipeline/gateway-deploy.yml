@@ -85,36 +85,36 @@ jobs:
                   write-host "##vso[task.setvariable variable=sslKeyVaultCertSecretId]$certId"
 
                   az network application-gateway stop --subscription $env:SUBSCRIPTIONID --resource-group $env:RESOURCEGROUPNAME --name $env:APPLICATIONNAME
-              - task: AzurePowerShell@5
-                displayName: SQL Server Redirect urls list
-                inputs:
-                  azureSubscription: ${{parameters.serviceConnection}}
-                  ScriptType: 'InlineScript'
-                  inline: |
-                    
-                    $sqlServerFQDN = $env:SERVERNAME
+            - task: AzurePowerShell@5
+              displayName: SQL Server Redirect urls list
+              inputs:
+                azureSubscription: ${{parameters.serviceConnection}}
+                ScriptType: 'InlineScript'
+                inline: |
+                  
+                  $sqlServerFQDN = $env:SERVERNAME
 
-                    $databaseName = $env:DATABASENAME
+                  $databaseName = $env:DATABASENAME
 
-                    $userQuery = "
-                      declare @results varchar(max)
+                  $userQuery = "
+                    declare @results varchar(max)
 
-                      select @results = coalesce(@results + ',', '') +  [redirectUrl]
-                      from [dbo].[serviceRedirectUris]
-                      order by [redirectUrl]
+                    select @results = coalesce(@results + ',', '') +  [redirectUrl]
+                    from [dbo].[serviceRedirectUris]
+                    order by [redirectUrl]
 
-                      select @results as results
-                    "
+                    select @results as results
+                  "
 
-                    $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
+                  $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
 
-                    $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $pwd  -query $userQuery  -Verbose 
-                    $results = $results -replace '"',''
-                    write-host "##vso[task.setvariable variable=redirectUrls]$results"
+                  $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $pwd  -query $userQuery  -Verbose 
+                  $results = $results -replace '"',''
+                  write-host "##vso[task.setvariable variable=redirectUrls]$results"
 
-                    write-host $redirectUrls
+                  write-host $redirectUrls
 
-                  azurePowerShellVersion: 'LatestVersion'
+                azurePowerShellVersion: 'LatestVersion'
             - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
               parameters:
                 serviceConnection: "${{parameters.serviceConnection}}"
