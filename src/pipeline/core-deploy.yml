@@ -46,7 +46,7 @@ jobs:
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
             scriptLocation: inlineScript
-            inlineScript: |
+            inline: |
               $projectCore = $env:PROJECTCORE
               $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
 
