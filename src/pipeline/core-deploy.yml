@@ -54,8 +54,8 @@ jobs:
 
               $databaseName = $env:DATABASENAME
 
-              $user = $env:SQLADMINISTRATORLOGIN
-              $pass = $env:SQLADMINISTRATORLOGINPASSWORD
+              $user = $($env:SQLADMINISTRATORLOGIN)
+              $pass = $($env:SQLADMINISTRATORLOGINPASSWORD)
 
               $userQuery = "
                 declare @results varchar(max)
