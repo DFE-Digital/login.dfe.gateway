@@ -106,7 +106,7 @@ jobs:
                       select @results as results
                     "
 
-                  $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
+                    $pwd = read-host -AsSecureString -Prompt $env:SQLADMINISTRATORLOGINPASSWORD
 
                     $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $pwd  -query $userQuery  -Verbose 
                     $results = $results -replace '"',''
