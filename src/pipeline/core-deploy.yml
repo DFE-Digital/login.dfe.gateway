@@ -45,7 +45,7 @@ jobs:
           displayName: SQL Server Redirect urls list
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
-            scriptLocation: inlineScript
+            ScriptType: 'InlineScript'
             inline: |
               $projectCore = $env:PROJECTCORE
               $sqlServerFQDN = "$projectCore-signin-shd-sql.database.windows.net"
