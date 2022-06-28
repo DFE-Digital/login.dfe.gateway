@@ -54,6 +54,9 @@ jobs:
 
               $databaseName = $env:DATABASENAME
 
+              $user = $env:SQLADMINISTRATORLOGIN
+              $pass = $env:SQLADMINISTRATORLOGINPASSWORD
+
               $userQuery = "
                 declare @results varchar(max)
 
@@ -65,7 +68,7 @@ jobs:
               "
 
 
-              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $env:SQLADMINISTRATORLOGIN -Password $env:SQLADMINISTRATORLOGINPASSWORD  -query $userQuery  -Verbose 
+              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
               $results = $results -replace '"',''
               write-host "##vso[task.setvariable variable=redirectUrls]$results"
 
