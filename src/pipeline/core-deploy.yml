@@ -25,7 +25,7 @@ jobs:
   displayName: deploy core vnet - ${{parameters.environmentName}}
   environment: ${{parameters.environmentName}}
   pool:
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
   variables:
   - group: platform-${{parameters.environmentName}}
   - name: overrideParameters
