@@ -57,7 +57,7 @@ jobs:
               $user = $env:SQLADMINISTRATORLOGIN
               $pass = $env:SQLADMINISTRATORLOGINPASSWORD
 
-              write-host $user $env:SERVERNAME
+              write-host $user $env:SERVERNAME $env:SQLADMINISTRATORLOGINPASSWORD  $env:SQLADMINISTRATORLOGIN
 
               $userQuery = "
                 declare @results varchar(max)
