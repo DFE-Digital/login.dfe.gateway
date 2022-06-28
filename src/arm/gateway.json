@@ -78,7 +78,7 @@
     "functions": [
     ],
     "variables": {
-        "redirectUrls": "[concat('(',parameters('redirectUrls'),')')]",
+        "redirectUrls": "[parameters('redirectUrls')]",
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
             "applicationGateway": {

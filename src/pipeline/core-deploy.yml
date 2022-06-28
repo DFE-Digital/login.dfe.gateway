@@ -43,69 +43,13 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        # - task: AzurePowerShell@5
-        #   displayName: SQL Server Redirect urls list
-        #   inputs:
-        #     azureSubscription: ${{parameters.serviceConnection}}
-        #     ScriptType: 'InlineScript'
-        #     inline: |
-        #       Get-ChildItem -Path Env:\ | Format-List
-        #       $sqlServerFQDN = $env:SERVERNAME
-
-        #       $databaseName = $env:DATABASENAME
-
-        #       $user = $env:AUDITSQLLOGIN
-        #       $pass = $env:AUDITSQLLOGINPASSWORD
-
-        #       $userQuery = "
-        #         declare @results varchar(max)
-
-        #         select @results = coalesce(@results + ',', '') +  [redirectUrl]
-        #         from [dbo].[serviceRedirectUris]
-        #         order by [redirectUrl]
-
-        #         select @results as results
-        #       "
-
-
-        #       $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
-        #       $results = $results -replace '"',''
-        #       write-host "##vso[task.setvariable variable=redirectUrls]$results"
-
-        #       write-host $redirectUrls
-
-        #     azurePowerShellVersion: 'LatestVersion'
-        - task: replacetokens@5
-          displayName: 'Replace tokens'
-          inputs:
-            rootDirectory: $(System.DefaultWorkingDirectory)/src/pws/
-            targetFiles: |
-              GetRedirectURL.ps1
-            encoding: 'auto'
-            tokenPattern: 'rm'
-            writeBOM: true
-            actionOnMissing: 'fail'
-            keepToken: false
-            actionOnNoFiles: 'fail'
-            enableTransforms: false
-            enableRecursion: false
-            useLegacyPattern: false
-            enableTelemetry: true
-        - task: AzurePowerShell@5
-          displayName: 'SQL Server Redirect urls list'
-          inputs:
-            azureSubscription: "${{parameters.ServiceConnection}}"
-            ScriptType: 'FilePath'
-            ScriptPath: '$(System.DefaultWorkingDirectory)/src/pws/GetRedirectURL.ps1'
-            azurePowerShellVersion: 'LatestVersion'
-            pwsh: true
-        # - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
-        #   parameters:
-        #     serviceConnection: ${{parameters.serviceConnection}}
-        #     subscriptionId: ${{parameters.subscriptionId}}
-        #     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
-        #     location: ${{parameters.deploymentLocation}}
-        #     templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
-        #     armParameterOverrideString: $(overrideParameters)
-        #     processOutputs: false
-        #     tags: $(Tags)
+        - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+          parameters:
+            serviceConnection: ${{parameters.serviceConnection}}
+            subscriptionId: ${{parameters.subscriptionId}}
+            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+            location: ${{parameters.deploymentLocation}}
+            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
+            armParameterOverrideString: $(overrideParameters)
+            processOutputs: false
+            tags: $(Tags)
