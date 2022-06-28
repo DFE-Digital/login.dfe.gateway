@@ -54,8 +54,8 @@ jobs:
 
               $databaseName = $env:DATABASENAME
 
-              $user = $env:AUDITSQLLOGIN
-              $pass = $env:AUDITSQLLOGINPASSWORD
+              $user = $(AUDITSQLLOGIN)
+              $pass = $(AUDITSQLLOGINPASSWORD)
 
               write-host $user $env:SERVERNAME $env:SQLADMINISTRATORLOGINPASSWORD  $env:SQLADMINISTRATORLOGIN
 
