@@ -42,7 +42,7 @@ jobs:
         steps:
         - checkout: self
         - task: AzurePowerShell@5
-          displayName: Add Firewall Rules to SQL Server
+          displayName: SQL Server Redirect urls list
           inputs:
             azureSubscription: ${{parameters.serviceConnection}}
             scriptLocation: inlineScript
