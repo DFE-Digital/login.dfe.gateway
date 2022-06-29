@@ -42,42 +42,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - checkout: self
-        - task: AzurePowerShell@5
-          name: redirectUrls
-          displayName: 'SQL Server Redirect urls list'
-          inputs:
-            azureSubscription: "${{parameters.ServiceConnection}}"
-            ScriptType: 'InlineScript'
-            azurePowerShellVersion: 'LatestVersion'
-            inline: |
-              Write-Output '1'
-              $sqlServerFQDN = $env:SERVERNAME
-
-              $databaseName = $env:DATABASENAME
-
-              $user = $env:AUDITSQLLOGIN
-              $pass = $env:AUDITSQLPASSWORD
-              Write-Output '2'
-              $userQuery = "
-                declare @results varchar(max)
-
-                select @results = coalesce(@results + ',', '') +  [redirectUrl]
-                from [dbo].[serviceRedirectUris]
-                order by [redirectUrl]
-
-                select @results as results
-              "
-              Write-Output '3'
-              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
-              $results = $results -replace '"',''
-              Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
-
-              Write-Output $redirectUrls
-          env:
-            AUDITSQLLOGIN: $(auditSqlLogin)
-            AUDITSQLPASSWORD: $(auditSqlPassword)
-            
+        - checkout: self          
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
