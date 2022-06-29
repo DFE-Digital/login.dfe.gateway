@@ -43,32 +43,42 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - task: replacetokens@5
-          displayName: 'Replace tokens'
-          inputs:
-            rootDirectory: $(System.DefaultWorkingDirectory)/src/pws/
-            targetFiles: |
-              GetRedirectURL.ps1
-            encoding: 'auto'
-            tokenPattern: 'rm'
-            writeBOM: true
-            actionOnMissing: 'fail'
-            keepToken: false
-            actionOnNoFiles: 'fail'
-            enableTransforms: false
-            enableRecursion: false
-            useLegacyPattern: false
-            enableTelemetry: true
-
         - task: AzurePowerShell@5
           name: redirectUrls
           displayName: 'SQL Server Redirect urls list'
           inputs:
             azureSubscription: "${{parameters.ServiceConnection}}"
-            ScriptType: 'FilePath'
-            ScriptPath: '$(System.DefaultWorkingDirectory)/src/pws/GetRedirectURL.ps1'
+            ScriptType: 'inline'
             azurePowerShellVersion: 'LatestVersion'
             pwsh: true
+            env:
+              auditSqlLogin: $(auditSqlLogin)
+              auditSqlPassword: $(auditSqlPassword)
+            script: |
+              $sqlServerFQDN = $env:SERVERNAME
+
+              $databaseName = $env:DATABASENAME
+
+              $user = $env:AUDITSQLLOGIN
+              $pass = $env:AUDITSQLPASSWORD
+
+              $userQuery = "
+                declare @results varchar(max)
+
+                select @results = coalesce(@results + ',', '') +  [redirectUrl]
+                from [dbo].[serviceRedirectUris]
+                order by [redirectUrl]
+
+                select @results as results
+              "
+
+              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
+              $results = $results -replace '"',''
+              Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
+
+              Write-Output $redirectUrls
+              
+            
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
