@@ -46,14 +46,9 @@ jobs:
         - task: AzurePowerShell@5
           name: redirectUrls
           displayName: 'SQL Server Redirect urls list'
-          env:
-              auditSqlLogin: $(auditSqlLogin)
-              auditSqlPassword: $(auditSqlPassword)
           inputs:
             azureSubscription: "${{parameters.ServiceConnection}}"
             ScriptType: 'inline'
-            azurePowerShellVersion: 'LatestVersion'
-            pwsh: true
             script: |
               $sqlServerFQDN = $env:SERVERNAME
 
@@ -77,7 +72,9 @@ jobs:
               Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
 
               Write-Output $redirectUrls
-              
+           env:
+              AUDITSQLLOGIN: $(auditSqlLogin)
+              AUDITSQLPASSWORD: $(auditSqlPassword)
             
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
