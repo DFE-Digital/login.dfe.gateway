@@ -1,0 +1,91 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationName": {
+            "type": "string",
+            "metadata": {
+                "description": "This is the name that will be assigned to the gateway"
+            }
+        },
+        "environmentName": {
+            "type": "string"
+        },
+        "projectCoreRgName": {
+            "type": "string"
+        },
+        "redirectUrls": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "sslKeyVaultCertSecretId": {
+            "type": "string"
+        },
+        "userAssignedIdentityName": {
+            "type": "string"
+        },
+
+        "projectId": {
+            "type": "string",
+            "defaultValue": "s141"
+        },
+        "environmentId": {
+            "type": "string",
+            "allowedValues": [
+                "d01",
+                "t01",
+                "t02",
+                "t03",
+                "p01",
+                "p02"
+            ]
+        },
+        "hostName1": {
+            "type": "string",
+            "defaultValue": "oidc",
+            "metadata": {
+                "description": "Web App name"
+            }
+        },
+        "hostName2": {
+            "type": "string",
+            "defaultValue": "interactions",
+            "metadata": {
+                "description": "Web App name"
+            }
+        },
+        "domainSuffix": {
+            "type": "string",
+            "defaultValue": "education.gov.uk"
+        },
+        "project": {
+            "type": "string",
+            "defaultValue": "signin"
+        },
+        "isProduction": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Overide with 'true' for production"
+            }
+        }
+    },
+    "functions": [
+    ],
+    "variables": {
+        "redirectUrls": "[parameters('redirectUrls')]"
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "redirectUrls": {
+            "type": "string",
+            "value": "[variables('redirectUrls')]"
+        }
+    }
+}
