@@ -48,9 +48,8 @@ jobs:
           displayName: 'SQL Server Redirect urls list'
           inputs:
             azureSubscription: "${{parameters.ServiceConnection}}"
-            ScriptType: 'inline'
-            azurePowerShellVersion: 'LatestVersion'
-            script: |
+            ScriptType: 'InlineScript'
+            inline: |
               Write-Output '1'
               $sqlServerFQDN = $env:SERVERNAME
 
