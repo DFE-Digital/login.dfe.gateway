@@ -42,14 +42,46 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - checkout: self          
-        - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
-          parameters:
-            serviceConnection: ${{parameters.serviceConnection}}
-            subscriptionId: ${{parameters.subscriptionId}}
-            resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
-            location: ${{parameters.deploymentLocation}}
-            templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
-            armParameterOverrideString: $(overrideParameters)
-            processOutputs: false
-            tags: $(Tags)
+        - checkout: self
+        - task: AzurePowerShell@5
+          name: redirectUrls
+          displayName: 'SQL Server Redirect urls list'
+          inputs:
+            azureSubscription: "${{parameters.ServiceConnection}}"
+            ScriptType: 'InlineScript'
+            azurePowerShellVersion: 'LatestVersion'
+            inline: |
+              $sqlServerFQDN = $env:SERVERNAME
+
+              $databaseName = $env:DATABASENAME
+
+              $user = $env:AUDITSQLLOGIN
+              $pass = $env:AUDITSQLPASSWORD
+
+              $userQuery = "
+                declare @results varchar(max)
+
+                select @results = coalesce(@results + ',', '') +  [redirectUrl]
+                from [dbo].[serviceRedirectUris]
+                order by [redirectUrl]
+
+                select @results as results
+              "
+
+              $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
+              Write-Output $results $user $pass
+              $results = $results -replace '"',''
+              $results = '(' + $result + ')'
+              Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
+
+              Write-Output $results          
+        # - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
+        #   parameters:
+        #     serviceConnection: ${{parameters.serviceConnection}}
+        #     subscriptionId: ${{parameters.subscriptionId}}
+        #     resourceGroupName: ${{parameters.projectId}}${{parameters.environmentId}}-${{parameters.projectCoreRgSuffix}}
+        #     location: ${{parameters.deploymentLocation}}
+        #     templateFilePath: '$(Pipeline.Workspace)/s/src/arm/core.json'
+        #     armParameterOverrideString: $(overrideParameters)
+        #     processOutputs: false
+        #     tags: $(Tags)
