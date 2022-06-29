@@ -46,14 +46,14 @@ jobs:
         - task: AzurePowerShell@5
           name: redirectUrls
           displayName: 'SQL Server Redirect urls list'
+          env:
+              auditSqlLogin: $(auditSqlLogin)
+              auditSqlPassword: $(auditSqlPassword)
           inputs:
             azureSubscription: "${{parameters.ServiceConnection}}"
             ScriptType: 'inline'
             azurePowerShellVersion: 'LatestVersion'
             pwsh: true
-            env:
-              auditSqlLogin: $(auditSqlLogin)
-              auditSqlPassword: $(auditSqlPassword)
             script: |
               $sqlServerFQDN = $env:SERVERNAME
 
