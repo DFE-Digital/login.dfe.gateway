@@ -69,8 +69,8 @@ jobs:
               "
 
               $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
-              Write-Output $results.GetType()
-              $results = $results -replace '"',''
+              Write-Output $results[1]
+              $results = $results[1] -replace '"',''
               $results = '(' + $result + ')'
               Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
 
