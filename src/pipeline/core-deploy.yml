@@ -43,6 +43,32 @@ jobs:
       deploy:
         steps:
         - checkout: self
+        - task: replacetokens@5
+          displayName: 'Replace tokens'
+          inputs:
+            rootDirectory: $(System.DefaultWorkingDirectory)/src/pws/
+            targetFiles: |
+              GetRedirectURL.ps1
+            encoding: 'auto'
+            tokenPattern: 'rm'
+            writeBOM: true
+            actionOnMissing: 'fail'
+            keepToken: false
+            actionOnNoFiles: 'fail'
+            enableTransforms: false
+            enableRecursion: false
+            useLegacyPattern: false
+            enableTelemetry: true
+
+        - task: AzurePowerShell@5
+          name: redirectUrls
+          displayName: 'SQL Server Redirect urls list'
+          inputs:
+            azureSubscription: "${{parameters.ServiceConnection}}"
+            ScriptType: 'FilePath'
+            ScriptPath: '$(System.DefaultWorkingDirectory)/src/pws/GetRedirectURL.ps1'
+            azurePowerShellVersion: 'LatestVersion'
+            pwsh: true
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
             serviceConnection: ${{parameters.serviceConnection}}
