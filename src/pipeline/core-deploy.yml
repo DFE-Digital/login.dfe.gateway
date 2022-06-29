@@ -72,9 +72,9 @@ jobs:
               Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
 
               Write-Output $redirectUrls
-           env:
-              AUDITSQLLOGIN: $(auditSqlLogin)
-              AUDITSQLPASSWORD: $(auditSqlPassword)
+          env:
+            AUDITSQLLOGIN: $(auditSqlLogin)
+            AUDITSQLPASSWORD: $(auditSqlPassword)
             
         - template: /Infrastructure/steps/deploy-template.yml@devopsTemplates
           parameters:
