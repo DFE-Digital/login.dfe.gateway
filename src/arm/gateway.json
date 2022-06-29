@@ -78,7 +78,6 @@
     "functions": [
     ],
     "variables": {
-        "redirectUrls": "[parameters('redirectUrls')]",
         "baseName": "[tolower(concat(parameters('applicationName'), '-', parameters('environmentName')))]",
         "resourceNames": {
             "applicationGateway": {
@@ -195,7 +194,7 @@
                     "exclusions": [
                         {
                             "selectorMatchOperator": "EqualsAny",
-                            "selector": "[variables('redirectUrls')]",
+                            "selector": "[parameters('redirectUrls')]",
                             "matchVariable": null
                         },
                         {
