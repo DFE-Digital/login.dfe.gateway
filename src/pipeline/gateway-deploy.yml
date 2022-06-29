@@ -142,3 +142,4 @@ jobs:
                 scriptLocation: inlineScript
                 inlineScript: |
                   az network vnet subnet delete --name gateway-new --resource-group $env:PROJECTCORERGNAME --vnet-name $env:VNET
+                  Get-ChildItem -Path Env:\ | Format-List
