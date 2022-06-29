@@ -194,11 +194,6 @@
                     "exclusions": [
                         {
                             "selectorMatchOperator": "EqualsAny",
-                            "selector": "[parameters('redirectUrls')]",
-                            "matchVariable": null
-                        },
-                        {
-                            "selectorMatchOperator": "EqualsAny",
                             "selector": "(_dsi_state.profiles,_dsi_state.profiles.sig)",
                             "matchVariable": null
                         }
