@@ -176,7 +176,7 @@
     },
     "resources": [
         {
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2021-05-01",
             "type": "Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies",
             "name": "[variables('resourceNames').wafPolicy]",
             "location": "[resourceGroup().location]",
