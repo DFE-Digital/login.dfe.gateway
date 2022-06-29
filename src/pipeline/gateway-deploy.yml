@@ -114,6 +114,7 @@ jobs:
                   Write-Output '3'
                   $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
                   $results = $results -replace '"',''
+                  $results = '(' + $result + ')'
                   Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
                   Write-Output '4'
                   Write-Output $results
@@ -128,7 +129,7 @@ jobs:
                 resourceGroupName: $(resourceGroupName)
                 location: "${{parameters.deploymentLocation}}"
                 templateFilePath: $(Pipeline.Workspace)/s/src/arm/gatewaytest.json
-                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" -redirectUrls "($(redirectUrls.redirectUrls))"'
+                armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" -redirectUrls "$(redirectUrls)"'
                 processOutputs: false
                 tags: $(Tags)
 
