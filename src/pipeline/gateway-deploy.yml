@@ -111,7 +111,8 @@ jobs:
                     select @results as results
                   "
 
-                  $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
+                  $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose
+                  $results['results'] = $results['results'] -replace " ",""
                   $resultsS = '(' + $results['results'] + ')'
                   Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$resultsS"
 
