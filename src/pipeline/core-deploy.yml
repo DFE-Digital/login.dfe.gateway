@@ -51,13 +51,14 @@ jobs:
             ScriptType: 'inline'
             azurePowerShellVersion: 'LatestVersion'
             script: |
+              Write-Output '1'
               $sqlServerFQDN = $env:SERVERNAME
 
               $databaseName = $env:DATABASENAME
 
               $user = $env:AUDITSQLLOGIN
               $pass = $env:AUDITSQLPASSWORD
-
+              Write-Output '2'
               $userQuery = "
                 declare @results varchar(max)
 
@@ -67,7 +68,7 @@ jobs:
 
                 select @results as results
               "
-
+              Write-Output '3'
               $results = Invoke-Sqlcmd -ServerInstance $sqlServerFQDN -Database $databaseName -Username $user -Password $pass  -query $userQuery  -Verbose 
               $results = $results -replace '"',''
               Write-Host "##vso[task.setvariable variable=redirectUrls;isoutput=ture]$results"
