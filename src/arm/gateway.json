@@ -186,7 +186,7 @@
                 "policySettings": {
                     "fileUploadLimitInMb": 100,
                     "maxRequestBodySizeInKb": 128,
-                    "mode": "Detection",
+                    "mode": "Prevention",
                     "requestBodyCheck": true,
                     "state": "Enabled"
                 },
