@@ -128,7 +128,7 @@ jobs:
                 subscriptionId: "${{parameters.subscriptionId}}"
                 resourceGroupName: $(resourceGroupName)
                 location: "${{parameters.deploymentLocation}}"
-                templateFilePath: $(Pipeline.Workspace)/s/src/arm/gatewaytest.json
+                templateFilePath: $(Pipeline.Workspace)/s/src/arm/gateway.json
                 armParameterOverrideString: ' -applicationName "${{parameters.applicationName}}" -environmentName "${{parameters.environmentName}}" -projectCoreRgName "$(projectCoreRgName)" -vnetName "$(vnet)" -subnetName "$(gatewaySubnet)" -sslKeyVaultCertSecretId "$(sslKeyVaultCertSecretId)" -userAssignedIdentityName "$(gatewayIdentityName)" -isProduction "${{parameters.isProduction}}" -environmentId "${{parameters.environmentId}}" -redirectUrls "$(redirectUrls)"'
                 processOutputs: false
                 tags: $(Tags)
