@@ -49,6 +49,7 @@ jobs:
           inputs:
             azureSubscription: "${{parameters.ServiceConnection}}"
             ScriptType: 'inline'
+            azurePowerShellVersion: 'LatestVersion'
             script: |
               $sqlServerFQDN = $env:SERVERNAME
 
