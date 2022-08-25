@@ -167,8 +167,10 @@
             "oidcFqdn2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName1'),'-2','.azurewebsites.net')]",
             "interactions1": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-1','.azurewebsites.net')]",
             "interactions2": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-',parameters('hostName2'),'-2','.azurewebsites.net')]",
+            "help": "[concat(parameters('projectId'),parameters('environmentId'),'-',parameters('project'),'-hlp','.azurewebsites.net')]",
             "oidcUrl": "[if(parameters('isProduction'), concat(parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName1'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
-            "interactionsUrl": "[if(parameters('isProduction'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]"
+            "interactionsUrl": "[if(parameters('isProduction'), concat(parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-',parameters('hostName2'),'.',parameters('project'),'.',parameters('domainSuffix')))]",
+            "helpUrl": "[if(parameters('isProduction'), concat('help.',parameters('project'),'.',parameters('domainSuffix')),concat(parameters('environmentName'),'-help.',parameters('project'),'.',parameters('domainSuffix')))]"
 
         }
     },
@@ -338,6 +340,16 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "name": "help-pool",
+                        "properties": {
+                            "backendAddresses": [
+                                {
+                                    "fqdn": "[variables('domains').help]"
+                                }
+                            ]
+                        }
                     }
                 ],
                 "backendHttpSettingsCollection": [
@@ -401,6 +413,24 @@
                                 "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/probes/interactions-backend-setting-probe')]"
                             }
                         }
+                    },
+                    {
+                        "name": "help-backend-setting",
+                        "properties": {
+                            "port": 443,
+                            "protocol": "Https",
+                            "cookieBasedAffinity": "Disabled",
+                            "connectionDraining": {
+                                "enabled": false,
+                                "drainTimeoutInSec": 1
+                            },
+                            "pickHostNameFromBackendAddress": true,
+                            "path": "/",
+                            "requestTimeout": 30,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/probes/help-backend-setting-probe')]"
+                            }
+                        }
                     }
                 ],
                 "httpListeners": [
@@ -461,6 +491,24 @@
                             "hostNames": [],
                             "requireServerNameIndication": true
                         }
+                    },
+                    {
+                        "name": "help-ssl-listener",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('applicationGateway').frontEndIpConfiguration.resourceId]"
+                            },
+                            "frontendPort": {
+                                "id": "[variables('applicationGateway').frontEndPort.resourceId]"
+                            },
+                            "protocol": "Https",
+                            "sslCertificate": {
+                                "id": "[variables('applicationGateway').sslCertificate.resourceId]"
+                            },
+                            "hostName": "[variables('domains').helpUrl]",
+                            "hostNames": [],
+                            "requireServerNameIndication": true
+                        }
                     }
                 ],
                 "requestRoutingRules": [
@@ -500,6 +548,24 @@
                     },
                     {
                         "name": "[concat(parameters('hostName2'),'-ruleset')]",
+                        "properties": {
+                            "ruleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/httpListeners/interactions-ssl-listener')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/backendAddressPools/interactions-pool')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/backendHttpSettingsCollection/interactions-backend-setting')]"
+                            },
+                            "rewriteRuleSet": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateway').name), '/rewriteRuleSets/interactions_rewrite')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "help-ruleset",
                         "properties": {
                             "ruleType": "Basic",
                             "httpListener": {
@@ -571,6 +637,23 @@
                                 ]
                             }
                         }
+                    },
+                    {
+                        "name": "help-backend-setting-probe",
+                        "properties": {
+                            "protocol": "Https",
+                            "path": "/healthcheck",
+                            "interval": 10,
+                            "timeout": 5,
+                            "unhealthyThreshold": 2,
+                            "pickHostNameFromBackendHttpSettings": true,
+                            "minServers": 0,
+                            "match": {
+                                "statusCodes": [
+                                    "200-399"
+                                ]
+                            }
+                        }
                     }
                 ],
                 "rewriteRuleSets": [
@@ -608,6 +691,27 @@
                                             {
                                                 "headerName": "X-Forwarded-Host",
                                                 "headerValue": "[variables('domains').interactionsUrl]"
+                                            }
+                                        ],
+                                        "responseHeaderConfigurations": []
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "help_rewrite",
+                        "properties": {
+                            "rewriteRules": [
+                                {
+                                    "ruleSequence": 100,
+                                    "conditions": [],
+                                    "name": "AddXForwardedHostHeader",
+                                    "actionSet": {
+                                        "requestHeaderConfigurations": [
+                                            {
+                                                "headerName": "X-Forwarded-Host",
+                                                "headerValue": "[variables('domains').help]"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
