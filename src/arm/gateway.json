@@ -711,7 +711,7 @@
                                         "requestHeaderConfigurations": [
                                             {
                                                 "headerName": "X-Forwarded-Host",
-                                                "headerValue": "[variables('domains').help]"
+                                                "headerValue": "[variables('domains').helpUrl"
                                             }
                                         ],
                                         "responseHeaderConfigurations": []
