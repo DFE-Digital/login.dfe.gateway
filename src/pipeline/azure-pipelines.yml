@@ -69,6 +69,6 @@ stages:
             serviceConnection: $(testServiceConnection)
           environmentName: ${{parameter.key}}
           ${{ if eq(parameter.key, 'pr') }}:
-            certificateName: signin-generic
+            sslCertificateName: signin-generic
           ${{ else }}:
-            certificateName: non-prod-gateway
+            sslCertificateName: non-prod-gateway
